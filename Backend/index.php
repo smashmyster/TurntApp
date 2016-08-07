@@ -1,8 +1,8 @@
 <?php
   $type=$_REQUEST["type"];
   switch ($type) {
-    case 'value':
-      # code...
+    case 'login':
+
       break;
 
     default:
