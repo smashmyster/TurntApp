@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_follow_img"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/profile"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/user_follow_img"
+        android:layout_alignTop="@+id/user_follow_img"
+        android:gravity="center|left"
+        android:layout_alignBottom="@+id/user_follow_img"
+        android:id="@+id/status_wrapper"
+        android:layout_toLeftOf="@+id/follow_wrapper"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:textStyle="bold"
+            android:id="@+id/follow_name"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:text="User Name"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:id="@+id/user_username"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:text="Username"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/user_follow_img"
+        android:layout_alignBottom="@+id/user_follow_img"
+        android:layout_alignParentRight="true"
+        android:id="@+id/follow_wrapper"
+        android:gravity="center"
+        android:orientation="vertical">
+    </LinearLayout>
+</RelativeLayout>

@@ -1,4 +1,4 @@
-package za.co.TurntApp.www.LocalData;
+package com.example.dopetheimmortal.turntapp.LocalData;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,8 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
-import za.co.TurntApp.www.Useful.Profile_Data;
-
+import com.example.dopetheimmortal.turntapp.Useful.Profile_Data;
 
 /**
  * Created by jackson on 2016/03/26.

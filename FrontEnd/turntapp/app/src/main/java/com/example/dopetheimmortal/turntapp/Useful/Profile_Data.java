@@ -1,4 +1,4 @@
-package za.co.TurntApp.www.Useful;
+package com.example.dopetheimmortal.turntapp.Useful;
 
 /**
  * Created by jackson on 2016/03/26.

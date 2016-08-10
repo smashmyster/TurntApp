@@ -1,4 +1,5 @@
-package za.co.TurntApp.www.DataStructures;
+package com.example.dopetheimmortal.turntapp.DataStructures;
+
 
 /**
  * Created by jackson on 2016/03/26.

@@ -1,12 +1,13 @@
-package za.co.TurntApp.www.Useful;
+package com.example.dopetheimmortal.turntapp.Useful;
 
 import android.content.Context;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import za.co.TurntApp.www.Activities.Followers;
-import za.co.TurntApp.www.LocalData.UserLocalData;
+import com.example.dopetheimmortal.turntapp.Activities.Followers;
+import com.example.dopetheimmortal.turntapp.LocalData.UserLocalData;
+
 
 /**
  * Created by jackson on 2016/03/26.

@@ -1,4 +1,4 @@
-package za.co.TurntApp.www.Adapters;
+package com.example.dopetheimmortal.turntapp.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,12 +7,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.dopetheimmortal.turntapp.DataStructures.FollowData;
+import com.example.dopetheimmortal.turntapp.R;
+
 import java.util.ArrayList;
 
-import za.co.TurntApp.www.DataStructures.FollowData;
-import za.co.TurntApp.www.R;
 
-public class FollowDataAdapter extends ArrayAdapter<FollowData > {
+public class FollowDataAdapter extends ArrayAdapter<FollowData> {
     ArrayList<FollowData> list;
     Context context;
     public FollowDataAdapter(Context context, ArrayList<FollowData> data) {

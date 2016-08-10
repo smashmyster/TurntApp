@@ -1,9 +1,12 @@
-package za.co.TurntApp.www.connector;
+package com.example.dopetheimmortal.turntapp.connector;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.example.dopetheimmortal.turntapp.Useful.ConnectorCallback;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -17,20 +20,19 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.HashMap;
 
-import za.co.TurntApp.www.Useful.ConnectorCallback;
 
 /**
- * Created by jackson on 2016/03/25.
+ * Created by jackson on 2016/05/25.
  */
-public class Connector extends AsyncTask<String, String, String>  {
+public class Connector extends AsyncTask<String, String, String> {
     String link;
     ConnectorCallback callback;
-    HashMap<String,String>data;
+    HashMap<String,String> data;
     Context cont;
     String prg_message,prg_title;
     boolean dismiss,show;
     ProgressDialog dialog;
-    public Connector(String link,ConnectorCallback callback,Context cont,HashMap<String,String>data,String prg_title,String prg_message,boolean prg_dissmis,boolean show){
+    public Connector(String link, ConnectorCallback callback, Context cont, HashMap<String,String> data, String prg_title, String prg_message, boolean prg_dissmis, boolean show){
         this.data=data;
         this.callback=callback;
         this.link=link;
@@ -52,7 +54,7 @@ public class Connector extends AsyncTask<String, String, String>  {
             dialog.show();
         }
     }
-    public  String  GetText(HashMap<String,String> info)  throws UnsupportedEncodingException {
+    public String GetText(HashMap<String,String> info)  throws UnsupportedEncodingException {
         // Create data variable for sent values to server
         String data="";
         boolean first=true;
@@ -96,15 +98,15 @@ public class Connector extends AsyncTask<String, String, String>  {
             }
 
 
-           response = sb.toString();
+            response = sb.toString();
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
             dialog.dismiss();
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             dialog.dismiss();
-            callback.display("Something is wrong with your connection please reconnect",cont);
+            return "Something is wrong with your connection please reconnect";
         }
         return response;
 
@@ -122,9 +124,9 @@ public class Connector extends AsyncTask<String, String, String>  {
             }else{
                 callback.fail(result);
             }
-        } catch (Exception e) {
+        } catch (JSONException e) {
             e.printStackTrace();
-            System.out.println(result);
+            callback.display("Something is wrong with your connection please reconnect",cont);
         }
 
 

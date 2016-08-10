@@ -1,4 +1,4 @@
-package za.co.TurntApp.www.Useful;
+package com.example.dopetheimmortal.turntapp.Useful;
 
 import android.content.Context;
 
