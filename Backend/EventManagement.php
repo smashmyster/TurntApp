@@ -35,17 +35,26 @@
       return $stmp->fetchAll();
     }
     function get_upcoming_events($id){
+      $response["ongoing"]=array();
       $now = new DateTime();
       $date=$now_string =$now->format("YmdHi");
+      $response["upcoming"]=array();
+      if($id==0){
+        $query="SELECT * FROM events WHERE id>$id AND $date>=start_time AND $date<=end_time LIMIT 10";
+        $rows=$this->db_connect_get_many($query);
+        $response["ongoing"]=array();
+        foreach ($rows as $row ) {
+          array_push($response["ongoing"],$row);
+        }
+      }
       $query="SELECT * FROM events WHERE id>$id AND $date<start_time LIMIT 10";
       $rows=$this->db_connect_get_many($query);
-      $response["data"]=array();
       foreach ($rows as $row ) {
-        array_push($response["data"],$row);
+        array_push($response["upcoming"],$row);
       }
-      if(sizeof($response["data"])==0){
+      if(sizeof($response["upcoming"])==0){
         $response["success"]=0;
-        unset($response["data"]);
+        unset($response["upcoming"]);
         return $response;
       }else{
         $response["success"]=1;
@@ -57,13 +66,13 @@
       $date=$now_string =$now->format("YmdHi");
       $query="SELECT * FROM events WHERE id>$id AND $date>=start_time AND $date<=end_time LIMIT 10";
       $rows=$this->db_connect_get_many($query);
-      $response["data"]=array();
+      $response["ongoing"]=array();
       foreach ($rows as $row ) {
-        array_push($response["data"],$row);
+        array_push($response["ongoing"],$row);
       }
-      if(sizeof($response["data"])==0){
+      if(sizeof($response["ongoing"])==0){
         $response["success"]=0;
-        unset($response["data"]);
+        unset($response["ongoing"]);
         return $response;
       }else{
         $response["success"]=1;
