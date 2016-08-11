@@ -40,7 +40,7 @@
         $response["success"]=0;
         $response["message"]='Username is already in use';
         $response["error"]=201;
-        die(json_encode($response));
+        return $response;
       }else{
         $query_params = array(':eemail'=>$email);
         $query="SELECT 1 from user where email=:eemail";
@@ -49,7 +49,7 @@
           $response["success"]=0;
           $response["message"]='Email is already in use';
           $response["error"]=202;
-          die(json_encode($response));
+          return $response;
         }else{
           $query_params = array(':ephone'=>$phone);
           $query="SELECT 1 from user where phone=:ephone";
@@ -58,10 +58,11 @@
             $response["success"]=0;
             $response["message"]='Phone number is already in use';
             $response["error"]=203;
-            die(json_encode($response));
+            return $response;
           } else {
-            $query_params = array(':euser' => $user,':epass'=>$pass,':eemail'=>$email,':ename'=>$name,':esurname'=>$surname,':ebday'=>$bday,':ephone'=>$phone,':eimage'=>$image,':eregid'=>$regid,':egender'=>$gender);
-            $query="INSERT INTO user (username,password,email,name,surname,birthday,phone,status,image,pp,loyalty,state,private,regid,gender) VALUES (:euser,:epass,:eemail,:ename,:esurname,:ebday,:ephone,'Lets get turnt','',:eimage,0,0,0,:eregid,:egender)";
+            $image_name=$this->get_image($image,$ext,$user);
+            $query_params = array(':euser' => $user,':epass'=>$pass,':eemail'=>$email,':ename'=>$name,':esurname'=>$surname,':ebday'=>$bday,':ephone'=>$phone,':eimage'=>$image_name,':eregid'=>$regid,':egender'=>$gender);
+            $query="INSERT INTO user (username,password,email,name,surname,birthday,phone,status,image_name,loyalty,state,private,regid,gender) VALUES (:euser,:epass,:eemail,:ename,:esurname,:ebday,:ephone,'Lets get turnt',:eimage,0,0,0,:eregid,:egender)";
             $this->db_connect_get_none($query,$query_params);
             $response["success"]=1;
             $response["message"]='Welcome to turntapp '.$name;
@@ -69,7 +70,8 @@
             $query_params = array(':eemail'=>$email);
             $row=$this->db_connect_get_one($query,$query_params);
             $response["id"]=$row["id"];
-            die(json_encode($response));
+            $response["code"]=1;
+            return $response;
           }
         }
       }
@@ -77,13 +79,14 @@
     function login($user,$pass){
       $query_params= array(':ename' => $user,':epass'=>$pass);
   		$query="SELECT 1 from user where username=:ename OR email=:ename";
-  		$row=$stmp->fetch();
+  		$row=$this->db_connect_get_many($query,$query_params);
   		if($row){
   			$query="SELECT * from user where (username=:ename OR email=:ename) AND password=:epass";
-  			$get=$stmp->fetch();
+  			$get=$this->db_connect_get_one($query,$query_params);
   			if($get){
-          unset($get["pass"]);
+          unset($get["password"]);
   				$get["success"]=1;
+          $get["code"]=0;
   				return $get;
   			}else{
   				$response["success"]=0;
@@ -97,6 +100,21 @@
   			$response["message"]="This username is not registered please double check";
   		  return $response;
   		}
+    }
+    function get_image($pic,$ext,$name){
+          // Get file name posted from Android App
+
+          // Decode Image
+          $binary=base64_decode($pic);
+          $filename=$name.'.'.$ext;
+          //header('Content-Type: bitmap; charset=utf-8');
+          // Images will be saved under 'www/imgupload/uplodedimages' folder
+          $file = fopen('UserProfilePics/'.$filename, 'w');
+          // Create File
+          fwrite($file, $binary);
+          fclose($file);
+          return $filename;
+
     }
   }
 
