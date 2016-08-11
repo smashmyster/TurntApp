@@ -16,17 +16,11 @@ public class Upcoming extends Fragment {
     public Upcoming() {
         // Required empty public constructor
     }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return null;
+        return inflater.inflate(R.layout.upcoming_freg, container, false);
 
     }
 

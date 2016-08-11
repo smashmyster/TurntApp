@@ -12,17 +12,16 @@ import com.example.dopetheimmortal.turntapp.R;
 /**
  * Created by jackson on 2016/03/26.
  */
-public class ProfileFragment extends Fragment {
-    public ProfileFragment() {
+public class Ongoing extends Fragment {
+    public Ongoing() {
         // Required empty public constructor
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.profile_freg, container, false);
+        return inflater.inflate(R.layout.ongoing_freg, container, false);
+
     }
 
 }

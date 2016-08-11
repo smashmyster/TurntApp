@@ -1,5 +1,6 @@
 package com.example.dopetheimmortal.turntapp.Activities;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -7,12 +8,16 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -43,7 +48,7 @@ import java.util.List;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends Activity implements OnClickListener, ConnectorCallback {
+public class LoginActivity extends AppCompatActivity implements OnClickListener, ConnectorCallback {
 
     EditText username, password, sign_username, sign_password, sign_confirm, sign_phone, sign_email, sign_name, sign_surname;
     ScrollView log;
@@ -60,15 +65,27 @@ public class LoginActivity extends Activity implements OnClickListener, Connecto
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+        check_account();
         initialize_views();
         set_image_listener();
+    }
+
+    private void check_account() {
+        UserLocalData check=new UserLocalData(this);
+        check.open();
+        if(check.check()){
+            startActivity(new Intent(this,Home.class));
+            finish();
+        }else{
+
+        }
     }
 
     private void set_image_listener() {
         pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                select_method();
+                set_read_write(LoginActivity.this);
             }
         });
     }
@@ -134,9 +151,9 @@ public class LoginActivity extends Activity implements OnClickListener, Connecto
     }
 
     private void initialize_views() {
-        sign_up.put("thumb", "");
         sign_up.put("regid", "");
         sign_up.put("ext", "");
+        sign_up.put("image", "");
 
         sign_username = (EditText) findViewById(R.id.sign_up_username);
         sign_password = (EditText) findViewById(R.id.sign_up_password);
@@ -217,6 +234,7 @@ public class LoginActivity extends Activity implements OnClickListener, Connecto
         sign_up.put("gender", Integer.toString(SpinnerItems.getSelectedItemPosition()));
         sign_up.put("name", sign_name.getText().toString());
         sign_up.put("surname", sign_surname.getText().toString());
+        sign_up.put("bday","10/03/2016");
         new Connector(link, this, this, sign_up, "Signing Up", "Please wait while we sign you up", false, true).execute();
 
     }
@@ -260,28 +278,49 @@ public class LoginActivity extends Activity implements OnClickListener, Connecto
     @Override
     public void success(String info) throws JSONException {
         JSONObject obj = new JSONObject(info);
-        String id = obj.getString("id");
-        String user = obj.getString("user");
-        String pass = obj.getString("pass");
-        String name = obj.getString("name");
-        String surname = obj.getString("surname");
-        String email = obj.getString("email");
-        String phone = obj.getString("phone");
-        String bday = obj.getString("bday");
-        String image = obj.getString("image");
-        String pp = obj.getString("pp");
-        String state = obj.getString("state");
-        String priv = obj.getString("private");
-        String regid = obj.getString("regid");
-        String followers = obj.getString("followers");
-        String following = obj.getString("following");
-        String loyalty = obj.getString("loyalty");
-        String status = obj.getString("status");
-        String gender = obj.getString("gender");
-        UserLocalData insert = new UserLocalData(this);
-        insert.open();
-        insert.createentry(id, user, pass, email, name, surname, bday, phone, status, image, pp, loyalty, state, priv, regid, followers, following, gender);
-        insert.close();
+        if (obj.getInt("code") == 1) {
+            String id = obj.getString("id");
+            String user = sign_up.get("user");
+            String name = sign_up.get("name");
+            String surname = sign_up.get("surname");
+            String email = sign_up.get("email");
+            String phone = sign_up.get("phone");
+            String bday = sign_up.get("bday");
+            String image = sign_up.get("user.")+sign_up.get("ext");
+            String state = "0";
+            String priv = "0";
+            String regid = "reg";
+            String followers = "0";
+            String following = "0";
+            String loyalty = "0";
+            String status = "Lets get turnt";
+            String gender = sign_up.get("gender");
+            UserLocalData insert = new UserLocalData(this);
+            insert.open();
+            insert.createentry(id, user, email, name, surname, bday, phone, status, image,loyalty, state, priv, regid, followers, following, gender);
+            insert.close();
+        } else {
+            String id = obj.getString("id");
+            String user = obj.getString("username");
+            String name = obj.getString("name");
+            String surname = obj.getString("surname");
+            String email = obj.getString("email");
+            String phone = obj.getString("phone");
+            String bday = obj.getString("birthday");
+            String image = obj.getString("image_name");
+            String state = obj.getString("state");
+            String priv = obj.getString("private");
+            String regid = obj.getString("regid");
+            String followers = obj.getString("followers");
+            String following = obj.getString("following");
+            String loyalty = obj.getString("loyalty");
+            String status = obj.getString("status");
+            String gender = obj.getString("gender");
+            UserLocalData insert = new UserLocalData(this);
+            insert.open();
+            insert.createentry(id, user, email, name, surname, bday, phone, status, image,loyalty, state, priv, regid, followers, following, gender);
+            insert.close();
+        }
         Intent i = new Intent(this, Home.class);
         startActivity(i);
         finish();
@@ -330,5 +369,29 @@ public class LoginActivity extends Activity implements OnClickListener, Connecto
     @Override
     public void onClick(View view) {
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case 1:
+                select_method();
+                break;
+        }
+    }
+
+    public void set_read_write(Activity cont) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            String[] PERMISIONS = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            int permission = ActivityCompat.checkSelfPermission(cont, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(cont, PERMISIONS, 1);
+            } else {
+                select_method();
+            }
+        }else{
+            select_method();
+        }
     }
 }

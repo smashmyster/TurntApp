@@ -16,7 +16,6 @@ public class UserLocalData {
     public static final String id = "_id";
     public static final String dbid = "dbid";
     public static final String user = "username";
-    public static final String pass = "password";
     public static final String email = "email";
     public static final String name = "name";
     public static final String surname = "surname";
@@ -24,7 +23,6 @@ public class UserLocalData {
     public static final String phone = "phone";
     public static final String status = "status";
     public static final String pic = "pic";
-    public static final String thumb = "thumb";
     public static final String loyalty = "loyalty";
     public static final String state = "state";
     public static final String priv = "private";
@@ -54,14 +52,12 @@ public class UserLocalData {
                     id + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     dbid+" TEXT NOT NULL, " +
                     user + " TEXT NOT NULL, " +
-                    pass+" TEXT NOT NULL, " +
                     email+" TEXT NOT NULL, " +
                     name+" TEXT NOT NULL, " +
                     surname+" TEXT NOT NULL, " +
                     bday+" TEXT NOT NULL, " +
                     phone+" TEXT NOT NULL, " +
                     status+" TEXT NOT NULL, " +
-                    thumb+" TEXT NOT NULL, " +
                     loyalty+" TEXT NOT NULL, " +
                     state+" TEXT NOT NULL, " +
                     priv+" TEXT NOT NULL, " +
@@ -97,11 +93,10 @@ public class UserLocalData {
         helper.close();
     }
 
-    public long createentry(String id,String user, String pass,String email,String name,String surname,String bday,String phone,String status,String image,String pp,String loyalty,String state,String priv,String regid,String followers,String following,String gender) {
+    public long createentry(String id,String user,String email,String name,String surname,String bday,String phone,String status,String image,String loyalty,String state,String priv,String regid,String followers,String following,String gender) {
         ContentValues cv = new ContentValues();
         cv.put(this.dbid, id);
         cv.put(this.user,user);
-        cv.put(this.pass,pass);
         cv.put(this.email,email);
         cv.put(this.name,name);
         cv.put(this.surname,surname);
@@ -109,7 +104,6 @@ public class UserLocalData {
         cv.put(this.phone,phone);
         cv.put(this.status,status);
         cv.put(this.pic,image);
-        cv.put(this.thumb,pp);
         cv.put(this.loyalty,loyalty);
         cv.put(this.state,state);
         cv.put(this.priv,priv);
@@ -122,7 +116,7 @@ public class UserLocalData {
     }
 
     public boolean check() {
-        String[] colunms = new String[] { id, user, pass };
+        String[] colunms = new String[] { id, user };
         Cursor c = database
                 .query(tbname, colunms, null, null, null, null, null);
         c.moveToFirst();
@@ -137,18 +131,16 @@ public class UserLocalData {
     }
 
     public Profile_Data actual() {
-        String[] colunms = new String[] { id, user,dbid,pass,email,name,surname,bday,phone,regid,gender,pic,status,thumb,following,followers,loyalty,state,priv};
+        String[] colunms = new String[] { id, user,dbid,email,name,surname,bday,phone,regid,gender,pic,status,following,followers,loyalty,state,priv};
         Cursor c = database
                 .query(tbname, colunms, null, null, null, null, null);
         int userid=c.getColumnIndex(dbid);
         int username = c.getColumnIndex(user);
-        int userpass = c.getColumnIndex(pass);
         int useremail = c.getColumnIndex(email);
         int userphone=c.getColumnIndex(phone);
         int ureg=c.getColumnIndex(regid);
         int ugender=c.getColumnIndex(gender);
         int ustatus=c.getColumnIndex(status);
-        int uthumb=c.getColumnIndex(thumb);
         int upic=c.getColumnIndex(pic);
         int ufollowers=c.getColumnIndex(followers);
         int ufollowing=c.getColumnIndex(following);
@@ -160,7 +152,7 @@ public class UserLocalData {
         int upriv=c.getColumnIndex(priv);
         c.moveToFirst();
         try {
-        Profile_Data get=new Profile_Data(c.getString(username),c.getString(userid),c.getString(userpass),c.getString(useremail),c.getString(user_name),c.getString(usersurname),c.getString(userbday),c.getString(userphone),c.getString(ureg),c.getString(ugender),c.getString(upic),c.getString(ustatus),c.getString(uthumb),c.getString(ufollowing),c.getString(ufollowers),c.getString(uloyalty),c.getString(ustate),c.getString(upriv));
+        Profile_Data get=new Profile_Data(c.getString(username),c.getString(userid),c.getString(useremail),c.getString(user_name),c.getString(usersurname),c.getString(userbday),c.getString(userphone),c.getString(ureg),c.getString(ugender),c.getString(upic),c.getString(ustatus),c.getString(ufollowing),c.getString(ufollowers),c.getString(uloyalty),c.getString(ustate),c.getString(upriv));
             System.out.println(get.user);
         return  get;
         } catch (Exception ex) {
@@ -172,7 +164,7 @@ public class UserLocalData {
     }
 
     public boolean delete(){
-        String[] colunms = new String[] { id, user,dbid,pass };
+        String[] colunms = new String[] { id, user,dbid};
         Cursor c = database
                 .query(tbname, colunms, null, null, null, null, null);
         int name = c.getColumnIndex(user);
@@ -181,11 +173,10 @@ public class UserLocalData {
         String[] whereArgs = new String[] { c.getString(name) };
         return database.delete(tbname, whereClause, whereArgs)>0;
     }
-    public String update_data(String id,String user, String pass,String email,String name,String surname,String bday,String phone,String status,String image,String pp,String loyalty,String state,String priv,String regid,String followers,String following,String gender){
+    public String update_data(String id,String user,String email,String name,String surname,String bday,String phone,String status,String image,String loyalty,String state,String priv,String regid,String followers,String following,String gender){
         ContentValues cv = new ContentValues();
         cv.put(this.dbid, id);
         cv.put(this.user,user);
-        cv.put(this.pass,pass);
         cv.put(this.email,email);
         cv.put(this.name,name);
         cv.put(this.surname,surname);
@@ -193,7 +184,6 @@ public class UserLocalData {
         cv.put(this.phone,phone);
         cv.put(this.status,status);
         cv.put(this.pic,image);
-        cv.put(this.thumb,pp);
         cv.put(this.loyalty,loyalty);
         cv.put(this.state,state);
         cv.put(this.priv,priv);
@@ -214,33 +204,4 @@ public class UserLocalData {
     }
 
 
-    public String update_data_not_pic(String user,String pass,String phone,String mood,String status,String id){
-        ContentValues cv = new ContentValues();
-        cv.put(this.dbid, id);
-        cv.put(this.user,user);
-        cv.put(this.pass,pass);
-        cv.put(this.email,email);
-        cv.put(this.name,name);
-        cv.put(this.surname,surname);
-        cv.put(this.bday,bday);
-        cv.put(this.phone,phone);
-        cv.put(this.status,status);
-        cv.put(this.loyalty,loyalty);
-        cv.put(this.state,state);
-        cv.put(this.priv,priv);
-        cv.put(this.regid,regid);
-        cv.put(this.followers,followers);
-        cv.put(this.following,following);
-        cv.put(this.gender,gender);
-        String where = dbid + "=" + id;
-        try{
-            database.update(tbname, cv, where, null);
-            return "Updated";
-        }
-        catch (Exception e){
-            String error =  e.getMessage().toString();
-            return  error;
-        }
-
-    }
 }
