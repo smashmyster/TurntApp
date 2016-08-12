@@ -1,0 +1,29 @@
+//create user table
+create table user (id int auto_increment primary key,username text not null,password text not null,pp longblob not null,loyalty int(225),status text not null,name text not null,surname text not null,email text not null,phone text not null,birthday text not null,image_name text not null,state int(2),private int(2),regid text not null,gender text not null);
+
+//create club info
+create table club_info (id int primary key auto_increment,coodinates text not null,address text not null,name text not null,tables int (225),rating int(5));
+
+//create tables tables
+create table tables(id int primary key auto_increment,club_id int (225),tbl_num int(225),user int(225),event int(225),foreign key(club_id)references club_info(id),foreign key(event) references events(id));
+
+//create events table
+create table events (id int primary key auto_increment ,djs text not null,attending int (225),event_type int (2),host_id int (225),rating int(5),tbl_avail int(225),specials text not null,gen_fee int(225),vip_fee int(225),name text not null);
+
+//Create booking tables
+create table bookings (id int primary key auto_increment,user int (225),event int(225),club int(225),tbl int(225),foreign key (user) references user(id),foreign key(club) references club_info(id),foreign key(event) references events(id));
+
+//following table
+create table followers(id int primary key auto_increment,follower int(225),following int (225),state int(2),foreign key(follower) references user(id),foreign key(following) references user(id));
+
+//create attanding tables
+create table attending(id int primary key auto_increment ,event int(225),user int (225),foreign key (event) references events(id),foreign key (user) references user(id));
+
+//create invites tables
+create table invites(id int primary key auto_increment,event int(225),inviter int(225),invitee int(225),foreign key(inviter) references user(id),foreign key (invitee) references user(id));
+
+//respond to invite
+create table invite_response(id int primary key auto_increment,responder int(225),comment text not null,foreign key(responder) references user(id),foreign key(event) references events(id));
+
+//club comments
+create table club_comments (id int primary key auto_increment,club_id int(225),comment text not null,user int(225),foreign key(club_id) references club_info(id),foreign key (user) references user(id));
