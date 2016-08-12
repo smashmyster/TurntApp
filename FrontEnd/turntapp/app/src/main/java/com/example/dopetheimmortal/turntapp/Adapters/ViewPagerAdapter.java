@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.app.ActionBar;
 
+import com.example.dopetheimmortal.turntapp.DataStructures.EventStruct;
 import com.example.dopetheimmortal.turntapp.HomeFragments.Ongoing;
 import com.example.dopetheimmortal.turntapp.HomeFragments.ProfileFragment;
 import com.example.dopetheimmortal.turntapp.HomeFragments.Upcoming;
@@ -21,18 +22,21 @@ import java.util.HashMap;
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     int size;
     ActionBar bar;
-
-    public ViewPagerAdapter(FragmentManager fm) {
+    ArrayList<EventStruct>upcoming_events;
+    ArrayList<EventStruct> ongoing_events;
+    public ViewPagerAdapter(FragmentManager fm,ArrayList<EventStruct>upcoming_events,ArrayList<EventStruct> ongoing_events) {
         super(fm);
-        this.size = size;
-        this.bar = bar;
+        this.upcoming_events=upcoming_events;
+        this.ongoing_events=ongoing_events;
     }
 
     @Override
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new Upcoming();
+                Upcoming up=new Upcoming();
+                up.set_data(upcoming_events);
+                return up;
             case 1:
                 return new Ongoing();
             case 2:
