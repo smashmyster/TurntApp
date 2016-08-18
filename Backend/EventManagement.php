@@ -47,7 +47,7 @@
           array_push($response["ongoing"],$row);
         }
       }else{
-        $response["code"]=0;
+        $response["code"]=1;
       }
       $query="SELECT * FROM events WHERE id>$id AND $date<start_time LIMIT 10";
       $rows=$this->db_connect_get_many($query);
@@ -70,7 +70,7 @@
       $rows=$this->db_connect_get_many($query);
       $response["ongoing"]=array();
       if($id!=0){
-        $response["code"]=1;
+        $response["code"]=0;
       }
       foreach ($rows as $row ) {
         array_push($response["ongoing"],$row);
@@ -107,6 +107,42 @@
       }
       $att["success"]=1;
       return $att;
+    }
+
+    function invite_user($me,$user,$event)
+    {
+      $query="SELECT 1 FROM invites WHERE event=$event AND inviter=$me AND invitee=$user";
+      $check=$this->db_connect_get_many($query);
+      if($check){
+        $query="SELECT state FROM invites WHERE event=$event AND inviter=$me AND invitee=$user";
+        $corr=$this->db_connect_get_one($query);
+        if($corr["state"]==0){
+          $response["message"]="User rejected this request";
+        }else if ($corr["state"]==1){
+          $response["message"]="User is already attending this event";
+        }else{
+          $response["message"]="User hasn't respondent to this request yet";
+        }
+        $response["success"]=0;
+      }else{
+        $query="INSERT INTO invites (events,inviter,invitee,state) VALUES ($event,$me,$user,-1)";
+        $this->db_connect_get_none($query);
+        $response["success"]=1;
+        $response["message"]="User successfully invited to this event";
+      }
+      return $response;
+    }
+    function respond_to_invite($requst_id,$accept){
+      if($accept==1){
+        $query="UPDATE invites SET state=1 WHERE id=$requst_id";
+        $this->db_connect_get_none($query);
+      }else{
+        $query="UPDATE invites SET state=0 WHERE id=$requst_id";
+        $this->db_connect_get_none($query);
+      }
+      $response["success"]=1;
+      $response["message"]="Thank you for responding";
+      return $response;
     }
 
   }

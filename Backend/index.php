@@ -53,6 +53,15 @@
     case 'get_user_info':
       # code...
       break;
+    case 'invite_user':
+      $me=$_REQUEST["me"];
+      $user=$_REQUEST["user"];
+      $event=$_REQUEST["event"];
+      include_once "EventManagement.php";
+      $events=new Events();
+      $info=$events->invite_user($me,$user,$event);
+      echo json_encode($info);
+      break;
 
     default:
       # code...
