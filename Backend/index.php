@@ -62,7 +62,13 @@
       $info=$events->invite_user($me,$user,$event);
       echo json_encode($info);
       break;
-
+    case 'respond_to_invite':
+      $requst_id=$_REQUEST["requst_id"];
+      $accept=$_REQUEST["accept"];
+      $events=new Events();
+      $info=$events->respond_to_invite($requst_id,$accept)
+      echo json_encode($info);
+      break;
     default:
       # code...
       break;
