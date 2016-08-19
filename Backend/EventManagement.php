@@ -84,8 +84,33 @@
         return $response;
       }
     }
-
-    function get_user_events_attending($user){
+    function get_user_events_attending($user,$me){
+      include_once 'InfoExchange.php';
+      $exchange=new InfoExchange();
+      if($exchange->is_private($user)){
+        if($exchange->is_following($me,$user)){
+          return $this->get_user_events_attending_allowed($user);
+        }else{
+          return array('success' =>0 ,'message'=>"This account is private");
+        }
+      }else{
+        return $this->get_user_events_attending_allowed($user);
+      }
+    }
+    function get_user_events_hosting($me,$user){
+      include_once 'InfoExchange.php';
+      $exchange=new InfoExchange();
+      if($exchange->is_private($user)){
+        if($exchange->is_following($me,$user)){
+          return $this->get_user_events_hosting_allowed($user);
+        }else{
+          return array('success' =>0 ,'message'=>"This account is private");
+        }
+      }else{
+        return $this->get_user_events_hosting_allowed($user);
+      }
+    }
+    function get_user_events_attending_allowed($user){
       $query="SELECT event FROM attending WHERE user=$user";
       $rows=$this->db_connect_get_many($query);
       $att=array();
@@ -98,7 +123,7 @@
       $att["success"]=1;
       return $att;
     }
-    function get_user_events_hosting($user){
+    function get_user_events_hosting_allowed($user){
       $query="SELECT * FROM events WHERE event_type=0 AND host_id=$user";
       $rows=$this->db_connect_get_many($query);
       $att=array();
@@ -108,9 +133,7 @@
       $att["success"]=1;
       return $att;
     }
-
-    function invite_user($me,$user,$event)
-    {
+    function invite_user($me,$user,$event){
       $query="SELECT 1 FROM invites WHERE event=$event AND inviter=$me AND invitee=$user";
       $check=$this->db_connect_get_many($query);
       if($check){
@@ -125,7 +148,7 @@
         }
         $response["success"]=0;
       }else{
-        $query="INSERT INTO invites (events,inviter,invitee,state) VALUES ($event,$me,$user,-1)";
+        $query="INSERT INTO invites (event,inviter,invitee,state) VALUES ($event,$me,$user,-1)";
         $this->db_connect_get_none($query);
         $response["success"]=1;
         $response["message"]="User successfully invited to this event";
@@ -134,9 +157,21 @@
     }
     function respond_to_invite($requst_id,$accept){
       if($accept==1){
+        $query="SELECT event FROM invites WHERE id=$requst_id";
+        $row=$this->db_connect_get_one($query);
+        $event=$row["event"];
+        $query="UPDATE events SET attending=attending+1 WHERE id=$event";
+        $this->db_connect_get_none($query);
         $query="UPDATE invites SET state=1 WHERE id=$requst_id";
         $this->db_connect_get_none($query);
       }else{
+        $query="SELECT state,event FROM invites WHERE id=$requst_id";
+        $row=$this->db_connect_get_one($query);
+        if($row["state"]==1){
+            $event=$row["event"];
+            $query="UPDATE events SET attending=attending-1 WHERE id=$event";
+            $this->db_connect_get_none($query);
+        }
         $query="UPDATE invites SET state=0 WHERE id=$requst_id";
         $this->db_connect_get_none($query);
       }
@@ -144,7 +179,36 @@
       $response["message"]="Thank you for responding";
       return $response;
     }
-
+    function get_events_users_attending($event){
+      $query="SELECT user FROM attending WHERE event=$event";
+      $people=$this->db_connect_get_many($query);
+      include_once 'InfoExchange.php';
+      $exchange=new InfoExchange();
+      $response["people"]=array();
+      foreach ($people as $person) {
+        array_push($response["people"],$exchange->get_user_basic_info($person["user"]));
+      }
+      $response["success"]=1;
+      return $response;
+    }
+    function get_invitable_list($event,$me){
+      include_once 'InfoExchange.php';
+      $exchange=new InfoExchange();
+      $followers=$exchange->get_my_followers($me)["people"];
+      $response["people"]=array();
+      foreach ($followers as $person) {
+        if(!$exchange->is_attending($event,$person["id"])){
+          if($exchange->is_invited($event,$person["id"],$me)){
+            $person["invited"]=1;
+          }else{
+            $person["invited"]=0;
+          }
+          array_push($response["people"],$person);
+        }
+      }
+      $response["success"]=1;
+      return $response;
+    }
   }
 
 ?>

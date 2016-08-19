@@ -59,12 +59,50 @@
         unset($info["birthday"]);
         $info["following"]=0;
         if($info["private"]==0){
-          unset($info["birthday"]);
+          //unset($info["birthday"]);
           return $info;
         }else{
           return $info;
         }
       }
+    }
+    function get_user_basic_info($user){
+      $query="SELECT id,name,surname,image_name,following,followers FROM user WHERE id=$user";
+      return $this->db_connect_get_one($query);
+    }
+    function is_following($me,$user){
+      $query="SELECT 1 FROM followers WHERE follower=$me AND following=$user";
+      $check_follow=$this->db_connect_get_many($query);
+      return $check_follow;
+    }
+    function is_private($user){
+      $query="SELECT private FROM user WHERE id=$user";
+      $check=$this->db_connect_get_one($query);
+      if($check["private"]==1){
+        return true;
+      }else{
+        return false;
+      }
+    }
+    function get_my_followers($me){
+      $query="SELECT follower FROM followers WHERE following=$me";
+      $followers=$this->db_connect_get_many($query);
+      $response["people"]=array();
+      foreach ($followers as $get) {
+        array_push($response["people"],$this->get_user_basic_info($get["follower"]));
+      }
+      $response["success"]=1;
+      return $response;
+    }
+    function is_attending($event,$user){
+      $query="SELECT 1 FROM attending WHERE event=$event AND user=$user";
+      $check=$this->db_connect_get_many($query);
+      return $check ? true:false;
+    }
+    function is_invited($event,$user,$me){
+      $query="SELECT 1 FROM invites WHERE event=$event AND inviter=$me AND invitee=$user";
+      $check=$this->db_connect_get_many($query);
+      return $check ? true:false;
     }
   }
 ?>

@@ -65,9 +65,26 @@
     case 'respond_to_invite':
       $requst_id=$_REQUEST["requst_id"];
       $accept=$_REQUEST["accept"];
+      include_once "EventManagement.php";
       $events=new Events();
-      $info=$events->respond_to_invite($requst_id,$accept)
+      $info=$events->respond_to_invite($requst_id,$accept);
       echo json_encode($info);
+      break;
+    case 'get_events_users_attending':
+      $event=$_REQUEST["event"];
+      $me=$_REQUEST["me"];
+      include_once "EventManagement.php";
+      $events=new Events();
+      $info=$events->get_events_users_attending($event);
+      echo json_encode($info);
+      break;
+    case 'get_invitable_list':
+        $event=$_REQUEST["event"];
+        $me=$_REQUEST["me"];
+        include_once "EventManagement.php";
+        $events=new Events();
+        $info=$events->get_invitable_list($event,$me);
+        echo json_encode($info);
       break;
     default:
       # code...
