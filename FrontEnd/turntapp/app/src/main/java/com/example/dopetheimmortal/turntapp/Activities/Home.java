@@ -71,7 +71,9 @@ public class Home extends AppCompatActivity implements ConnectorCallback {
             String name = get.getString("name");
             String start_time = get.getString("start_time");
             String end_time = get.getString("end_time");
-            upcoming_events.add(new EventStruct(id, djs, attending, event_type, host_id, rating, tbl_avail, specials, gen_fee, vip_fee, name, start_time, end_time));
+            String latlong = get.getString("latlong");
+            String address = get.getString("address");
+            upcoming_events.add(new EventStruct(id, djs, attending, event_type, host_id, rating, tbl_avail, specials, gen_fee, vip_fee, name, start_time, end_time,latlong,address));
         }
         object = obj.getJSONArray("ongoing");
         for (int i = 0; i < object.length(); i++) {
@@ -89,7 +91,9 @@ public class Home extends AppCompatActivity implements ConnectorCallback {
             String name = get.getString("name");
             String start_time = get.getString("start_time");
             String end_time = get.getString("end_time");
-            ongoing_events.add(new EventStruct(id, djs, attending, event_type, host_id, rating, tbl_avail, specials, gen_fee, vip_fee, name, start_time, end_time));
+            String latlong = get.getString("latlong");
+            String address = get.getString("address");
+            ongoing_events.add(new EventStruct(id, djs, attending, event_type, host_id, rating, tbl_avail, specials, gen_fee, vip_fee, name, start_time, end_time,latlong,address));
         }
         adapt_data(upcoming_events,ongoing_events);
     }

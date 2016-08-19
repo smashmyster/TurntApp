@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -45,6 +47,15 @@ public class Upcoming extends Fragment {
             final EventStruct get = upcoming_events.get(i);
 
             TextView name = (TextView) convertView.findViewById(R.id.event_name);
+            TextView host = (TextView)convertView.findViewById(R.id.host);
+//            host.setText(get.);
+            ImageButton btn=(ImageButton)convertView.findViewById(R.id.nav);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //Open google maps navigate
+                }
+            });
             name.setText(get.name);
             list.addFooterView(convertView);
         }

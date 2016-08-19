@@ -239,8 +239,9 @@
           $response["id"]=$get["id"];
           $response["success"]=1;
           $response["message"]="Event successfully created";
-          return $response;
+          $response["people"]=$this->get_invitable_list($get["id"],$me)["people"];
         }
+        return $response;
     }
     function get_image($pic,$filename){
           // Get file name posted from Android App
