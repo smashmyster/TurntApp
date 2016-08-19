@@ -209,6 +209,52 @@
       $response["success"]=1;
       return $response;
     }
+    function user_create_event($name,$address,$latlong,$me,$djs,$specials,$gen_fee,$vip_fee,$start_time,$end_time,$ext,$pic){
+        $image_name=$name.'_'.$start_time.$ext;
+        $this->get_image($pic,$image_name);
+        $query="SELECT 1 FROM events WHERE name=:ename AND address=:eaddress";
+        $query_params=array(':ename'=>$name,'eaddress'=>$address);
+        $check=$this->db_connect_get_many($query,$query_params);
+        if($check){
+          $response["success"]=0;
+          $response["message"]="This event has already been created ";
+        }else{
+          $query="INSERT INTO events (name,address,latlong,host_id,djs,specials,gen_fee,vip_fee,start_time,end_time,event_type,logo)
+                          VALUES (:ename,:eaddress,:elatlong,:eme,:edjs,:especials,:egen_fee,:evip_fee,:estart_time,:eend_time,0,:eimage_name)
+          ";
+          $query_params = array(':ename'=>$name,
+          ':eaddress'=>$address,
+          ':elatlong'=>$latlong,
+          ':eme'=>$me,
+          ':edjs'=>$djs,
+          ':especials'=>$specials,
+          ':egen_fee'=>$gen_fee,
+          ':evip_fee'=>$vip_fee,
+          ':estart_time'=>$start_time,
+          ':eend_time'=>$end_time,
+          ':eimage_name'=>$image_name);
+          $this->db_connect_get_none($query,$query_params);
+          $query="SELECT id FROM events ORDER BY id DESC LIMIT 1";
+          $get=$this->db_connect_get_one($query);
+          $response["id"]=$get["id"];
+          $response["success"]=1;
+          $response["message"]="Event successfully created";
+          return $response;
+        }
+    }
+    function get_image($pic,$filename){
+          // Get file name posted from Android App
+
+          // Decode Image
+          $binary=base64_decode($pic);
+
+          //header('Content-Type: bitmap; charset=utf-8');
+          // Images will be saved under 'www/imgupload/uplodedimages' folder
+          $file = fopen('EventImages/'.$filename, 'w');
+          // Create File
+          fwrite($file, $binary);
+          fclose($file);
+    }
   }
 
 ?>

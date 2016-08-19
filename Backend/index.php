@@ -86,6 +86,24 @@
         $info=$events->get_invitable_list($event,$me);
         echo json_encode($info);
       break;
+    case 'create_user_event':
+      $name=$_REQUEST["name"];
+      $address=$_REQUEST["address"];
+      $latlong=$_REQUEST["latlong"];
+      $me=$_REQUEST["me"];
+      $djs=$_REQUEST["djs"];
+      $specials=$_REQUEST["specials"];
+      $gen_fee=$_REQUEST["gen_fee"];
+      $vip_fee=$_REQUEST["vip_fee"];
+      $start_time=$_REQUEST["start_time"];
+      $end_time=$_REQUEST["end_time"];
+      $ext=$_REQUEST["ext"];
+      $pic=$_REQUEST["pic"];
+      include_once "EventManagement.php";
+      $events=new Events();
+      $info=$events->user_create_event($name,$address,$latlong,$me,$djs,$specials,$gen_fee,$vip_fee,$start_time,$end_time,$ext,$pic);
+      echo json_encode($info);
+      break;
     default:
       # code...
       break;
