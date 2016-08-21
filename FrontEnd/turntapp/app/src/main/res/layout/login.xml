@@ -16,10 +16,6 @@
             android:layout_height="57dp"
             android:background="#40E0D0"
             android:orientation="horizontal">
-
-
-
-
         </LinearLayout>
 
         <LinearLayout android:layout_width="fill_parent"

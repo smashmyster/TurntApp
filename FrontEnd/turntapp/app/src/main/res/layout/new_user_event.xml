@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/pipe2"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#40E0D0"
+        android:foregroundGravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <EditText
+                android:id="@+id/new_event_name"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/curvesagain"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="Event Name"
+                android:inputType="text" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_gravity="center_horizontal" />
+
+            <EditText
+                android:id="@+id/new_event_address"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/curvesagain"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="Address"
+                android:inputType="text" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_gravity="center_horizontal" />
+
+            <EditText
+                android:id="@+id/new_event_djs"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/curvesagain"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="Entertainer"
+                android:inputType="text" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_gravity="center_horizontal" />
+
+            <EditText
+                android:id="@+id/new_event_specials"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/curvesagain"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="Specials"
+                android:inputType="text" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_gravity="center_horizontal" />
+
+            <EditText
+                android:id="@+id/new_event_gen_fee"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/curvesagain"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="General Fee"
+                android:inputType="text" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_gravity="center_horizontal" />
+
+            <EditText
+                android:id="@+id/new_event_vip_fee"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/curvesagain"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="VIP Fee"
+                android:inputType="text" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_gravity="center_horizontal" />
+
+            <EditText
+                android:id="@+id/new_event_start_time"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/curvesagain"
+                android:ems="10"
+                android:focusable="false"
+                android:gravity="center"
+                android:hint="Start Time"
+                android:inputType="text" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_gravity="center_horizontal" />
+
+            <EditText
+                android:id="@+id/new_event_end_time"
+                android:layout_width="match_parent"
+                android:focusable="false"
+                android:layout_height="35dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/curvesagain"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="End Time"
+                android:inputType="text" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/upload"
+                android:text="Upload"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

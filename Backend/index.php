@@ -1,6 +1,9 @@
 <?php
 //Event type, 1==club and 0==user event
-  $type=$_REQUEST["type"];
+  $type="";
+  if(isset($_REQUEST["type"])){
+    $type=$_REQUEST["type"];
+  }
   switch ($type) {
     case 'sign_up':
       $user=$_REQUEST["user"];
