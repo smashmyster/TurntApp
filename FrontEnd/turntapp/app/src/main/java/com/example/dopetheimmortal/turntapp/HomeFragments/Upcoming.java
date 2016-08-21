@@ -60,7 +60,5 @@ public class Upcoming extends Fragment {
             list.addFooterView(convertView);
         }
         return lay;
-
     }
-
 }

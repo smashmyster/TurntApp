@@ -59,9 +59,9 @@ public class Home extends AppCompatActivity implements ConnectorCallback {
         for (int i = 0; i < object.length(); i++) {
             JSONObject get = object.getJSONObject(i);
             String id = get.getString("id");
-            String djs = get.getString("id");
-            String attending = get.getString("id");
-            String event_type = get.getString("id");
+            String djs = get.getString("djs");
+            String attending = get.getString("attending");
+            String event_type = get.getString("event_type");
             String host_id = get.getString("host_id");
             String rating = get.getString("rating");
             String tbl_avail = get.getString("tbl_avail");
@@ -73,15 +73,16 @@ public class Home extends AppCompatActivity implements ConnectorCallback {
             String end_time = get.getString("end_time");
             String latlong = get.getString("latlong");
             String address = get.getString("address");
-            upcoming_events.add(new EventStruct(id, djs, attending, event_type, host_id, rating, tbl_avail, specials, gen_fee, vip_fee, name, start_time, end_time,latlong,address));
+            String logo = get.getString("logo");
+            upcoming_events.add(new EventStruct(id, djs, attending, event_type, host_id, rating, tbl_avail, specials, gen_fee, vip_fee, name, start_time, end_time,latlong,address,logo));
         }
         object = obj.getJSONArray("ongoing");
         for (int i = 0; i < object.length(); i++) {
             JSONObject get = object.getJSONObject(i);
             String id = get.getString("id");
-            String djs = get.getString("id");
-            String attending = get.getString("id");
-            String event_type = get.getString("id");
+            String djs = get.getString("djs");
+            String attending = get.getString("attending");
+            String event_type = get.getString("event_type");
             String host_id = get.getString("host_id");
             String rating = get.getString("rating");
             String tbl_avail = get.getString("tbl_avail");
@@ -93,7 +94,8 @@ public class Home extends AppCompatActivity implements ConnectorCallback {
             String end_time = get.getString("end_time");
             String latlong = get.getString("latlong");
             String address = get.getString("address");
-            ongoing_events.add(new EventStruct(id, djs, attending, event_type, host_id, rating, tbl_avail, specials, gen_fee, vip_fee, name, start_time, end_time,latlong,address));
+            String logo = get.getString("logo");
+            ongoing_events.add(new EventStruct(id, djs, attending, event_type, host_id, rating, tbl_avail, specials, gen_fee, vip_fee, name, start_time, end_time,latlong,address,logo));
         }
         adapt_data(upcoming_events,ongoing_events);
     }

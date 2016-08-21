@@ -35,6 +35,8 @@
       return $stmp->fetchAll();
     }
     function get_upcoming_events($id){
+      include_once 'InfoExchange.php';
+      $exchange=new InfoExchange();
       $now = new DateTime();
       $date=$now_string =$now->format("YmdHi");
       $response["upcoming"]=array();
@@ -51,7 +53,13 @@
       }
       $query="SELECT * FROM events WHERE id>$id AND $date<start_time LIMIT 10";
       $rows=$this->db_connect_get_many($query);
+
       foreach ($rows as $row ) {
+        if($row["event_type"]==1){
+           $row["host_name"]=$exchange->get_club_info($row["host_id"])["club_info"]["name"];
+        }else{
+          $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
+        }
         array_push($response["upcoming"],$row);
       }
       if(sizeof($response["upcoming"])==0){
