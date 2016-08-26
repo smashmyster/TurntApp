@@ -17,136 +17,289 @@
             android:gravity="center"
             android:orientation="vertical">
 
-
-            <EditText
-                android:id="@+id/new_event_name"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/curvesagain"
-                android:ems="10"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:hint="Event Name"
-                android:inputType="text" />
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/new_event_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_alignBottom="@+id/name_del"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_toRightOf="@+id/name_del"
+                    android:layout_toStartOf="@+id/name_del"
+                    android:background="@drawable/curvesagain"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:hint="Event Name"
+                    android:inputType="text" />
+
+                <ImageButton
+                    android:id="@+id/name_del"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel" />
+            </RelativeLayout>
+
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
                 android:layout_gravity="center_horizontal" />
 
-            <EditText
-                android:id="@+id/new_event_address"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/curvesagain"
-                android:ems="10"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:hint="Address"
-                android:inputType="text" />
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/new_event_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_alignBottom="@+id/add_del"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_toRightOf="@+id/add_del"
+                    android:layout_toStartOf="@+id/add_del"
+                    android:background="@drawable/curvesagain"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:hint="Address"
+                    android:inputType="text" />
+
+                <ImageButton
+                    android:id="@+id/add_del"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel" />
+            </RelativeLayout>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
                 android:layout_gravity="center_horizontal" />
 
-            <EditText
-                android:id="@+id/new_event_djs"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/curvesagain"
-                android:ems="10"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:hint="Entertainer"
-                android:inputType="text" />
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/new_event_djs"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_alignBottom="@+id/djs_del"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_toRightOf="@+id/djs_del"
+                    android:layout_toStartOf="@+id/djs_del"
+                    android:background="@drawable/curvesagain"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:hint="Entertainer"
+                    android:inputType="text" />
+
+                <ImageButton
+                    android:id="@+id/djs_del"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel" />
+            </RelativeLayout>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
                 android:layout_gravity="center_horizontal" />
 
-            <EditText
-                android:id="@+id/new_event_specials"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/curvesagain"
-                android:ems="10"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:hint="Specials"
-                android:inputType="text" />
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/new_event_specials"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_alignBottom="@+id/specials_del"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_toRightOf="@+id/specials_del"
+                    android:layout_toStartOf="@+id/specials_del"
+                    android:background="@drawable/curvesagain"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:hint="Specials"
+                    android:inputType="text" />
+
+                <ImageButton
+                    android:id="@+id/specials_del"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel" />
+            </RelativeLayout>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
                 android:layout_gravity="center_horizontal" />
 
-            <EditText
-                android:id="@+id/new_event_gen_fee"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/curvesagain"
-                android:ems="10"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:hint="General Fee"
-                android:inputType="text" />
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/new_event_gen_fee"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_alignBottom="@+id/fee_del"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_toRightOf="@+id/fee_del"
+                    android:layout_toStartOf="@+id/fee_del"
+                    android:background="@drawable/curvesagain"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:hint="General Fee"
+                    android:inputType="text" />
+
+                <ImageButton
+                    android:id="@+id/fee_del"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel" />
+            </RelativeLayout>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
                 android:layout_gravity="center_horizontal" />
 
-            <EditText
-                android:id="@+id/new_event_vip_fee"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/curvesagain"
-                android:ems="10"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:hint="VIP Fee"
-                android:inputType="text" />
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/new_event_vip_fee"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_alignBottom="@+id/vip_del"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_toRightOf="@+id/vip_del"
+                    android:layout_toStartOf="@+id/vip_del"
+                    android:background="@drawable/curvesagain"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:hint="VIP Fee"
+                    android:inputType="text" />
+
+                <ImageButton
+                    android:id="@+id/vip_del"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel" />
+            </RelativeLayout>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
                 android:layout_gravity="center_horizontal" />
 
-            <EditText
-                android:id="@+id/new_event_start_time"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/curvesagain"
-                android:ems="10"
-                android:focusable="false"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:hint="Start Time"
-                android:inputType="text" />
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/new_event_start_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_alignBottom="@+id/stime_del"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_toRightOf="@+id/stime_del"
+                    android:layout_toStartOf="@+id/stime_del"
+                    android:background="@drawable/curvesagain"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:hint="Start Time"
+                    android:inputType="text" />
+
+                <ImageButton
+                    android:id="@+id/stime_del"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel" />
+            </RelativeLayout>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
                 android:layout_gravity="center_horizontal" />
 
-            <EditText
-                android:id="@+id/new_event_end_time"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:focusable="false"
-                android:layout_height="35dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/curvesagain"
-                android:ems="10"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:hint="End Time"
-                android:inputType="text" />
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/new_event_end_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_alignBottom="@+id/etime_del"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_toRightOf="@+id/etime_del"
+                    android:layout_toStartOf="@+id/etime_del"
+                    android:background="@drawable/curvesagain"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:hint="End Time"
+                    android:inputType="text" />
+
+                <ImageButton
+                    android:id="@+id/etime_del"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel" />
+            </RelativeLayout>
+
             <Button
+                android:id="@+id/upload"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/upload"
-                android:text="Upload"/>
+                android:text="Upload" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

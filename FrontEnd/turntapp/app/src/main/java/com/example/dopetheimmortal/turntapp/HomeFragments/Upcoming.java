@@ -48,7 +48,7 @@ public class Upcoming extends Fragment {
 
             TextView name = (TextView) convertView.findViewById(R.id.event_name);
             TextView host = (TextView)convertView.findViewById(R.id.host);
-//            host.setText(get.);
+            host.setText(get.host_name);
             ImageButton btn=(ImageButton)convertView.findViewById(R.id.nav);
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
