@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -53,7 +56,10 @@ public class Upcoming extends Fragment {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //Open google maps navigate
+                    String url = "http://maps.google.com/maps?daddr="+get.address;
+                    Intent intent = new Intent(android.content.Intent.ACTION_VIEW,  Uri.parse(url));
+                    startActivity(intent);
+
                 }
             });
             name.setText(get.name);
