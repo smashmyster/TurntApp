@@ -1,5 +1,5 @@
   function search_event($name){
-      $query="SELECT id,name FROM tbl_events WHERE name LIKE :ename";
+      $query="SELECT id,name FROM events WHERE name LIKE :ename";
       $query_params=array(':ename'=>'%'.$name.'%');
       $data=$this->db_connect_get_many($query,$query_params);
       if($data){
