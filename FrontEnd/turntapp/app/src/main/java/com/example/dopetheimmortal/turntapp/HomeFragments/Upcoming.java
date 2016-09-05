@@ -44,7 +44,6 @@ public class Upcoming extends Fragment {
         ListView list = (ListView) lay.findViewById(R.id.upcoming_events);
         list.setAdapter(new UpcomingAdapter(getContext(), dummy));
         for (int i = 0; i < upcoming_events.size(); i++) {
-
             View convertView = LayoutInflater.from(getContext()).inflate(
                     R.layout.show_event, null, false);
             final EventStruct get = upcoming_events.get(i);

@@ -136,6 +136,9 @@ public class Home extends AppCompatActivity implements ConnectorCallback {
                 startActivity(new Intent(this, LoginActivity.class));
                 finish();
                 break;
+            case R.id.new_event:
+                startActivity(new Intent(this, NewEvent.class));
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

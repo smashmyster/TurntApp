@@ -358,7 +358,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
-//                startActivity(new Intent(LoginActivity.this, MainMenu.class));
+//                startActivity(new_name Intent(LoginActivity.this, MainMenu.class));
                 finish();
             }
         });
