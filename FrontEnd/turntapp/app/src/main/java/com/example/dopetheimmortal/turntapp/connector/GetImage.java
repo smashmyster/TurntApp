@@ -43,7 +43,7 @@ public class GetImage extends AsyncTask<Bitmap, Bitmap, Bitmap> {
 
         try {
             try {
-//                image = new ImageProcessing().get_saved_image(food.image,"restaurants/menus");
+//                image = new_name ImageProcessing().get_saved_image(food.image,"restaurants/menus");
                 if (image == null) {
                     InputStream in = new URL(link).openStream();
                     BitmapFactory.Options options = new BitmapFactory.Options();
@@ -54,7 +54,7 @@ public class GetImage extends AsyncTask<Bitmap, Bitmap, Bitmap> {
                     float ratio = imageWidth / imageHeight;
                     int new_height = (int) (200 * ratio);
                     image = new ImageProcessing().decodeSampledBitmapFromResource(link,200, new_height, options);
-                    //new ImageProcessing().createImageFile(food.image, image,"restaurants/menus");
+                    //new_name ImageProcessing().createImageFile(food.image, image,"restaurants/menus");
                 } else {
                     return image;
                 }
@@ -62,12 +62,12 @@ public class GetImage extends AsyncTask<Bitmap, Bitmap, Bitmap> {
                 e.printStackTrace();
                 return null;
             }
-//            BitmapFactory.Options options=new BitmapFactory.Options();
+//            BitmapFactory.Options options=new_name BitmapFactory.Options();
 //            options.inSampleSize=3;
-//            InputStream in = new URL(food.image).openStream();
+//            InputStream in = new_name URL(food.image).openStream();
 //                image = BitmapFactory.decodeStream(in,null,options);
 //            if (image.getHeight()>1000 && image.getWidth()>1000){
-//                image=new ImageProcessing().resize_to_smaller(image);
+//                image=new_name ImageProcessing().resize_to_smaller(image);
 //            }
         } catch (Exception e) {
             e.printStackTrace();
