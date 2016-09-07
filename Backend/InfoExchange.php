@@ -67,7 +67,7 @@
       }
     }
     function get_user_basic_info($user){
-      $query="SELECT id,name,surname,image_name,following,followers FROM user WHERE id=$user";
+      $query="SELECT id,name,surname,image_name,following,followers,status FROM user WHERE id=$user";
       return $this->db_connect_get_one($query);
     }
     function is_following($me,$user){

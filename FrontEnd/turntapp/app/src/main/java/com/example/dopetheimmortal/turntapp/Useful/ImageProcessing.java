@@ -1,5 +1,7 @@
 package com.example.dopetheimmortal.turntapp.Useful;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -90,6 +92,7 @@ public class ImageProcessing {
         }
         return received;
     }
+
     public String SaveImage(Bitmap finalBitmap) {
 
         String root = Environment.getExternalStorageDirectory().toString();
@@ -98,20 +101,21 @@ public class ImageProcessing {
         Random generator = new Random();
         int n = 10000;
         n = generator.nextInt(n);
-        String fname = "Image-"+ n +".jpg";
+        String fname = "Image-" + n + ".jpg";
         File file = new File(myDir, fname);
-        if (file.exists ()) file.delete ();
+        if (file.exists()) file.delete();
         try {
             FileOutputStream out = new FileOutputStream(file);
             finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
             out.flush();
             out.close();
-            return root+"/"+fname;
+            return root + "/" + fname;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return "";
     }
+
     public Bitmap decodeSampledBitmapFromResource(String link, int reqWidth, int reqHeight, BitmapFactory.Options options) throws IOException {
 
         InputStream in = new URL(link).openStream();
@@ -121,6 +125,7 @@ public class ImageProcessing {
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeStream(in, null, options);
     }
+
     public int calculateInSampleSize(
             BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // Raw height and width of image
@@ -143,4 +148,5 @@ public class ImageProcessing {
 
         return inSampleSize;
     }
+
 }

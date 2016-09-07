@@ -32,8 +32,8 @@ public class FollowDataAdapter extends ArrayAdapter<FollowData> {
         }
         final FollowData get = list.get(position);
 
-        TextView username = (TextView) convertView.findViewById(R.id.user_username);
-        username.setText(get.username);
+        TextView username = (TextView) convertView.findViewById(R.id.user_status);
+        username.setText(get.status);
         TextView name = (TextView) convertView.findViewById(R.id.follow_name);
         name.setText(get.name);
 

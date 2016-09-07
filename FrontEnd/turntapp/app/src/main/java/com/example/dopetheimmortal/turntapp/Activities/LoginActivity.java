@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -376,6 +377,21 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode){
             case 1:
+                SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+                int defaultValue = -1;
+                int requested = sharedPref.getInt("requested", defaultValue);
+                System.out.println(requested);
+                if(requested==-1){
+                    if(grantResults[0]==1){
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putInt("requested", 1);
+                        editor.commit();
+                    }
+                }else{
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putInt("requested", -1);
+                    editor.commit();
+                }
                 select_method();
                 break;
         }

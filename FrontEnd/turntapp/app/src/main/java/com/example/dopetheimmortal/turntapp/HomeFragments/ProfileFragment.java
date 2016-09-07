@@ -1,12 +1,15 @@
 package com.example.dopetheimmortal.turntapp.HomeFragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.dopetheimmortal.turntapp.Activities.Followers;
 import com.example.dopetheimmortal.turntapp.LocalData.UserLocalData;
 import com.example.dopetheimmortal.turntapp.R;
 import com.example.dopetheimmortal.turntapp.Useful.Profile_Data;
@@ -42,7 +45,13 @@ public class ProfileFragment extends Fragment {
 
         TextView name1 = (TextView) lay.findViewById(R.id.num_followers);
         name1.setText(person.followers);
-
+        RelativeLayout followers_wrapper=(RelativeLayout)lay.findViewById(R.id.followers_wraper);
+        followers_wrapper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), Followers.class));
+            }
+        });
         TextView name2 = (TextView) lay.findViewById(R.id.num_attending);
        // name2.setText( person.regid);
 

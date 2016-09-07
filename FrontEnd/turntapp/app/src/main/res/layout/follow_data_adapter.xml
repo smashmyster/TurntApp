@@ -18,7 +18,6 @@
         android:gravity="center|left"
         android:layout_alignBottom="@+id/user_follow_img"
         android:id="@+id/status_wrapper"
-        android:layout_toLeftOf="@+id/follow_wrapper"
         android:orientation="vertical">
 
         <TextView
@@ -33,18 +32,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
-            android:id="@+id/user_username"
+            android:id="@+id/user_status"
             android:textAppearance="?android:textAppearanceSmall"
-            android:text="Username"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/user_follow_img"
-        android:layout_alignBottom="@+id/user_follow_img"
-        android:layout_alignParentRight="true"
-        android:id="@+id/follow_wrapper"
-        android:gravity="center"
-        android:orientation="vertical">
+            android:text="Status"/>
     </LinearLayout>
 </RelativeLayout>

@@ -55,7 +55,7 @@ public class Upcoming extends Fragment {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String url = "http://maps.google.com/maps?daddr="+get.address;
+                    String url = "http://maps.google.com/maps?daddr="+get.latlong;
                     Intent intent = new Intent(android.content.Intent.ACTION_VIEW,  Uri.parse(url));
                     startActivity(intent);
 

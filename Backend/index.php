@@ -101,12 +101,19 @@
       $start_time=$_REQUEST["start_time"];
       $end_time=$_REQUEST["end_time"];
       $ext=$_REQUEST["ext"];
-      $pic=$_REQUEST["pic"];
+      $pic=$_REQUEST["thumb"];
       include_once "EventManagement.php";
       $events=new Events();
       $info=$events->user_create_event($name,$address,$latlong,$me,$djs,$specials,$gen_fee,$vip_fee,$start_time,$end_time,$ext,$pic);
       echo json_encode($info);
       break;
+      case 'get_my_followers':
+        include_once 'InfoExchange.php';
+        $exchange=new InfoExchange();
+        $me=$_REQUEST["id"];
+        $info=$exchange->get_my_followers($me);
+        echo json_encode($info);
+        break;
     default:
       # code...
       break;

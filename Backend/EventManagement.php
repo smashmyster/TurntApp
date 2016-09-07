@@ -42,10 +42,15 @@
       $response["upcoming"]=array();
       if($id==0){
         $response["ongoing"]=array();
-        $query="SELECT * FROM events WHERE id>$id AND $date>=start_time AND $date<=end_time LIMIT 10";
+        $query="SELECT * FROM events WHERE id>$id AND $date<=start_time  LIMIT 10";
         $rows=$this->db_connect_get_many($query);
         $response["ongoing"]=array();
         foreach ($rows as $row ) {
+          if($row["event_type"]==1){
+   $row["host_name"]=$exchange->get_club_info($row["host_id"])["club_info"]["name"];
+}else{
+  $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
+}
           array_push($response["ongoing"],$row);
         }
       }else{
@@ -58,7 +63,7 @@
         if($row["event_type"]==1){
            $row["host_name"]=$exchange->get_club_info($row["host_id"])["club_info"]["name"];
         }else{
-          $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
+          $row["host_name"]="User";
         }
         array_push($response["upcoming"],$row);
       }
@@ -81,6 +86,11 @@
         $response["code"]=0;
       }
       foreach ($rows as $row ) {
+        if($row["event_type"]==1){
+   $row["host_name"]=$exchange->get_club_info($row["host_id"])["club_info"]["name"];
+}else{
+  $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
+}
         array_push($response["ongoing"],$row);
       }
       if(sizeof($response["ongoing"])==0){
