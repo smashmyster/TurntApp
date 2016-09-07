@@ -5,7 +5,7 @@
     android:background="#00FFFFFF"
     android:orientation="vertical">
 
-    <ImageView
+    <com.example.dopetheimmortal.turntapp.Activities.TouchImageView
         android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

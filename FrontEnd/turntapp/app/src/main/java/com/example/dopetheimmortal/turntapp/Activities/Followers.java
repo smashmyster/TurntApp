@@ -46,14 +46,8 @@ public class Followers extends Activity implements ConnectorCallback {
         initialize();
         people=new ArrayList<>();
         HashMap<String,String> info=get_data();
-        info.put("type","get_my_followers");
-        UserLocalData user=new UserLocalData(this);
-        user.open();
-        String id=user.actual().dbid;
-        user.close();
-        info.put("id",id);
-        String link=this.getString(R.string.link);
-        connect=new Connector(link,this,this,info,"Loading","",false,true);
+        String link=this.getString(R.string.ip)+this.getString(R.string.following_data);
+        connect=new Connector(link,this,this,info,"","",false,false);
         connect.execute();
     }
 
@@ -95,12 +89,12 @@ public class Followers extends Activity implements ConnectorCallback {
         for(int i=0;i<arr.length();i++){
             JSONObject item=arr.getJSONObject(i);
             String id=item.getString("id");
+            String username=item.getString("username");
+            String pp=item.getString("pp");
             String name=item.getString("name");
             String surname=item.getString("surname");
-            String image=item.getString("image_name");
-            String status=item.getString("status");
-//            int state=item.getInt("follow_back");
-            final FollowData person=new FollowData(name,image,id,surname,status);
+            int state=item.getInt("follow_back");
+            final FollowData person=new FollowData(name,surname,username,pp,state,id);
             View toadd=get_person(person);
             toadd.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -129,27 +123,11 @@ public class Followers extends Activity implements ConnectorCallback {
         RelativeLayout convertView = null;
         convertView = (RelativeLayout) inflater.inflate(R.layout.follow_data_adapter, null);
 
-        TextView username = (TextView) convertView.findViewById(R.id.user_status);
-        username.setText(get.status);
+        TextView username = (TextView) convertView.findViewById(R.id.user_username);
+        username.setText(get.username);
         TextView name = (TextView) convertView.findViewById(R.id.follow_name);
-        name.setText(get.name+" "+get.surname);
+        name.setText(get.name);
 
         return convertView;
     }
-
-
-    String l="<li class=\"mar-btm\">" +
-            "<div class=\"media-right\">" +
-            "<img src=\"http://bootdey.com/img/Content/avatar/avatar2.png\" class=\"img-circle img-sm\" alt=\"Profile Picture\">" +
-            "</div>" +
-            "<div class=\"media-body pad-hor speech-right\">" +
-            "<div class=\"speech\">" +
-            "<a href=\"#\" class=\"media-heading\">"+"Lucy Doe"+"</a>" +
-            "<p>"+"Hi, I want to buy a new shoes."+"</p>" +
-            "<p class=\"speech-time\">" +
-            "<i class=\"fa fa-clock-o fa-fw\"></i> 09:23AM" +
-            "</p>" +
-            "</div>" +
-            "</div>" +
-            "</li>"
 }

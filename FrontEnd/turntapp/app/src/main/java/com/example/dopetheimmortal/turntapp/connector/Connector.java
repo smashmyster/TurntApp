@@ -28,6 +28,7 @@ public class Connector extends AsyncTask<String, String, String> {
     String link;
     ConnectorCallback callback;
     HashMap<String,String> data;
+
     Context cont;
     String prg_message,prg_title;
     boolean dismiss,show;
@@ -35,6 +36,7 @@ public class Connector extends AsyncTask<String, String, String> {
     public Connector(String link, ConnectorCallback callback, Context cont, HashMap<String,String> data, String prg_title, String prg_message, boolean prg_dissmis, boolean show){
         this.data=data;
         this.callback=callback;
+        //e.printstackreace
         this.link=link;
         this.cont=cont;
         this.prg_message=prg_message;
@@ -104,9 +106,9 @@ public class Connector extends AsyncTask<String, String, String> {
             e.printStackTrace();
             dialog.dismiss();
         } catch (IOException e) {
-//            e.printStackTrace();
+            e.printStackTrace();
             dialog.dismiss();
-            return "Something is wrong with your connection please reconnect";
+            return "Something is wrong with your connection please reconnect1";
         }
         return response;
 
@@ -126,7 +128,7 @@ public class Connector extends AsyncTask<String, String, String> {
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            callback.display("Something is wrong with your connection please reconnect",cont);
+            callback.display("Something is wrong with your connection please reconnect2",cont);
         }
 
 
