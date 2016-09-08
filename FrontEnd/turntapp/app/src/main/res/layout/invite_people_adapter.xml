@@ -5,36 +5,52 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/user_follow_img"
+        android:id="@+id/user_invite_img"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:src="@drawable/profile"/>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/user_follow_img"
-        android:layout_alignTop="@+id/user_follow_img"
+        android:layout_alignTop="@+id/user_invite_img"
         android:gravity="center|left"
-        android:layout_alignBottom="@+id/user_follow_img"
+        android:layout_alignBottom="@+id/user_invite_img"
         android:id="@+id/status_wrapper"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_toLeftOf="@+id/user_invite_img"
+        android:layout_toEndOf="@+id/user_invite_img">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
             android:textStyle="bold"
-            android:id="@+id/follow_name"
+            android:id="@+id/invite_user_name"
             android:textAppearance="?android:textAppearanceMedium"
-            android:text="User Name"/>
+            android:text="User Name"
+            android:layout_toRightOf="@+id/invite_user"
+            android:layout_alignParentStart="true" />
+
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
-            android:id="@+id/user_username"
-            android:textAppearance="?android:textAppearanceSmall"
-            android:text="Username"/>
-    </LinearLayout>
 
+            android:id="@+id/invite_user_status"
+            android:layout_below="@+id/invite_user_name"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:text="Status"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_input_add"
+            android:id="@+id/invite_user"
+
+            android:layout_gravity="right"
+            android:layout_alignTop="@+id/follow_name"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
 </RelativeLayout>
