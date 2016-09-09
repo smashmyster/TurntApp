@@ -14,14 +14,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.example.dopetheimmortal.turntapp.Adapters.InviteAdapter;
 import com.example.dopetheimmortal.turntapp.Adapters.ViewPagerAdapter;
 import com.example.dopetheimmortal.turntapp.DataStructures.EventStruct;
+import com.example.dopetheimmortal.turntapp.DataStructures.GeneralUser;
 import com.example.dopetheimmortal.turntapp.LocalData.UserLocalData;
 import com.example.dopetheimmortal.turntapp.R;
+import com.example.dopetheimmortal.turntapp.Useful.ConnectorCallSearch;
 import com.example.dopetheimmortal.turntapp.Useful.ConnectorCallback;
 import com.example.dopetheimmortal.turntapp.connector.Connector;
+import com.example.dopetheimmortal.turntapp.connector.ConnectorInvite;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,7 +39,7 @@ import java.util.HashMap;
 /**
  * Created by jackson on 2016/08/11.
  */
-public class Home extends AppCompatActivity implements ConnectorCallback {
+public class Home extends AppCompatActivity implements ConnectorCallback,ConnectorCallSearch {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -45,10 +51,10 @@ public class Home extends AppCompatActivity implements ConnectorCallback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
-        initializetools();
-        String link = this.getString(R.string.link);
         search_user=(EditText)findViewById(R.id.search_user_text);
         show_search=(ListView) findViewById(R.id.show_search_results);
+        initializetools();
+        String link = this.getString(R.string.link);
         HashMap<String, String> data = new HashMap<>();
         data.put("type", "get_upcoming_events");
         data.put("id", "0");
@@ -180,5 +186,64 @@ public class Home extends AppCompatActivity implements ConnectorCallback {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void get_users(String info) throws JSONException {
+        JSONObject object=new JSONObject(info);
+        JSONArray arr=object.getJSONArray("data");
+        ArrayList<GeneralUser>users=new ArrayList<>();
+        ArrayList<GeneralUser>dummy=new ArrayList<>();
+        InviteAdapter adapter=new InviteAdapter(this,dummy);
+        show_search.setAdapter(adapter);
+        for (int i=0;i<arr.length();i++){
+            JSONObject o=arr.getJSONObject(i);
+            String id= o.getString("id");
+            String name= o.getString("name");
+            String surname= o.getString("surname");
+            String image_name= o.getString("image_name");
+            String following= o.getString("following");
+            String followers= o.getString("followers");
+            String status= o.getString("status");
+            String invited= o.getString("invited");
+            GeneralUser use=new GeneralUser(id,name,surname,image_name,following,followers,status,invited);
+            users.add(use);
+            show_search.addFooterView(get_view(use));
+        }
+    }
+    public View get_view(final GeneralUser get){
+        View  convertView =getLayoutInflater().inflate(R.layout.invite_people_adapter,null);
+        TextView name = (TextView) convertView.findViewById(R.id.invite_user_name);
+        name.setText(get.name+" "+get.surname);
+        TextView status = (TextView) convertView.findViewById(R.id.invite_user_status);
+        status.setText(get.status);
+        if(get.invited.equals("0")){
+            System.out.println("About to");
+            final ImageView image=(ImageView)convertView.findViewById(R.id.send_invite_img);
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    HashMap<String,String>send=new HashMap<String, String>();
+                    send.put("type","invite_user");
+                    send.put("user",get.id);
+//                    send.put("event",event);
+                    UserLocalData user=new UserLocalData(Home.this);
+                    user.open();
+                    send.put("me",user.actual().dbid);
+                    user.close();
+                    String link=Home.this.getString(R.string.link);
+//                    new ConnectorInvite(link,Home.this,Home.this,send,"","",true,false,image).execute();
+                }
+            });
+        }else{
+            ImageView image=(ImageView)convertView.findViewById(R.id.send_invite_img);
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+        }
+        return convertView;
     }
 }

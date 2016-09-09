@@ -104,5 +104,21 @@
       $check=$this->db_connect_get_many($query);
       return $check ? true:false;
     }
+    function search($text,$me){
+      $query="SELECT id FROM user WHERE name LIKE :ename OR surname LIKE :ename OR username LIKE :ename OR email LIKE :ename LIMIT 10";
+      $query_params=array(':ename'=>'%'.$text.'%');
+      $data=$this->db_connect_get_many($query,$query_params);
+      $response["data"]=array();
+      foreach ($data as $key ) {
+        $get=$this->get_user_basic_info($key["id"]);
+        if($this->is_following($me,$key["id"])){
+            $get["is_following"]=1;
+        }else{
+            $get["is_following"]=0;
+        }
+        array_push($response["data"],$get);
+      }
+      return $response;
+    }
   }
 ?>

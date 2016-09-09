@@ -35,7 +35,8 @@ public class InviteUsers extends Activity implements ConnectorCallbackInvite{
         setContentView(R.layout.invite_people_list);
         list=(ListView)findViewById(R.id.invite_people_list);
         ArrayList<GeneralUser>users=new ArrayList<>();
-        InviteAdapter adapter=new InviteAdapter(this,users);
+        ArrayList<GeneralUser>dummy=new ArrayList<>();
+        InviteAdapter adapter=new InviteAdapter(this,dummy);
         list.setAdapter(adapter);
         Bundle bh=getIntent().getExtras();
         String data=bh.getString("data");

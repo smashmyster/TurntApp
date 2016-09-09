@@ -107,13 +107,21 @@
       $info=$events->user_create_event($name,$address,$latlong,$me,$djs,$specials,$gen_fee,$vip_fee,$start_time,$end_time,$ext,$pic);
       echo json_encode($info);
       break;
-      case 'get_my_followers':
+    case 'get_my_followers':
         include_once 'InfoExchange.php';
         $exchange=new InfoExchange();
         $me=$_REQUEST["id"];
         $info=$exchange->get_my_followers($me);
         echo json_encode($info);
         break;
+    case 'search_user':
+      include_once 'InfoExchange.php';
+      $exchange=new InfoExchange();
+      $text=$_REQUEST["search"];
+      $me=$_REQUEST["me"];
+      $info=$exchange->search($text,$me);
+      echo json_encode($info);
+      break;
     default:
       # code...
       break;
