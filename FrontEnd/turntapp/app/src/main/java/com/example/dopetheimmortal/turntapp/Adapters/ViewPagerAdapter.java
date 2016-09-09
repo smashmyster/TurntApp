@@ -38,7 +38,9 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
                 up.set_data(upcoming_events);
                 return up;
             case 1:
-                return new Ongoing();
+                Ongoing on=new Ongoing();
+                on.set_data(ongoing_events);
+                return on;
             case 2:
                 return new ProfileFragment();
         }

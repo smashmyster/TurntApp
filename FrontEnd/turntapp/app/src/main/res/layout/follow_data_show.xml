@@ -2,7 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <RelativeLayout android:layout_width="fill_parent"
+        android:layout_height="57dp"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/search_user"
+            android:src="@android:drawable/ic_menu_search"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

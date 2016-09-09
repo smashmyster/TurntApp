@@ -34,13 +34,13 @@ public class InviteUsers extends Activity implements ConnectorCallbackInvite{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.invite_people_list);
         list=(ListView)findViewById(R.id.invite_people_list);
+        ArrayList<GeneralUser>users=new ArrayList<>();
+        InviteAdapter adapter=new InviteAdapter(this,users);
+        list.setAdapter(adapter);
         Bundle bh=getIntent().getExtras();
         String data=bh.getString("data");
         try {
             event=new JSONObject(data).getString("id");
-            ArrayList<GeneralUser>users=new ArrayList<>();
-            InviteAdapter adapter=new InviteAdapter(this,users);
-            list.setAdapter(adapter);
             JSONArray arr=(new JSONObject(data)).getJSONArray("people");
             for (int i=0;i<arr.length();i++){
                 JSONObject o=arr.getJSONObject(i);
@@ -68,7 +68,7 @@ public class InviteUsers extends Activity implements ConnectorCallbackInvite{
         status.setText(get.status);
         if(get.invited.equals("0")){
             System.out.println("About to");
-            final  ImageView image=(ImageView)convertView.findViewById(R.id.invite_user);
+            final  ImageView image=(ImageView)convertView.findViewById(R.id.send_invite_img);
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -85,7 +85,7 @@ public class InviteUsers extends Activity implements ConnectorCallbackInvite{
                 }
             });
         }else{
-            ImageView image=(ImageView)convertView.findViewById(R.id.invite_user);
+            ImageView image=(ImageView)convertView.findViewById(R.id.send_invite_img);
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

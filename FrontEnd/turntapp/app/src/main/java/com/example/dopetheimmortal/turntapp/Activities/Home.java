@@ -5,10 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ListView;
 
 import com.example.dopetheimmortal.turntapp.Adapters.ViewPagerAdapter;
 import com.example.dopetheimmortal.turntapp.DataStructures.EventStruct;
@@ -31,13 +37,18 @@ public class Home extends AppCompatActivity implements ConnectorCallback {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private EditText search_user;
+    private ListView show_search;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
         initializetools();
         String link = this.getString(R.string.link);
+        search_user=(EditText)findViewById(R.id.search_user_text);
+        show_search=(ListView) findViewById(R.id.show_search_results);
         HashMap<String, String> data = new HashMap<>();
         data.put("type", "get_upcoming_events");
         data.put("id", "0");
@@ -48,6 +59,24 @@ public class Home extends AppCompatActivity implements ConnectorCallback {
     private void initializetools() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, null, R.string.app_name, R.string.app_name) {
+            public void onDrawerClosed(View view) {
+                invalidateOptionsMenu();
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                invalidateOptionsMenu();
+            }
+        };
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
+        show_search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                mDrawerLayout.closeDrawers();
+            }
+        });
     }
 
     @Override
@@ -127,6 +156,9 @@ public class Home extends AppCompatActivity implements ConnectorCallback {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
         switch (item.getItemId()) {
             case R.id.logout:
                 UserLocalData loc = new UserLocalData(this);
@@ -141,5 +173,12 @@ public class Home extends AppCompatActivity implements ConnectorCallback {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
     }
 }

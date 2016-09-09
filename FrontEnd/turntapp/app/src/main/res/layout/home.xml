@@ -45,12 +45,24 @@
         </RelativeLayout>
     </FrameLayout>
 
-    <ListView
-        android:id="@+id/menus"
+    <RelativeLayout
+        android:id="@+id/sub_menu"
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="#ffffff"
         android:choiceMode="singleChoice"
-        android:dividerHeight="4dp" />
+        android:dividerHeight="4dp" >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/search_user_text"
+            android:hint="Search User or event"/>
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/show_search_results">
+        </ListView>
+
+    </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>

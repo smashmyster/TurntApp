@@ -1,56 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <ImageView
+        android:id="@+id/user_invite_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/user_invite_img"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:src="@drawable/profile"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/profile" />
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignTop="@+id/user_invite_img"-->
+    <!--android:gravity="center|left"-->
+    <!--android:layout_alignBottom="@+id/user_invite_img"-->
+    <!--android:id="@+id/status_wrapper"-->
+    <!--android:orientation="vertical"-->
+    <!--android:layout_toLeftOf="@+id/user_invite_img"-->
+    <!--android:layout_toEndOf="@+id/user_invite_img">-->
+
+
+    <!--</RelativeLayout>-->
+    <ImageView
+        android:id="@+id/send_invite_img"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/user_invite_img"
-        android:gravity="center|left"
-        android:layout_alignBottom="@+id/user_invite_img"
-        android:id="@+id/status_wrapper"
-        android:orientation="vertical"
-        android:layout_toLeftOf="@+id/user_invite_img"
-        android:layout_toEndOf="@+id/user_invite_img">
+        android:layout_alignParentEnd="true"
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:textStyle="bold"
-            android:id="@+id/invite_user_name"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:text="User Name"
-            android:layout_toRightOf="@+id/invite_user"
-            android:layout_alignParentStart="true" />
+        android:layout_centerVertical="true"
+        android:layout_gravity="right"
+        android:src="@android:drawable/ic_input_add" />
 
+    <TextView
+        android:id="@+id/invite_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/send_invite_img"
+        android:layout_toRightOf="@+id/user_invite_img"
+        android:paddingLeft="20dp"
+        android:text="User Name"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-
-            android:id="@+id/invite_user_status"
-            android:layout_below="@+id/invite_user_name"
-            android:textAppearance="?android:textAppearanceSmall"
-            android:text="Status"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_input_add"
-            android:id="@+id/invite_user"
-
-            android:layout_gravity="right"
-            android:layout_alignTop="@+id/follow_name"
-            android:layout_alignParentEnd="true" />
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/invite_user_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/invite_user_name"
+        android:layout_toRightOf="@+id/user_invite_img"
+        android:paddingLeft="20dp"
+        android:text="Status"
+        android:textAppearance="?android:textAppearanceSmall" />
 </RelativeLayout>
