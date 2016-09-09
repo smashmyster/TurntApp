@@ -1,0 +1,180 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{amssymb}
+\author{
+  Andries Bingani, 856807 \and
+  Jackson Dyora, 747772\and
+  Thabiso Leeuw, 814690 \and
+  Khutso Mpaketsane, 806383 \and
+  Lesego Seitshiro ,792986
+}
+\title{Software Architecture}
+\begin{document}
+\maketitle
+\section{Introduction}
+\subsection{Scope}
+The scope of this SAD is to depict the architecture of the online event hosting application created by the company Turnt App.
+
+\subsection{Definitions, Acronyms and Abbreviations}	
+RUP: Rational Unified Process\\
+UML: Unified Modeling Language\\
+SAD: Software Architecture Document\\
+
+\subsection{References}
+\subsection{Overview}
+In order to fully document all the aspects of the architecture, the Software Architecture Document contains the following subsections.\\
+Section 2: describes the use of each view\\
+Section 3: describes the architectural constraints of the system\\
+Section 4: describes the functional requirements with a significant impact on the architecture\\
+Section 5: describes the most important use-case realization. Will contain the Analysis Model and the Design Model\\
+Section 6: describes design’s concurrency aspects\\
+Section 7: describes how the system will be deployed. Will contain the Deployment Model\\
+Section 8: describes the layers and subsystems of the application\\
+Section 9: describes any significant persistent element. Will contain the Data Model\\
+Section 10: describes any performance issues and constraints\\
+Section 11: describes any aspects related to the quality of service (QoS) attributes\\
+
+
+\section{Architectural Representation }
+This document details the architecture using the views defined in the “4+1” model [KRU41], but using the 	RUP naming convention. The views used to document the Turnt App. application are:
+\subsection{Logical Architecture}
+
+Audience: Designers.\\
+Area: Functional Requirements: describes the design's object model. Also describes the most important use-case realizations.\\
+Related Artifacts: Design model\\
+
+\subsection{Process view}
+Audience: Integrators.\\
+Area: Non-functional requirements: describes the design's concurrency and synchronization aspects.\\
+Related Artifacts: (no specific artifact).\\
+
+
+\subsection{Development view }
+Audience: Programmers.\\
+Area: Software components: describes the layers and subsystems of the application.\\
+Related Artifacts: Implementation model, components\\
+
+\subsection{Physical view} 
+Audience: Deployment managers.\\
+Area: Topology: describes the mapping of the software onto the hardware and shows the system's distributed aspects.\\
+Related Artifacts: Deployment model.\\
+
+\subsection{Use Case view}
+Audience: all the stakeholders of the system, including the end-users.\\
+Area: describes the set of scenarios and/or use cases that represent some significant, central functionality of the system.\\
+Related Artifacts : Use-Case Model, Use-Case documents\\
+
+\section{Architectural Goals and Constraints} 
+
+This section describes the software requirements and objectives that have some significant impact on the architecture
+
+\subsection{Technical Platform}
+
+The Turnt App will be deployed onto the lamp server (the wits lamp server, as it is the only server that we have access to). 
+
+\subsection{ Transaction}
+
+The Turnt App is transactional, leveraging the technical platform capabilities. Transaction management model of the lamp will be reused intensively.
+
+\subsection{ Security}
+
+The system must be secured, so that a customer can view events on the app.
+The application must implement basic security behaviours:
+\begin{itemize}
+\item Authentication: Login using at least a user name and a password
+\item Authorization: according to their profile, online customer must be granted or not to perform some specific actions.
+\end{itemize}	
+For internet access, the following requirements are mandatory
+
+\begin{itemize}
+\item Confidentiality: sensitive data must be encrypted (passwords)
+\item Data integrity : Data sent across the network cannot be modified by a tier
+\item Auditing: Every sensitive action can be logged
+\item Non-repudiation : gives evidence a specific action occurred
+\end{itemize}
+
+\subsection{Persistence }
+
+Data persistence will be addressed using a relational database. 
+
+\subsection{Reliability/Availability (failover)}
+
+The availability of the system is a key requirement by nature, as it is a selling system. The candidate architecture must ensure failover capabilities.
+Targeted availability is 12/5: 12 hours a day, 5 days a week 
+The time left (8 hours) is reserved for any maintenance activities
+
+
+\subsection{Performance}
+
+The login process must be under 5 seconds.
+
+\subsection{Internationalization (i18n)}
+layers must be generic enough to work with any internationalization context.
+
+\section{Scenarios}
+This section lists use cases or scenarios from the use-case model if they represent some significant, central functionality of the final system. The only use-case studied here on the Turnt App architecture is the one related to computicket. It includes a search feature as well as a call to external services (uber options)
+
+
+\subsection{Events}
+	
+A customer accesses the Turnt App application and search for the available events.  The customer chooses from a list of events and selects which event she/he wants to attend.  Then, the customer performs a computicket payment to get the tickets. Once the payment has been validated, the customer confirms attendance, enters her/his location ( address, coordinates etc..) and all the relevant information is sent to the Google maps app then the directions are given.
+\begin{figure}[H]
+\includegraphics{usecase.jpg}
+\end{figure}
+\subsection{Use-Case Realizations}
+Refers to section 5.2 to see how design elements provide the functionalities identified in the significant use-cases
+\section{Logical View}
+\subsection{Overview}
+The Turnt App application is divided into layers based on the N-tier architecture.\\
+The layering model of the Turnt App application is based on a responsibility layering strategy that associates each layer with a particular responsibility.
+This strategy has been chosen because it isolates various system responsibilities from one another, so that it improves both system development and maintenance.
+\subsection{Architectural Layer Dependencies}
+\begin{figure}[H]
+\includegraphics{alayer.jpg}
+\end{figure}
+Each layer has specific responsibilities.
+\begin{itemize}
+\item The presentation layer deals with the presentation logic and the pages  rendering
+\item The control layer manages the access to the domain layer
+\item The resource layer (integration layer) is responsible for the access to the enterprise information system (databases or other sources of information)
+\item The domain layer is related to the business logic and manages the accesses to the resource layer.
+\item	The Common Elements layer gathers the common objects reused through all the layers
+\end{itemize}
+
+\section{Process View}
+The android package automatically handles the processes of the system.
+\section{Physical View}
+Global Overview.
+\begin{figure}[H]
+\includegraphics{one.png}
+\end{figure}
+
+\section{Development  View} 
+\subsection{ Overview}
+
+The Development view depicts the physical composition of the implementation in terms of Implementation Subsystems, and Implementation Elements (directories and files, including source code, data, and executable files). 
+Usually, the layers of the Development view do fit the layering defined in the Logical view
+
+It is unnecessary to document the Development view in great details in this document. For further information, refer to the Online Catering Service 1.0 workspace in Rational Software Architect. 
+
+\subsection{Layers}
+
+\subsubsection{Presentation Layer}
+The Presentation layer contains all the components needed to allow interactions with an end-user. It encompasses the user interface 
+\subsubsection{	Control Layer}
+The Control layer contains all the components used to access the domain layer or directly the resource layer when this is appropriate. 
+
+\subsubsection{	Resource Layer}
+The Resource layer contains the components needed to enable communication between the business tier and the enterprise information systems (Database, external services, ERP, etc…)
+
+\subsubsection{	Domain layer}
+The Domain layer contains all the components related to the business logic. It gathers all the subsystems that meet the needs of a particular business domain. It also contains the business object model.
+
+\subsubsection{	Common Elements Layer}
+The Common Element layer contains the components re-used within several layers.
+
+\end{document}
