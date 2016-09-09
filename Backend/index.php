@@ -122,6 +122,13 @@
       $info=$exchange->search($text,$me);
       echo json_encode($info);
       break;
+    case 'search_event':
+      include_once 'InfoExchange.php';
+      $group_run=new InfoExchange();
+      $name=$_REQUEST["name"];
+      $info=$group_run->search_event($name);
+      echo json_encode($info);
+      break;
     default:
       # code...
       break;
