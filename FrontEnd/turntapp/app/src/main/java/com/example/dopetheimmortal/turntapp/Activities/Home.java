@@ -9,6 +9,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +31,7 @@ import com.example.dopetheimmortal.turntapp.Useful.ConnectorCallSearch;
 import com.example.dopetheimmortal.turntapp.Useful.ConnectorCallback;
 import com.example.dopetheimmortal.turntapp.connector.Connector;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorInvite;
+import com.example.dopetheimmortal.turntapp.connector.ConnectorSearch;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,12 +57,15 @@ public class Home extends AppCompatActivity implements ConnectorCallback,Connect
         setContentView(R.layout.home);
         search_user=(EditText)findViewById(R.id.search_user_text);
         show_search=(ListView) findViewById(R.id.show_search_results);
+        ArrayList<GeneralUser>dummy=new ArrayList<>();
+        InviteAdapter adapter=new InviteAdapter(this,dummy);
+        show_search.setAdapter(adapter);
         initializetools();
         String link = this.getString(R.string.link);
         HashMap<String, String> data = new HashMap<>();
         data.put("type", "get_upcoming_events");
         data.put("id", "0");
-        new Connector(link, this, this, data, "Loading events", "Loading events\nPlease wait..", false, true).execute();
+        new Connector(link, this, this, data, "Loading events", "Loading eventsPlease wait..", false, true).execute();
 
     }
 
@@ -81,6 +88,31 @@ public class Home extends AppCompatActivity implements ConnectorCallback,Connect
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 mDrawerLayout.closeDrawers();
+            }
+        });
+        search_user.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                HashMap<String,String>get=new HashMap<String, String>();
+                get.put("type","search_user");
+                UserLocalData o=new UserLocalData(Home.this);
+                o.open();
+                String me=o.actual().dbid;
+                o.close();
+                get.put("me",me);
+                get.put("search",charSequence.toString());
+                String link=Home.this.getString(R.string.link);//"http://10.0.0.11/TurntappAssignment/Backend/";
+                new ConnectorSearch(link,Home.this,Home.this,get,"","",false,false).execute();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
     }
@@ -177,6 +209,9 @@ public class Home extends AppCompatActivity implements ConnectorCallback,Connect
             case R.id.new_event:
                 startActivity(new Intent(this, NewEvent.class));
                 break;
+            case R.id.search_user:
+                open_drawe();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -187,15 +222,14 @@ public class Home extends AppCompatActivity implements ConnectorCallback,Connect
         super.onPostCreate(savedInstanceState);
         mDrawerToggle.syncState();
     }
-
+    ArrayList <View>temp=new ArrayList<>();
     @Override
     public void get_users(String info) throws JSONException {
         JSONObject object=new JSONObject(info);
         JSONArray arr=object.getJSONArray("data");
         ArrayList<GeneralUser>users=new ArrayList<>();
-        ArrayList<GeneralUser>dummy=new ArrayList<>();
-        InviteAdapter adapter=new InviteAdapter(this,dummy);
-        show_search.setAdapter(adapter);
+        for (int i = temp.size() - 1; i >= 0; i--)
+            show_search.removeFooterView(temp.get(i));
         for (int i=0;i<arr.length();i++){
             JSONObject o=arr.getJSONObject(i);
             String id= o.getString("id");
@@ -205,10 +239,11 @@ public class Home extends AppCompatActivity implements ConnectorCallback,Connect
             String following= o.getString("following");
             String followers= o.getString("followers");
             String status= o.getString("status");
-            String invited= o.getString("invited");
-            GeneralUser use=new GeneralUser(id,name,surname,image_name,following,followers,status,invited);
+            GeneralUser use=new GeneralUser(id,name,surname,image_name,following,followers,status,"");
             users.add(use);
-            show_search.addFooterView(get_view(use));
+            View d=get_view(use);
+            show_search.addFooterView(d);
+            temp.add(d);
         }
     }
     public View get_view(final GeneralUser get){
@@ -245,5 +280,9 @@ public class Home extends AppCompatActivity implements ConnectorCallback,Connect
             });
         }
         return convertView;
+    }
+    public void open_drawe()
+    {
+        mDrawerLayout.openDrawer(Gravity.LEFT);
     }
 }

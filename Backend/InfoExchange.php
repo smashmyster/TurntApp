@@ -118,6 +118,7 @@
         }
         array_push($response["data"],$get);
       }
+      $response["success"]=1;
       return $response;
     }
     function search_event($name){

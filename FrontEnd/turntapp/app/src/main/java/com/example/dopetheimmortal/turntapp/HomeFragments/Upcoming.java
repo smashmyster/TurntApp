@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.dopetheimmortal.turntapp.Activities.TouchImageView;
 import com.example.dopetheimmortal.turntapp.Adapters.UpcomingAdapter;
 import com.example.dopetheimmortal.turntapp.DataStructures.EventStruct;
 import com.example.dopetheimmortal.turntapp.DataStructures.FollowData;
@@ -63,6 +64,7 @@ public class Upcoming extends Fragment {
             });
             name.setText(get.name);
             list.addFooterView(convertView);
+             TouchImageView img = (TouchImageView) lay.findViewById(R.id.logo);
         }
         return lay;
     }

@@ -12,4 +12,9 @@
         android:orderInCategory="100"
         android:title="New Event"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/search_user"
+        android:orderInCategory="100"
+        android:title="Search for a user"
+        app:showAsAction="never" />
 </menu>

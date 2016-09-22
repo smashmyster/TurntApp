@@ -99,7 +99,7 @@ public class NewEvent extends Activity implements View.OnClickListener,Connector
                 upload.put("type","create_user_event");
                 upload.put("name",name.getText().toString());
                 upload.put("address",address.getText().toString());
-                upload.put("latlong","10.0,14.23");
+                upload.put("latlong","-26.1941697,28.034061");
                 UserLocalData user=new UserLocalData(this);
                 user.open();
                 String me=user.actual().dbid;

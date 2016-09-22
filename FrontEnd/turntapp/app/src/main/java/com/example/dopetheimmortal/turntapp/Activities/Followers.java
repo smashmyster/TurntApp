@@ -36,6 +36,7 @@ public class Followers extends Activity implements ConnectorCallback {
     ListView followers;
     View head,tail;
     ListAdapter adapter;
+
     ArrayList<FollowData> people;
     Connector connect;
     @Override
