@@ -129,6 +129,14 @@
       $info=$group_run->search_event($name);
       echo json_encode($info);
       break;
+    case 'follow_user':
+      include_once 'ProfileActions.php';
+      $useractions=new UserActions();
+      $me=$_REQUEST["me"];
+      $user=$_REQUEST["user"];
+      $info=$useractions->follow_user($me,$user);
+      echo json_encode($info);
+      break;
     default:
       # code...
       break;
