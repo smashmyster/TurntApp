@@ -92,7 +92,6 @@
     case 'create_user_event':
       $name=$_REQUEST["name"];
       $address=$_REQUEST["address"];
-      $latlong=$_REQUEST["latlong"];
       $me=$_REQUEST["me"];
       $djs=$_REQUEST["djs"];
       $specials=$_REQUEST["specials"];
@@ -104,7 +103,7 @@
       $pic=$_REQUEST["thumb"];
       include_once "EventManagement.php";
       $events=new Events();
-      $info=$events->user_create_event($name,$address,$latlong,$me,$djs,$specials,$gen_fee,$vip_fee,$start_time,$end_time,$ext,$pic);
+      $info=$events->user_create_event($name,$address,$me,$djs,$specials,$gen_fee,$vip_fee,$start_time,$end_time,$ext,$pic);
       echo json_encode($info);
       break;
     case 'get_my_followers':

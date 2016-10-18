@@ -42,178 +42,21 @@
       $response["upcoming"]=array();
       if($id==0){
         $response["ongoing"]=array();
-        $query="SELECT * FROM events WHERE id>$id AND start_time<$date LIMIT 10";
+        $query="SELECT * FROM events WHERE id>$id AND $date<=start_time  LIMIT 10";
         $rows=$this->db_connect_get_many($query);
         $response["ongoing"]=array();
         foreach ($rows as $row ) {
           if($row["event_type"]==1){
-            $row["host_name"]=$exchange->get_club_info($row["host_id"])["club_info"]["name"];
-          }else{
-            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                                                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                                                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-
-                                                                                                                                                                                                                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-
-                                                                                                                                                                                                                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                                                                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                                                                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                                                                                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                                                                                                                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                                                                                                                                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                                                                                                                                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                                                                                                                                                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                                                                                                                                                                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                                                                                                                                                                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                                                                                                                                                                                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                                                                                                                                                                                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                                                                                                                                                                                                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-
-                                                                                                                                                                                                                                                                                                                                                                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                                                                                                                                                                                                                                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                                                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                                                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                                                                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                                                                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                                                                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                                                                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
-          }
+   $row["host_name"]=$exchange->get_club_info($row["host_id"])["club_info"]["name"];
+}else{
+  $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
+}
           array_push($response["ongoing"],$row);
         }
       }else{
         $response["code"]=1;
       }
-      $query="SELECT * FROM events WHERE id>$id AND start_time<$date LIMIT 10";
+      $query="SELECT * FROM events WHERE id>$id AND $date<start_time LIMIT 10";
       $rows=$this->db_connect_get_many($query);
 
       foreach ($rows as $row ) {
@@ -384,8 +227,33 @@
       $response["success"]=1;
       return $response;
     }
-    function user_create_event($name,$address,$latlong,$me,$djs,$specials,$gen_fee,$vip_fee,$start_time,$end_time,$ext,$pic){
+    function lookup($string){
+
+      $string = str_replace (" ", "+", urlencode($string));
+      $details_url = "http://maps.googleapis.com/maps/api/geocode/json?address=".$string."&sensor=false";
+
+      $ch = curl_init();
+      curl_setopt($ch, CURLOPT_URL, $details_url);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+      $response = json_decode(curl_exec($ch), true);
+
+   // If Status Code is ZERO_RESULTS, OVER_QUERY_LIMIT, REQUEST_DENIED or INVALID_REQUEST
+      if ($response['status'] != 'OK') {
+        return null;
+      }
+      $geometry = $response['results'][0]['geometry'];
+
+      $longitude = $geometry['location']['lat'];
+      $latitude = $geometry['location']['lng'];
+
+      $data=$geometry['location']['lat'].','.$geometry['location']['lng'];
+
+      return $data;
+
+    }
+    function user_create_event($name,$address,$me,$djs,$specials,$gen_fee,$vip_fee,$start_time,$end_time,$ext,$pic){
         $image_name=$name.'_'.$start_time.$ext;
+        $latlong=$this->lookup($address);
         $this->get_image($pic,$image_name);
         $query="SELECT 1 FROM events WHERE name=:ename AND address=:eaddress";
         $query_params=array(':ename'=>$name,'eaddress'=>$address);
