@@ -15,7 +15,7 @@
 
     <string name="ip">http://10.0.0.7/</string>
     <!--<string name="link">http://lamp.ms.wits.ac.za/~856807/TurntApp/</string>-->
-    <string name="link">http://10.30.102.172/TurntappAssignment/Backend/</string>
+    <string name="link">http://10.30.101.252/TurntappAssignment/Backend/</string>
     <string name="image_link">http://10.0.1.145/TurntappAssignment/Backend/</string>
     <!-- Login related links -->
     <!--Login User-->
