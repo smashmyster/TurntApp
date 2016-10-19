@@ -42,7 +42,7 @@
       $response["upcoming"]=array();
       if($id==0){
         $response["ongoing"]=array();
-        $query="SELECT * FROM events WHERE id>$id AND $date<=start_time  LIMIT 10";
+        $query="SELECT * FROM events WHERE id>$id AND start_time<$date AND end_time>$date  LIMIT 10";
         $rows=$this->db_connect_get_many($query);
         $response["ongoing"]=array();
         foreach ($rows as $row ) {
@@ -56,7 +56,7 @@
       }else{
         $response["code"]=1;
       }
-      $query="SELECT * FROM events WHERE id>$id AND $date<start_time LIMIT 10";
+      $query="SELECT * FROM events WHERE id>$id AND start_time>$date LIMIT 10";
       $rows=$this->db_connect_get_many($query);
 
       foreach ($rows as $row ) {
@@ -252,7 +252,7 @@
 
     }
     function user_create_event($name,$address,$me,$djs,$specials,$gen_fee,$vip_fee,$start_time,$end_time,$ext,$pic){
-        $image_name=$name.'_'.$start_time.$ext;
+        $image_name=$name.'_'.$start_time.'.'.$ext;
         $latlong=$this->lookup($address);
         $this->get_image($pic,$image_name);
         $query="SELECT 1 FROM events WHERE name=:ename AND address=:eaddress";

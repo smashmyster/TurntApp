@@ -45,16 +45,31 @@
       echo json_encode($info);
       break;
     case 'get_user_events_attending':
-      # code...
+        $me=$_REQUEST["me"];
+        $user=$_REQUEST["user"];
+        include_once "EventManagement.php";
+        $events=new Events();
+        $info=$events->get_user_events_attending($user,$me);
+        echo json_encode($info);
       break;
     case 'get_user_events_hosting':
-      # code...
+      $me=$_REQUEST["me"];
+      $user=$_REQUEST["user"];
+      include_once "EventManagement.php";
+      $events=new Events();
+      $info=$events->get_user_events_attending($user,$me);
+      echo json_encode($info);
       break;
     case 'get_club_info':
-      # code...
+
       break;
     case 'get_user_info':
-      # code...
+      $me=$_REQUEST["me"];
+      $person=$_REQUEST["user"];
+      include_once 'InfoExchange.php';
+      $get=new InfoExchange();
+      $info=$get->get_user_info($me,$person);
+      echo json_encode($info);
       break;
     case 'invite_user':
       $me=$_REQUEST["me"];

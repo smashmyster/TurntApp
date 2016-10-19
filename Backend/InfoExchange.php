@@ -52,6 +52,7 @@
       unset($info["pp"]);
       unset($info["email"]);
       unset($info["phone"]);
+      $info["success"]=1;
       if(sizeof($check)>=1){
         $info["following"]=1;
         return $info;
