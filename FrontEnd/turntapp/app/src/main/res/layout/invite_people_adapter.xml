@@ -24,15 +24,6 @@
 
 
     <!--</RelativeLayout>-->
-    <ImageView
-        android:id="@+id/send_invite_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-
-        android:layout_centerVertical="true"
-        android:layout_gravity="right"
-        android:src="@android:drawable/ic_input_add" />
 
     <TextView
         android:id="@+id/invite_user_name"
@@ -54,4 +45,14 @@
         android:paddingLeft="20dp"
         android:text="Status"
         android:textAppearance="?android:textAppearanceSmall" />
+
+    <ImageView
+        android:id="@+id/send_invite_img"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+
+        android:layout_gravity="right"
+        android:src="@android:drawable/ic_input_add"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

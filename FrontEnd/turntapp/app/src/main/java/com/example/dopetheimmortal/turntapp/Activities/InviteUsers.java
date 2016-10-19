@@ -2,7 +2,6 @@ package com.example.dopetheimmortal.turntapp.Activities;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -53,7 +52,7 @@ public class InviteUsers extends Activity implements ConnectorCallbackInvite{
                 String followers= o.getString("followers");
                 String status= o.getString("status");
                 String invited= o.getString("invited");
-                GeneralUser use=new GeneralUser(id,name,surname,image_name,following,followers,status,invited);
+                GeneralUser use=new GeneralUser(id,name,surname,image_name,following,followers,status,invited,false);
                 users.add(use);
                 list.addFooterView(get_view(use));
             }

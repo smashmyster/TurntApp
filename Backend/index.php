@@ -158,6 +158,14 @@
       $info=$useractions->follow_user($me,$user);
       echo json_encode($info);
       break;
+      case 'unfollow_user':
+      include_once 'ProfileActions.php';
+      $useractions=new UserActions();
+      $me=$_REQUEST["me"];
+      $user=$_REQUEST["user"];
+      $info=$useractions->unfollow_user($me,$user);
+      echo json_encode($info);
+      break;
     default:
       # code...
       break;

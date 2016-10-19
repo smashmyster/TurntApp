@@ -5,8 +5,8 @@ package com.example.dopetheimmortal.turntapp.DataStructures;
  */
 public class GeneralUser {
    public String id,name,surname,image_name,following,followers,status,invited;
-
-    public GeneralUser(String id, String name, String surname, String image_name, String following, String followers, String status, String invited) {
+    public boolean followings;
+    public GeneralUser(String id, String name, String surname, String image_name, String following, String followers, String status, String invited, boolean followings) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -15,5 +15,6 @@ public class GeneralUser {
         this.followers = followers;
         this.status = status;
         this.invited = invited;
+        this.followings=followings;
     }
 }

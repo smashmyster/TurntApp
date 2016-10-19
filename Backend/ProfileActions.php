@@ -145,6 +145,31 @@
 		$response["message"]="You are now following";
 		return $response;
     }
+    function unfollow_user($follower,$following){
+      $query="SELECT 1 from followers where follower=$follower AND following=$following";
+      $row=$this->db_connect_get_one($query);
+      if($row){
+
+        $query="SELECT 1 from followers where following=$follower AND follower=$following";
+        $check=$this->db_connect_get_one($query);
+      if($check){
+        $query="DELETE FROM followers WHERE follower=$follower AND following=$following";
+        $this->db_connect_get_none($query);
+      }
+      $query="UPDATE user set followers=followers-1 WHERE id=$following";
+      $this->db_connect_get_none($query);
+      $query="UPDATE user set following=following-1 WHERE id=$follower";
+      $this->db_connect_get_none($query);
+    }else{
+      $response["success"]=0;
+      $response["error"]=204;
+      $response["message"]="You are already following this user";
+      return $response;
+    }
+    $response["success"]=1;
+    $response["message"]="You are now following";
+    return $response;
+    }
   }
 
 ?>
