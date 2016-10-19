@@ -66,7 +66,7 @@ public class ProfileFragment extends Fragment {
         // name2.setText( person.regid);
         ListView l=(ListView)lay.findViewById(R.id.show_my_events);
         ArrayList<EventStruct> dummy = new ArrayList<>();
-        l.setAdapter(new UpcomingAdapter(getContext(), dummy));
+        l.setAdapter(new UpcomingAdapter(getContext(), dummy,getActivity()));
         for (int i = 0; i < b.size(); i++) {
             View convertView = LayoutInflater.from(getContext()).inflate(
                     R.layout.show_event, null, false);

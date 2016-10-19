@@ -299,6 +299,10 @@
           fwrite($file, $binary);
           fclose($file);
     }
+    function get_event_by_id($id){
+      $query="SELECT * FROM events WHERE id=$id";
+      return $this->db_connect_get_one($query);
+    }
   }
 
 ?>

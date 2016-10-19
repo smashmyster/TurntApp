@@ -146,7 +146,7 @@
     case 'search_event':
       include_once 'InfoExchange.php';
       $group_run=new InfoExchange();
-      $name=$_REQUEST["name"];
+      $name=$_REQUEST["search"];
       $info=$group_run->search_event($name);
       echo json_encode($info);
       break;

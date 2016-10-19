@@ -126,14 +126,16 @@
       $query="SELECT id,name FROM events WHERE name LIKE :ename";
       $query_params=array(':ename'=>'%'.$name.'%');
       $data=$this->db_connect_get_many($query,$query_params);
+      $response["data"]=array();
       if($data){
         $response["success"]=1;
-        $response["data"]=array();
+        include_once 'EventManagement.php';
+        $po=new Events();
         foreach ($data as $key ) {
-          array_push($response["data"],$key);
+          array_push($response["data"],$po->get_event_by_id($key["id"]));
         }
       }else{
-        $response["success"]=0;
+        $response["success"]=1;
         $response["message"]="Event not found";
       }
       return $response;

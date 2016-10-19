@@ -230,6 +230,9 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
             case R.id.search_user:
                 open_drawe();
                 break;
+            case R.id.search_event:
+                startActivity(new Intent(this,SearchEvent.class));
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

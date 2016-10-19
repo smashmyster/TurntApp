@@ -17,4 +17,9 @@
         android:orderInCategory="100"
         android:title="Search for a user"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/search_event"
+        android:orderInCategory="100"
+        android:title="Search for an event"
+        app:showAsAction="never" />
 </menu>

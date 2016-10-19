@@ -36,7 +36,7 @@ public class Ongoing extends Fragment {
         View lay = inflater.inflate(R.layout.ongoing_freg, container, false);
         ArrayList<EventStruct> dummy = new ArrayList<>();
         ListView list = (ListView) lay.findViewById(R.id.ongoing_events);
-        list.setAdapter(new UpcomingAdapter(getContext(), dummy));
+        list.setAdapter(new UpcomingAdapter(getContext(), dummy,getActivity()));
         for (int i = 0; i < ongoing_events.size(); i++) {
             View convertView = LayoutInflater.from(getContext()).inflate(
                     R.layout.show_event, null, false);

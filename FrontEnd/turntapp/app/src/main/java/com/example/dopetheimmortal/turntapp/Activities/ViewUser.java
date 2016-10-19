@@ -121,7 +121,7 @@ public class ViewUser extends AppCompatActivity implements ConnectorCallback,Cal
         }
         ListView l=(ListView)findViewById(R.id.show_my_events);
         ArrayList<EventStruct> dummy = new ArrayList<>();
-        l.setAdapter(new UpcomingAdapter(this, dummy));
+        l.setAdapter(new UpcomingAdapter(this, dummy,this));
         for (int i = 0; i < b.size(); i++) {
             View convertView = LayoutInflater.from(this).inflate(
                     R.layout.show_event, null, false);
