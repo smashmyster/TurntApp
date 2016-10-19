@@ -52,6 +52,13 @@
         $info=$events->get_user_events_attending($user,$me);
         echo json_encode($info);
       break;
+    case 'get_my_events':
+      $me=$_REQUEST["me"];
+      include_once "EventManagement.php";
+      $events=new Events();
+      $info=$events->get_user_events_attending_allowed($me);
+    echo json_encode($info);
+      break;
     case 'get_user_events_hosting':
       $me=$_REQUEST["me"];
       $user=$_REQUEST["user"];

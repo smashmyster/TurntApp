@@ -131,12 +131,12 @@
     function get_user_events_attending_allowed($user){
       $query="SELECT event FROM attending WHERE user=$user";
       $rows=$this->db_connect_get_many($query);
-      $att=array();
+      $att["data"]=array();
       foreach ($rows as $row) {
         $party_id=$row["event"];
         $query="SELECT * FROM events WHERE id=$party_id";
         $info=$this->db_connect_get_one($query);
-        array_push($att,$info);
+        array_push($att["data"],$info);
       }
       $att["success"]=1;
       return $att;

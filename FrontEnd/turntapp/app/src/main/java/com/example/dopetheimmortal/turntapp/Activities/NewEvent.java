@@ -99,7 +99,6 @@ public class NewEvent extends Activity implements View.OnClickListener,Connector
                 upload.put("type","create_user_event");
                 upload.put("name",name.getText().toString());
                 upload.put("address",address.getText().toString());
-                upload.put("latlong","-26.1941697,28.034061");
                 UserLocalData user=new UserLocalData(this);
                 user.open();
                 String me=user.actual().dbid;
@@ -135,7 +134,7 @@ public class NewEvent extends Activity implements View.OnClickListener,Connector
                     get_time.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            stime.setText("" + date_picker.getDayOfMonth() + "/" + new Date().getMonth(date_picker.getMonth()) + "/" + date_picker.getYear() + "  " + time_picker.getHour() + ":" + time_picker.getMinute());
+                            stime.setText("" + date_picker.getDayOfMonth() + "/" + new Date().getMonth(date_picker.getMonth()) + "/" + date_picker.getYear() + "  " + time_picker.getCurrentHour() + ":" + time_picker.getCurrentMinute());
                             upload.put("start_time", get_send(date_picker, time_picker));
 
                         }
@@ -148,7 +147,7 @@ public class NewEvent extends Activity implements View.OnClickListener,Connector
                     get_time.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            etime.setText("" + date_picker.getDayOfMonth() + "/" + new Date().getMonth(date_picker.getMonth()) + "/" + date_picker.getYear() + "  " + time_picker.getHour() + ":" + time_picker.getMinute());
+                            etime.setText("" + date_picker.getDayOfMonth() + "/" + new Date().getMonth(date_picker.getMonth()) + "/" + date_picker.getYear() + "  " + time_picker.getCurrentHour() + ":" + time_picker.getCurrentMinute());
                             upload.put("end_time", get_send(date_picker, time_picker));
                         }
                     });
@@ -159,24 +158,24 @@ public class NewEvent extends Activity implements View.OnClickListener,Connector
         builder.show();
     }
 
-    public String get_date(DatePicker date_picker, TimePicker time_picker) {
-        String year, month, day, hour, min;
-        year = "" + date_picker.getYear();
-        month = ("" + date_picker.getMonth()).length() == 2 ? "" + date_picker.getMonth() : "0" + date_picker.getMonth();
-        day = ("" + date_picker.getDayOfMonth()).length() == 2 ? "" + date_picker.getDayOfMonth() : "0" + date_picker.getDayOfMonth();
-        hour = ("" + time_picker.getHour()).length() == 2 ? "" + time_picker.getHour() : "0" + time_picker.getHour();
-        min = ("" + time_picker.getMinute()).length() == 2 ? "" + time_picker.getMinute() : "0" + time_picker.getMinute();
-        String time = year + month + day + hour + min;
-        return time;
-    }
+//    public String get_date(DatePicker date_picker, TimePicker time_picker) {
+//        String year, month, day, hour, min;
+//        year = "" + date_picker.getYear();
+//        month = ("" + date_picker.getMonth()).length() == 2 ? "" + date_picker.getMonth() : "0" + date_picker.getMonth();
+//        day = ("" + date_picker.getDayOfMonth()).length() == 2 ? "" + date_picker.getDayOfMonth() : "0" + date_picker.getDayOfMonth();
+//        hour = ("" + time_picker.getHour()).length() == 2 ? "" + time_picker.getHour() : "0" + time_picker.getHour();
+//        min = ("" + time_picker.getMinute()).length() == 2 ? "" + time_picker.getMinute() : "0" + time_picker.getMinute();
+//        String time = year + month + day + hour + min;
+//        return time;
+//    }
 
     public String get_send(DatePicker date_picker, TimePicker time_picker) {
         String year, month, day, hour, min;
         year = "" + date_picker.getYear();
         month = (Integer.toString(date_picker.getMonth())).length() == 2 ? Integer.toString(date_picker.getMonth()): "0" + Integer.toString(date_picker.getMonth()+1);
         day = ("" + date_picker.getDayOfMonth()).length() == 2 ? "" + date_picker.getDayOfMonth() : "0" + date_picker.getDayOfMonth();
-        hour = ("" + time_picker.getHour()).length() == 2 ? "" + time_picker.getHour() : "0" + time_picker.getHour();
-        min = ("" + time_picker.getMinute()).length() == 2 ? "" + time_picker.getMinute() : "0" + time_picker.getMinute();
+        hour = ("" + time_picker.getCurrentHour()).length() == 2 ? "" + time_picker.getCurrentHour() : "0" + time_picker.getCurrentHour();
+        min = ("" + time_picker.getCurrentHour()).length() == 2 ? "" + time_picker.getCurrentMinute() : "0" + time_picker.getCurrentMinute();
         String time = year + month + day + hour + min;
         return time;
     }

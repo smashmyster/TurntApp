@@ -27,9 +27,12 @@ import com.example.dopetheimmortal.turntapp.DataStructures.EventStruct;
 import com.example.dopetheimmortal.turntapp.DataStructures.GeneralUser;
 import com.example.dopetheimmortal.turntapp.LocalData.UserLocalData;
 import com.example.dopetheimmortal.turntapp.R;
+import com.example.dopetheimmortal.turntapp.Useful.CallBackAttending;
 import com.example.dopetheimmortal.turntapp.Useful.ConnectorCallSearch;
 import com.example.dopetheimmortal.turntapp.Useful.ConnectorCallback;
+import com.example.dopetheimmortal.turntapp.Useful.Profile_Data;
 import com.example.dopetheimmortal.turntapp.connector.Connector;
+import com.example.dopetheimmortal.turntapp.connector.ConnectorAttending;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorInvite;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorSearch;
 
@@ -43,7 +46,7 @@ import java.util.HashMap;
 /**
  * Created by jackson on 2016/08/11.
  */
-public class Home extends AppCompatActivity implements ConnectorCallback,ConnectorCallSearch {
+public class Home extends AppCompatActivity implements ConnectorCallback,ConnectorCallSearch,CallBackAttending {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -51,6 +54,9 @@ public class Home extends AppCompatActivity implements ConnectorCallback,Connect
     private ActionBarDrawerToggle mDrawerToggle;
     private EditText search_user;
     private ListView show_search;
+    ArrayList<EventStruct>upcomig_events;
+    ArrayList<EventStruct> ongoing_events;
+    ArrayList<EventStruct> b;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +71,7 @@ public class Home extends AppCompatActivity implements ConnectorCallback,Connect
         HashMap<String, String> data = new HashMap<>();
         data.put("type", "get_upcoming_events");
         data.put("id", "0");
-        new Connector(link, this, this, data, "Loading events", "Loading eventsPlease wait..", false, true).execute();
+        new Connector(link, this, this, data, "Loading events", "Loading events\nPlease wait..", false, true).execute();
 
     }
 
@@ -166,11 +172,13 @@ public class Home extends AppCompatActivity implements ConnectorCallback,Connect
             String host_name = get.getString("host_name");
             ongoing_events.add(new EventStruct(id, djs, attending, event_type, host_id, rating, tbl_avail, specials, gen_fee, vip_fee, name, start_time, end_time,latlong,address,logo,host_name));
         }
-        adapt_data(upcoming_events,ongoing_events);
+        this.upcomig_events=upcoming_events;
+        this.ongoing_events=ongoing_events;
+        get_my_events();
     }
-    public void adapt_data(ArrayList<EventStruct>upcomig_events,ArrayList<EventStruct> ongoing_events){
+    public void adapt_data(){
         viewPager = (ViewPager) findViewById(R.id.pager);
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(),upcomig_events,ongoing_events);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(),upcomig_events,ongoing_events,b);
         viewPager.setAdapter(adapter);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -284,5 +292,47 @@ public class Home extends AppCompatActivity implements ConnectorCallback,Connect
     public void open_drawe()
     {
         mDrawerLayout.openDrawer(Gravity.LEFT);
+    }
+
+    public void get_my_events() {
+        HashMap<String,String>att=new HashMap<>();
+        UserLocalData looca=new UserLocalData(this);
+        looca.open();
+        Profile_Data ll=looca.actual();
+        looca.close();
+        String id=ll.dbid;
+        att.put("me",id);
+        att.put("type","get_my_events");
+        String link=this.getString(R.string.link);
+        new ConnectorAttending(link,this,this,att,"","",false,false).execute();
+    }
+
+    @Override
+    public void success_my_events(String s) throws JSONException {
+        JSONObject o=new JSONObject(s);
+        JSONArray arr=o.getJSONArray("data");
+        ArrayList<EventStruct>b=new ArrayList<>();
+        for (int i=0;i<arr.length();i++){
+            JSONObject get=arr.getJSONObject(i);
+            String id = get.getString("id");
+            String djs = get.getString("djs");
+            String attending = get.getString("attending");
+            String event_type = get.getString("event_type");
+            String host_id = get.getString("host_id");
+            String tbl_avail = get.getString("tbl_avail");
+            String specials = get.getString("specials");
+            String gen_fee = get.getString("gen_fee");
+            String vip_fee = get.getString("vip_fee");
+            String name = get.getString("name");
+            String start_time = get.getString("start_time");
+            String end_time = get.getString("end_time");
+            String latlong = get.getString("latlong");
+            String address = get.getString("address");
+            String logo = get.getString("logo");
+            EventStruct event=new EventStruct(id,djs,attending,event_type,host_id,"0",tbl_avail,specials,gen_fee,vip_fee,name,start_time,end_time,latlong,address,logo,"");
+            b.add(event);
+        }
+        this.b=b;
+        adapt_data();
     }
 }

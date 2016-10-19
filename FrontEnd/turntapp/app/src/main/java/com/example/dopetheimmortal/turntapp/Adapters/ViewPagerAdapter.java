@@ -1,6 +1,5 @@
 package com.example.dopetheimmortal.turntapp.Adapters;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -12,8 +11,6 @@ import com.example.dopetheimmortal.turntapp.HomeFragments.ProfileFragment;
 import com.example.dopetheimmortal.turntapp.HomeFragments.Upcoming;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
 
 
 /**
@@ -23,11 +20,13 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     int size;
     ActionBar bar;
     ArrayList<EventStruct>upcoming_events;
+    ArrayList<EventStruct> b;
     ArrayList<EventStruct> ongoing_events;
-    public ViewPagerAdapter(FragmentManager fm,ArrayList<EventStruct>upcoming_events,ArrayList<EventStruct> ongoing_events) {
+    public ViewPagerAdapter(FragmentManager fm,ArrayList<EventStruct>upcoming_events,ArrayList<EventStruct> ongoing_events,ArrayList<EventStruct> b) {
         super(fm);
         this.upcoming_events=upcoming_events;
         this.ongoing_events=ongoing_events;
+        this.b=b;
     }
 
     @Override
@@ -42,9 +41,11 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
                 on.set_data(ongoing_events);
                 return on;
             case 2:
-                return new ProfileFragment();
+                ProfileFragment p=new ProfileFragment();
+                p.set_data(b);
+                return p;
         }
-        return new ProfileFragment();
+        return null;
     }
 
     @Override
