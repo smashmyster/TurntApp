@@ -1,205 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#00FFFFFF"
-    android:orientation="vertical">
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:background="#00FFFFFF"
+    >
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="wrap_content"
+        android:id="@+id/dummy2"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
             <ImageView
-                android:id="@+id/user_photo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:src="@drawable/profile" />
-
+                android:src="@drawable/profile"
+                android:id="@+id/user_photo"
+                android:layout_alignParentLeft="true"/>
             <LinearLayout
-                android:id="@+id/status_wrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/user_photo"
-                android:layout_alignParentRight="true"
-                android:layout_alignTop="@+id/user_photo"
                 android:layout_toRightOf="@+id/user_photo"
+                android:layout_alignTop="@+id/user_photo"
                 android:gravity="center|left"
+                android:layout_alignBottom="@+id/user_photo"
+                android:id="@+id/status_wrapper"
+                android:layout_alignParentRight="true"
                 android:orientation="vertical">
-
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:textStyle="bold"
                     android:id="@+id/user_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="20dp"
-                    android:text="Username"
                     android:textAppearance="?android:textAppearanceLarge"
-                    android:textStyle="bold" />
-
+                    android:text="Username"/>
                 <TextView
-                    android:id="@+id/status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="20dp"
-                    android:text="Status"
-                    android:textAppearance="?android:textAppearanceSmall" />
+                    android:id="@+id/status"
+                    android:textAppearance="?android:textAppearanceSmall"
+                    android:text="Status"/>
             </LinearLayout>
-
-            <View
-                android:id="@+id/primerdivisor"
-                android:layout_width="fill_parent"
-                android:layout_height="1dp"
-                android:layout_alignParentLeft="true"
+            <View android:id="@+id/primerdivisor" android:layout_width="fill_parent"
+                android:layout_height="1dp" android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/status_wrapper"
-                android:background="#000000"
-                android:paddingTop="20dp" />
-
+                android:paddingTop="20dp" android:background="#000000"
+                />
             <LinearLayout
-                android:id="@+id/gen_info_wrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_below="@+id/primerdivisor"
+                android:id="@+id/gen_info_wrapper"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
-                android:layout_below="@+id/primerdivisor"
-                android:orientation="horizontal"
-                android:weightSum="3">
-
-                <View
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentLeft="true"
-                    android:background="#000000" />
+                >
+                <View  android:layout_width="2dp"
+                    android:layout_height="match_parent" android:layout_alignParentLeft="true"
+                    android:background="#000000"/>
 
                 <RelativeLayout
-                    android:id="@+id/following_wraper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:paddingLeft="14dp"
                     android:gravity="center"
-                    android:paddingLeft="14dp">
-
+                    android:layout_weight="1" android:id="@+id/following_wraper">
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Following"
+                        android:textStyle="bold"
                         android:id="@+id/followers_start"
+                        android:textAppearance="?android:textAppearanceMedium"/>
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Following"
-                        android:textAppearance="?android:textAppearanceMedium"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/num_following"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/followers_start"
-                        android:layout_alignRight="@+id/followers_start"
                         android:layout_below="@+id/followers_start"
+                        android:textStyle="bold"
+                        android:id="@+id/num_following"
+                        android:layout_alignRight="@+id/followers_start"
+                        android:layout_alignLeft="@+id/followers_start"
                         android:gravity="center"
-                        android:text="Following"
-                        android:textAppearance="?android:textAppearanceSmall"
 
-                        android:textStyle="bold" />
+                        android:textAppearance="?android:textAppearanceSmall"/>
                 </RelativeLayout>
-
-                <View
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentLeft="true"
+                <View  android:layout_width="2dp"
+                    android:layout_height="match_parent" android:layout_alignParentLeft="true"
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/gen_info_wrapper"
-                    android:background="#000000"
-                    android:paddingTop="12dp" />
-
+                    android:paddingTop="12dp" android:background="#000000"/>
                 <RelativeLayout
-                    android:id="@+id/followers_wraper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:paddingLeft="14dp"
                     android:gravity="center"
-                    android:paddingLeft="14dp">
-
+                    android:layout_weight="1" android:id="@+id/followers_wraper">
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Followers"
+                        android:textStyle="bold"
                         android:id="@+id/following_start"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Followers"
-                        android:textAppearance="?android:textAppearanceMedium"
-                        android:textStyle="bold" />
-
+                        android:textAppearance="?android:textAppearanceMedium"/>
                     <TextView
-                        android:id="@+id/num_followers"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/following_start"
-                        android:layout_alignRight="@+id/following_start"
-                        android:layout_below="@+id/following_start"
-                        android:gravity="center"
                         android:text="Followers"
-                        android:textAppearance="?android:textAppearanceSmall"
+                        android:layout_below="@+id/following_start"
+                        android:textStyle="bold"
+                        android:id="@+id/num_followers"
+                        android:layout_alignRight="@+id/following_start"
+                        android:layout_alignLeft="@+id/following_start"
+                        android:gravity="center"
 
-                        android:textStyle="bold" />
+                        android:textAppearance="?android:textAppearanceSmall"/>
                 </RelativeLayout>
-
-                <View
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentLeft="true"
+                <View  android:layout_width="2dp"
+                    android:layout_height="match_parent" android:layout_alignParentLeft="true"
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/gen_info_wrapper"
-                    android:background="#000000"
-                    android:paddingTop="12dp" />
-
+                    android:paddingTop="12dp" android:background="#000000"/>
                 <RelativeLayout
-                    android:id="@+id/att_wraper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:paddingLeft="14dp"
                     android:gravity="center"
-                    android:paddingLeft="14dp">
-
+                    android:layout_weight="1" android:id="@+id/att_wraper">
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Attending"
+                        android:textStyle="bold"
                         android:id="@+id/att_start"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Attending"
-                        android:textAppearance="?android:textAppearanceMedium"
-                        android:textStyle="bold" />
-
+                        android:textAppearance="?android:textAppearanceMedium"/>
                     <TextView
-                        android:id="@+id/num_attending"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/att_start"
-                        android:layout_alignRight="@+id/att_start"
-                        android:layout_below="@+id/att_start"
-                        android:gravity="center"
                         android:text="Attending"
-                        android:textAppearance="?android:textAppearanceSmall"
+                        android:layout_below="@+id/att_start"
+                        android:textStyle="bold"
+                        android:id="@+id/num_attending"
+                        android:layout_alignRight="@+id/att_start"
+                        android:layout_alignLeft="@+id/att_start"
+                        android:gravity="center"
 
-                        android:textStyle="bold" />
+                        android:textAppearance="?android:textAppearanceSmall"/>
                 </RelativeLayout>
             </LinearLayout>
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1dp"
-                android:layout_alignParentLeft="true"
+            <View  android:layout_width="fill_parent"
+                android:layout_height="1dp" android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/gen_info_wrapper"
-                android:background="#000000"
-                android:paddingTop="12dp"
-                android:id="@+id/dummy2"/>
+                android:paddingTop="12dp" android:background="#000000"/>
 
-            <ListView
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/dummy2"
-                android:id="@+id/show_my_events"></ListView>
         </RelativeLayout>
     </ScrollView>
-
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/dummy2"
+        android:id="@+id/show_my_events"/>
 </RelativeLayout>

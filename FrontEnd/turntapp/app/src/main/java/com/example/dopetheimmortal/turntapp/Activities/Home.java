@@ -235,7 +235,7 @@ public class Home extends AppCompatActivity implements ConnectorCallback,Connect
     public void get_users(String info) throws JSONException {
         JSONObject object=new JSONObject(info);
         JSONArray arr=object.getJSONArray("data");
-        ArrayList<GeneralUser>users=new ArrayList<>();
+        final ArrayList<GeneralUser>users=new ArrayList<>();
         for (int i = temp.size() - 1; i >= 0; i--)
             show_search.removeFooterView(temp.get(i));
         for (int i=0;i<arr.length();i++){
@@ -287,6 +287,17 @@ public class Home extends AppCompatActivity implements ConnectorCallback,Connect
                 }
             });
         }
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bh=new Bundle();
+                bh.putString("id",get.id);
+                Intent o=new Intent(Home.this,ViewUser.class);
+                o.putExtras(bh);
+                startActivity(o);
+                System.out.println("Trying");
+            }
+        });
         return convertView;
     }
     public void open_drawe()

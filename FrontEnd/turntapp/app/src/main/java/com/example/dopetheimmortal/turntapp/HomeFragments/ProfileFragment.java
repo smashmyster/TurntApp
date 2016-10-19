@@ -85,7 +85,8 @@ public class ProfileFragment extends Fragment {
 
                 }
             });
-            name.setText(get.name);
+            name22.setText(get.name);
+
             l.addFooterView(convertView);
         }
         return lay;
