@@ -10,7 +10,7 @@
           'registration_ids'=>$tokens,
           'data'=>$message//array("message" => " FCM PUSH NOTIFICATION TEST MESSAGE","type"=>'order')
       );
-      $hearders=array('Authorization:key=AIzaSyDnug4LqWhu2Ww-VV3yzpzk9otIopClwjg',
+      $hearders=array('Authorization:key=AIzaSyBSpJXB363kGmkAI2MYdmj5ImGq4b2TrJk',
       'Content-Type:application/json');
       $ch = curl_init();
       curl_setopt($ch, CURLOPT_URL, $url);

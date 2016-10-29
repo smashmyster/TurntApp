@@ -46,9 +46,9 @@
         $rows=$this->db_connect_get_many($query);
         $response["ongoing"]=array();
         foreach ($rows as $row ) {
-          $query="SELECT * FROM attending WHERE user=$user AND id=:eid";
+          $query="SELECT * FROM attending WHERE user=$user AND event=:eid";
           $jaa=$this->db_connect_get_many($query,array(':eid'=>$row["id"]));
-          if(sizeof($jaa)>0){
+          if($jaa){
             $row["me_attending"]=1;
           }else{
             $row["me_attending"]=0;
@@ -68,9 +68,9 @@
 
       foreach ($rows as $row ) {
         $io=$row["id"];
-        $query="SELECT * FROM attending WHERE user=$user AND id=$io";
-        $jaa=$this->db_connect_get_one($query);
-        if(sizeof($jaa)>0){
+        $query="SELECT * FROM attending WHERE user=$user AND event=$io";
+        $jaa=$this->db_connect_get_many($query);
+        if($jaa){
           $row["me_attending"]=1;
         }else{
           $row["me_attending"]=0;
@@ -192,7 +192,7 @@
       }else{
         $query="INSERT INTO invites (event,inviter,invitee,state) VALUES ($event,$me,$user,-1)";
         $this->db_connect_get_none($query);
-        $query="SELECT regid FROM regid FROM user WHERE id=$user";
+        $query="SELECT regid FROM user WHERE id=$user";
         $reg=$this->db_connect_get_one($query)["regid"];
         $query="SELECT id,name,logo FROM events WHERE id=$event";
         $event_info=$this->db_connect_get_one($query);
@@ -259,8 +259,8 @@
             $person["invited"]=1;
           }else{
             $person["invited"]=0;
+            array_push($response["people"],$person);
           }
-          array_push($response["people"],$person);
         }
       }
       $response["id"]=$event;

@@ -8,12 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.dopetheimmortal.turntapp.Adapters.UpcomingAdapter;
 import com.example.dopetheimmortal.turntapp.DataStructures.EventStruct;
 import com.example.dopetheimmortal.turntapp.R;
+import com.example.dopetheimmortal.turntapp.Useful.ViewEvent;
+import com.example.dopetheimmortal.turntapp.connector.GetImage;
 
 import java.util.ArrayList;
 
@@ -23,9 +26,11 @@ import java.util.ArrayList;
  */
 public class Ongoing extends Fragment {
     ArrayList<EventStruct> ongoing_events;
+
     public Ongoing() {
         // Required empty public constructor
     }
+
     public void set_data(ArrayList<EventStruct> ongoing_events) {
         this.ongoing_events = ongoing_events;
     }
@@ -36,30 +41,41 @@ public class Ongoing extends Fragment {
         View lay = inflater.inflate(R.layout.ongoing_freg, container, false);
         ArrayList<EventStruct> dummy = new ArrayList<>();
         ListView list = (ListView) lay.findViewById(R.id.ongoing_events);
-        list.setAdapter(new UpcomingAdapter(getContext(), dummy,getActivity()));
+        list.setAdapter(new UpcomingAdapter(getContext(), dummy, getActivity()));
         for (int i = 0; i < ongoing_events.size(); i++) {
             View convertView = LayoutInflater.from(getContext()).inflate(
                     R.layout.show_event, null, false);
             final EventStruct get = ongoing_events.get(i);
 
             TextView name = (TextView) convertView.findViewById(R.id.event_name);
-            TextView host = (TextView)convertView.findViewById(R.id.host);
+            TextView host = (TextView) convertView.findViewById(R.id.host);
             host.setText(get.host_name);
-            ImageButton btn=(ImageButton)convertView.findViewById(R.id.nav);
+            ImageButton btn = (ImageButton) convertView.findViewById(R.id.nav);
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String url = "http://maps.google.com/maps?daddr="+get.latlong;
-                    Intent intent = new Intent(android.content.Intent.ACTION_VIEW,  Uri.parse(url));
+                    String url = "http://maps.google.com/maps?daddr=" + get.latlong;
+                    Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(url));
                     startActivity(intent);
 
                 }
             });
+            ImageView image=(ImageView)convertView.findViewById(R.id.logo);
+            String link=getContext().getString(R.string.link)+"EventImages/"+get.logo;
+            new GetImage(link,getContext(),image).execute();
             name.setText(get.name);
             list.addFooterView(convertView);
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new ViewEvent().view_event(get, getContext(), getActivity());
+                }
+            });
         }
         return lay;
-
     }
-
 }
+
+
+
+

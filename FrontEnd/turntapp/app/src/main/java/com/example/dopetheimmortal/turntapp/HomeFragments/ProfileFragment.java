@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import com.example.dopetheimmortal.turntapp.DataStructures.EventStruct;
 import com.example.dopetheimmortal.turntapp.LocalData.UserLocalData;
 import com.example.dopetheimmortal.turntapp.R;
 import com.example.dopetheimmortal.turntapp.Useful.Profile_Data;
+import com.example.dopetheimmortal.turntapp.connector.GetImage;
 
 import java.util.ArrayList;
 
@@ -43,7 +45,10 @@ public class ProfileFragment extends Fragment {
         data.open();
         Profile_Data person =data.actual();
         data.close();
-
+        ImageView imageView=(ImageView)lay.findViewById(R.id.user_photo);
+        String image_link=getContext().getString(R.string.link)+"UserProfilePics/"+person.pic;
+        new GetImage(image_link,getContext(),imageView).execute();
+        System.out.println(person.pic);
         TextView username = (TextView) lay.findViewById(R.id.user_name);
         username.setText(person.surname);
 
@@ -86,7 +91,9 @@ public class ProfileFragment extends Fragment {
                 }
             });
             name22.setText(get.name);
-
+            ImageView image=(ImageView)convertView.findViewById(R.id.logo);
+            String link=getContext().getString(R.string.link)+"EventImages/"+get.logo;
+            new GetImage(link,getContext(),image).execute();
             l.addFooterView(convertView);
         }
         return lay;
