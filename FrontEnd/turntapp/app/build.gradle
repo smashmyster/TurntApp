@@ -24,5 +24,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.1.1'
     compile 'com.android.support:design:24.1.1'
     compile 'com.google.android.gms:play-services-gcm:9.4.0'
+    compile 'com.uber.sdk:rides-android:0.5.3'
 }
 apply plugin: 'com.google.gms.google-services'

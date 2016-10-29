@@ -24,9 +24,16 @@ import com.example.dopetheimmortal.turntapp.connector.CallBackAttending;
 import com.example.dopetheimmortal.turntapp.connector.Connector;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorAttending;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorCallback;
+import com.uber.sdk.android.core.UberSdk;
+import com.uber.sdk.android.rides.RideParameters;
+import com.uber.sdk.android.rides.RideRequestButton;
+import com.uber.sdk.core.auth.Scope;
+import com.uber.sdk.rides.client.ServerTokenSession;
+import com.uber.sdk.rides.client.SessionConfiguration;
 
 import org.json.JSONException;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -37,6 +44,23 @@ public class ViewEvent implements ConnectorCallback, CallBackAttending {
     Dialog dialog;
     Context context;
     Activity activity;
+    SessionConfiguration config = new SessionConfiguration.Builder()
+            // mandatory
+            .setClientId("_ZrUfd8-PPK5GiQNcuqV8oJqpQWIFEed")
+            // required for enhanced button features
+            .setServerToken("kVKaKz9cz3u_rIX39QExrlzIgCAVeU6rWChpLKi5")
+            // required for implicit grant authentication
+            .setRedirectUri("YOUR_REDIRECT_URI")
+            // required scope for Ride Request Widget features
+            .setScopes(Arrays.asList(Scope.RIDE_WIDGETS))
+            // optional: set Sandbox as operating environment
+            .setEnvironment(SessionConfiguration.Environment.SANDBOX)
+            .build();
+
+    public ViewEvent() {
+        UberSdk.initialize(config);
+    }
+
     public void view_event(EventStruct struct, Context context, Activity activity) {
         this.context = context;
         this.activity=activity;
@@ -108,7 +132,27 @@ public class ViewEvent implements ConnectorCallback, CallBackAttending {
                 new ConnectorAttending(link, ViewEvent.this, context, send, "Getting list", "Please wait", false, true).execute();
             }
         });
+        final RideRequestButton requestButton=(RideRequestButton)view.findViewById(R.id.ride);
+        ServerTokenSession session = new ServerTokenSession(config);
+        requestButton.setSession(session);
+        requestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                run_get_ride(requestButton);
+            }
+        });
         return view;
+    }
+
+    private void run_get_ride(RideRequestButton requestButton) {
+//        requestButton.loadRideInformation();
+        RideParameters rideParams = new RideParameters.Builder()
+                // Required for pickup estimates; lat (Double), lng (Double), nickname (String), formatted address (String) of pickup location
+                .setPickupLocation(37.775304, -122.417522, "Uber HQ", "1455 Market Street, San Francisco")
+                .build();
+// set parameters for the RideRequestButton instance
+        requestButton.setRideParameters(rideParams);
+        requestButton.loadRideInformation();
     }
 
     @Override

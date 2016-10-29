@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:uber="http://schemas.android.com/apk/res-auto">
     <ImageView
         android:layout_width="90dp"
         android:layout_height="90dp"
@@ -67,4 +69,11 @@
         android:layout_alignTop="@+id/invite_users"
         android:layout_alignBottom="@+id/invite_users"
         android:layout_alignParentRight="true"/>
+    <com.uber.sdk.android.rides.RideRequestButton
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/ride"
+        android:layout_below="@+id/invite_users"
+        uber:ub__style="black" />
 </RelativeLayout>
