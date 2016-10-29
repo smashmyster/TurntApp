@@ -355,7 +355,7 @@
       $pngAbsoluteFilePath = "BarCodes/".$fileName;
       // generating
       // QRcode::png($codeContents, $pngAbsoluteFilePath);
-      QRcode::png($codeContents, $pngAbsoluteFilePath);
+      QRcode::png($codeContents, $pngAbsoluteFilePath,QR_ECLEVEL_L, 80);
 
       // displaying
       return array('success'=>1,'message'=>'attending');

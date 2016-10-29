@@ -7,10 +7,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -24,6 +27,7 @@ import com.example.dopetheimmortal.turntapp.connector.CallBackAttending;
 import com.example.dopetheimmortal.turntapp.connector.Connector;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorAttending;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorCallback;
+import com.example.dopetheimmortal.turntapp.connector.GetImage;
 import com.uber.sdk.android.core.UberSdk;
 import com.uber.sdk.android.rides.RideParameters;
 import com.uber.sdk.android.rides.RideRequestButton;
@@ -93,8 +97,10 @@ public class ViewEvent implements ConnectorCallback, CallBackAttending {
         attending.setText(struct.attending + " People are attending");
         ImageView invite = (ImageView) view.findViewById(R.id.invite_users);
         CheckBox check = (CheckBox) view.findViewById(R.id.attending_status);
+        final ImageButton checkin=(ImageButton)view.findViewById(R.id.checkin);
         if (struct.me_attending) {
             check.setChecked(true);
+            checkin.setVisibility(View.VISIBLE);
         }
         check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -109,11 +115,19 @@ public class ViewEvent implements ConnectorCallback, CallBackAttending {
                 send.put("event", struct.id);
                 if (isChecked) {
                     send.put("type", "attending");
+                    checkin.setVisibility(View.VISIBLE);
                 } else {
                     send.put("type", "unattending");
+                    checkin.setVisibility(View.GONE);
                 }
                 new Connector(link, ViewEvent.this, context, send, "Updating status", "Loading....", false, true).execute();
             }
+        });
+        checkin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                run_get_qr_code(struct);
+;            }
         });
         final Bundle bh = new Bundle();
         bh.putString("data", struct.id);
@@ -142,6 +156,27 @@ public class ViewEvent implements ConnectorCallback, CallBackAttending {
             }
         });
         return view;
+    }
+
+    private void run_get_qr_code(EventStruct struct) {
+        AlertDialog.Builder builder=new AlertDialog.Builder(context);
+        builder.setTitle("Please scan the tablet to confirm your attendance");
+        View v=LayoutInflater.from(context).inflate(R.layout.view_image,null,false);
+
+        ImageView imageview=(ImageView)v.findViewById(R.id.show_image);
+        builder.setView(v);
+        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        UserLocalData ll=new UserLocalData(context);
+        ll.open();
+        String link=context.getString(R.string.link)+"BarCodes/"+ll.actual().dbid+"_"+struct.id+".png";
+        ll.close();
+        new GetImage(link,context,imageview).execute();
+        builder.show();
     }
 
     private void run_get_ride(RideRequestButton requestButton) {
