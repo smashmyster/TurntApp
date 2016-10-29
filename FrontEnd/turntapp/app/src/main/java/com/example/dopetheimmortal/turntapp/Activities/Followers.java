@@ -2,9 +2,11 @@ package com.example.dopetheimmortal.turntapp.Activities;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -20,6 +22,7 @@ import com.example.dopetheimmortal.turntapp.R;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorCallback;
 import com.example.dopetheimmortal.turntapp.Useful.Profile_Data;
 import com.example.dopetheimmortal.turntapp.connector.Connector;
+import com.example.dopetheimmortal.turntapp.connector.GetImage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -100,15 +103,11 @@ public class Followers extends Activity implements ConnectorCallback {
             String surname=item.getString("surname");
             String image=item.getString("image_name");
             String status=item.getString("status");
+            String image_name=item.getString("image_name");
 //            int state=item.getInt("follow_back");
             final FollowData person=new FollowData(name,image,id,surname,status);
-            View toadd=get_person(person);
-            toadd.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(Followers.this,person.id, Toast.LENGTH_LONG).show();
-                }
-            });
+            View toadd=get_person(person,image_name);
+
             followers.addFooterView(toadd);
             people.add(person);
         }
@@ -125,7 +124,7 @@ public class Followers extends Activity implements ConnectorCallback {
 
     }
 
-    public View get_person(FollowData get) {
+    public View get_person(final FollowData get, String image_name) {
         LayoutInflater inflater = getLayoutInflater();
         RelativeLayout convertView = null;
         convertView = (RelativeLayout) inflater.inflate(R.layout.follow_data_adapter, null);
@@ -134,7 +133,19 @@ public class Followers extends Activity implements ConnectorCallback {
         username.setText(get.status);
         TextView name = (TextView) convertView.findViewById(R.id.follow_name);
         name.setText(get.name+" "+get.surname);
-
+        ImageView image=(ImageView)convertView.findViewById(R.id.user_follow_img) ;
+        String image_link=this.getString(R.string.link)+"UserProfilePics/"+image_name;
+        new GetImage(image_link,this,image).execute();
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bh=new Bundle();
+                bh.putString("id",get.id);
+                Intent intent=new Intent(Followers.this,ViewUser.class);
+                intent.putExtras(bh);
+                startActivity(intent);
+            }
+        });
         return convertView;
     }
 

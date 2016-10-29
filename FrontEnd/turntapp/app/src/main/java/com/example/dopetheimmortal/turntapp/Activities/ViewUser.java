@@ -2,6 +2,7 @@ package com.example.dopetheimmortal.turntapp.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,6 +24,7 @@ import com.example.dopetheimmortal.turntapp.connector.ConnectorCallback;
 import com.example.dopetheimmortal.turntapp.Useful.Profile_Data;
 import com.example.dopetheimmortal.turntapp.connector.Connector;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorAttending;
+import com.example.dopetheimmortal.turntapp.connector.GetImage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,6 +32,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static java.security.AccessController.getContext;
 
 /**
  * Created by jackson on 2016/10/19.
@@ -77,6 +82,9 @@ public class ViewUser extends AppCompatActivity implements ConnectorCallback,Cal
         TextView name2 = (TextView) findViewById(R.id.num_attending);
         name2.setText( object.getString("num"));
         get_events();
+        ImageView imageView=(ImageView)findViewById(R.id.user_photo);
+        String image_link=this.getString(R.string.link)+"UserProfilePics/"+object.getString("image_name");
+        new GetImage(image_link,this,imageView).execute();
 
     }
     public void get_events() {
@@ -142,7 +150,9 @@ public class ViewUser extends AppCompatActivity implements ConnectorCallback,Cal
                 }
             });
             name22.setText(get.name);
-
+            ImageView image=(ImageView)convertView.findViewById(R.id.logo);
+            String link=this.getString(R.string.link)+"EventImages/"+get.logo;
+            new GetImage(link,this,image).execute();
             l.addFooterView(convertView);
         }
     }

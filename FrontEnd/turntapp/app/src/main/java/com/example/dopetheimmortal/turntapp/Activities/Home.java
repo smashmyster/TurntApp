@@ -364,7 +364,6 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
                 Intent o = new Intent(Home.this, ViewUser.class);
                 o.putExtras(bh);
                 startActivity(o);
-                System.out.println("Trying");
             }
         });
         return convertView;

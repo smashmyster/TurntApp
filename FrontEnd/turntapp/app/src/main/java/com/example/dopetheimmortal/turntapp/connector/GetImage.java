@@ -11,7 +11,6 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.widget.ImageView;
 
-import com.example.dopetheimmortal.turntapp.DataStructures.EventStruct;
 import com.example.dopetheimmortal.turntapp.Useful.ImageProcessing;
 
 import java.io.InputStream;
@@ -24,12 +23,13 @@ public class GetImage extends AsyncTask<Bitmap, Bitmap, Bitmap> {
     String link;
     Context context;
     ImageView image_view;
+
     public GetImage(String link, Context context, ImageView image) {
         this.link = link;
         this.context = context;
 //        this.menu_interface=menu_interface;
         System.gc();
-        this.image_view=image;
+        this.image_view = image;
     }
 
     @Override
@@ -53,7 +53,7 @@ public class GetImage extends AsyncTask<Bitmap, Bitmap, Bitmap> {
                     int imageWidth = options.outWidth;
                     float ratio = imageWidth / imageHeight;
                     int new_height = (int) (200 * ratio);
-                    image = new ImageProcessing().decodeSampledBitmapFromResource(link,200, new_height, options);
+                    image = new ImageProcessing().decodeSampledBitmapFromResource(link, 200, new_height, options);
                     //new_name ImageProcessing().createImageFile(food.image, image,"restaurants/menus");
                 } else {
                     return image;
@@ -79,8 +79,9 @@ public class GetImage extends AsyncTask<Bitmap, Bitmap, Bitmap> {
 
     @Override
     protected void onPostExecute(Bitmap bitmap) {
-            System.gc();
+        System.gc();
+        if (bitmap != null)
             image_view.setImageBitmap(bitmap);
-            System.gc();
-        }
+        System.gc();
     }
+}

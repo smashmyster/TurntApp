@@ -48,7 +48,6 @@ public class ProfileFragment extends Fragment {
         ImageView imageView=(ImageView)lay.findViewById(R.id.user_photo);
         String image_link=getContext().getString(R.string.link)+"UserProfilePics/"+person.pic;
         new GetImage(image_link,getContext(),imageView).execute();
-        System.out.println(person.pic);
         TextView username = (TextView) lay.findViewById(R.id.user_name);
         username.setText(person.surname);
 
