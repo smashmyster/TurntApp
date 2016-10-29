@@ -20,7 +20,7 @@ function sign_up() {
     var ext="ext";
     var regid="regid";
     var gender="gender";
-    $.post('../Backend/index.php', {
+    $.post('../Backendindex.php', {
            /* name: name,
             user: user,
             type: type,

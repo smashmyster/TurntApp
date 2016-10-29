@@ -1,0 +1,57 @@
+//This will be sample manager
+function sign_up() {
+    //var localObj = JSON.parse(localStorage.getItem("userInfo"));
+    //var user = localObj.id;
+    var type = 'sign_up';
+    var user = 'test name';
+    //var nasasa_reg = $('#nasasa_registered :selected').text();
+    /*var nasasa_id = $('#NID').val();
+    var bank = $('#Bank :selected').text();
+    var account_number = $('#account').val();
+    var reg_date = $('#date').val();
+    var soc_type = $('#sType').val();*/
+    var pass= "12345";
+    var email="test@test.com"
+    var name="name";
+    var surname="surname";
+    var bday="bday";
+    var phone="phone";
+    var image="image";
+    var ext="ext";
+    var regid="regid";
+    var gender="gender";
+    $.post('index.php', {
+           /* name: name,
+            user: user,
+            type: type,
+            nasasa_reg: nasasa_reg,
+            nasasa_id: nasasa_id,
+            bank: bank,
+            account_number: account_number,
+            reg_date: reg_date,
+            soc_type: soc_type*/
+	    type:type,
+    	    user:user,
+	    pass: pass,
+    	    email:email,
+    	    name:name,
+    	    surname:surname,
+    	    bday:bday,
+    	    phone:phone,
+    	    image:image,
+    	    ext:ext,
+    	    regid:regid,
+    	    gender:gender;
+        },
+        function(data) {
+            console.log(data);
+            var received = JSON.parse(data);
+            if (received.success == 1) {
+                console.log("success");
+            }
+	    else {
+                console.log("fail");
+            }
+        }
+    );
+}
