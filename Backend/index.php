@@ -184,6 +184,14 @@
       $info=$useractions->unfollow_user($me,$user);
       echo json_encode($info);
       break;
+    case 'get_my_invites':
+        $user=$_REQUEST["me"];
+      include_once 'EventManagement.php';
+      $events=new Events();
+      $info=$events->get_events($user);
+      echo json_encode($info);
+      # code...
+      break;
     case 'test_gcm':
       $token=array();
       array_push($token,'fXtJe_KL9Ws:APA91bHzluZ4vcZKXJH8036GOnnZ75Yv_hEC35xCl8QouB0YqMvgGDx3p8NS0UdjEUQbJvcSsCXnj7lv_QlFjtQ9NJbltg26RaQVQwMlPkbk8DDICKfnW1bjKcqreF2khAhfSXuNR0gZ');

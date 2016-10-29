@@ -346,12 +346,39 @@
     function attend_event($id,$event){
       $query="INSERT INTO attending (event,user) VALUES ($event,$id)";
       $this->db_connect_get_none($query);
+      include('QRCreator/qrlib.php');
+      $codeContents = $id."_".$event;
+
+      // we need to generate filename somehow,
+      // with md5 or with database ID used to obtains $codeContents...
+      $fileName = $id."_".$event.'.png';
+      $pngAbsoluteFilePath = "BarCodes/".$fileName;
+      // generating
+      // QRcode::png($codeContents, $pngAbsoluteFilePath);
+      QRcode::png($codeContents, $pngAbsoluteFilePath);
+
+      // displaying
       return array('success'=>1,'message'=>'attending');
     }
     function unattend_event($id,$event){
       $query="DELETE FROM attending WHERE event=$event AND user=$id";
       $this->db_connect_get_none($query);
       return array('success'=>1,'message'=>'unattending');
+    }
+    function get_events($me){
+      $query="SELECT * FROM invites WHERE invitee=$me AND state=-1";
+      $data=$this->db_connect_get_many($query);
+      include_once 'InfoExchange.php';
+      $exchange=new InfoExchange();
+      $response["data"]=array();
+      foreach ($data as $key) {
+        $query="SELECT * FROM events WHERE id=:eid";
+        $send["event"]=$this->db_connect_get_one($query,array(':eid'=>$key["event"]));
+        $send["inviter"]=$exchange->get_user_basic_info($key["inviter"]);
+        array_push($response["data"],$send);
+      }
+      $response["success"]=1;
+      return $response;
     }
   }
 
