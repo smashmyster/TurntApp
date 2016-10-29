@@ -148,7 +148,7 @@ public class ViewEvent implements ConnectorCallback, CallBackAttending {
 //        requestButton.loadRideInformation();
         RideParameters rideParams = new RideParameters.Builder()
                 // Required for pickup estimates; lat (Double), lng (Double), nickname (String), formatted address (String) of pickup location
-                .setPickupLocation(37.775304, -122.417522, "Uber HQ", "1455 Market Street, San Francisco")
+                .setPickupLocation(-26.190046, 28.026686, "Wits",null)
                 .build();
 // set parameters for the RideRequestButton instance
         requestButton.setRideParameters(rideParams);
