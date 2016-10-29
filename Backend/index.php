@@ -32,11 +32,28 @@
       break;
     case 'get_upcoming_events':
       $id=$_REQUEST["id"];
+      $user=$_REQUEST["user"];
       include_once "EventManagement.php";
       $events=new Events();
-      $info=$events->get_upcoming_events($id);
+      $info=$events->get_upcoming_events($id,$user);
       echo json_encode($info);
       break;
+    case 'attending':
+      $id=$_REQUEST["id"];
+      $event=$_REQUEST["event"];
+      include_once "EventManagement.php";
+      $events=new Events();
+      $info=$events->attend_event($id,$event);
+      echo json_encode($info);
+      break;
+      case 'unattending':
+        $id=$_REQUEST["id"];
+        $event=$_REQUEST["event"];
+        include_once "EventManagement.php";
+        $events=new Events();
+        $info=$events->unattend_event($id,$event);
+        echo json_encode($info);
+        break;
     case 'get_ongoing_events':
       $id=$_REQUEST["id"];
       include_once "EventManagement.php";
@@ -165,6 +182,15 @@
       $user=$_REQUEST["user"];
       $info=$useractions->unfollow_user($me,$user);
       echo json_encode($info);
+      break;
+    case 'test_gcm':
+      $token=array();
+      array_push($token,'fXtJe_KL9Ws:APA91bHzluZ4vcZKXJH8036GOnnZ75Yv_hEC35xCl8QouB0YqMvgGDx3p8NS0UdjEUQbJvcSsCXnj7lv_QlFjtQ9NJbltg26RaQVQwMlPkbk8DDICKfnW1bjKcqreF2khAhfSXuNR0gZ');
+      $message["message"]=1;
+      include_once 'SendGCM.php';
+      $send=new GCM();
+      $send->send_invite($token,$message);
+
       break;
     default:
       echo json_encode(array('success'=>-1,'message'=>'Unknown Request'));

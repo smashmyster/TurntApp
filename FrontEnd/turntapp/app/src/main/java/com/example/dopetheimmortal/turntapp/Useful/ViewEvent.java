@@ -1,7 +1,9 @@
 package com.example.dopetheimmortal.turntapp.Useful;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -10,29 +12,50 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dopetheimmortal.turntapp.Activities.InviteUsers;
 import com.example.dopetheimmortal.turntapp.DataStructures.EventStruct;
+import com.example.dopetheimmortal.turntapp.LocalData.UserLocalData;
 import com.example.dopetheimmortal.turntapp.R;
+import com.example.dopetheimmortal.turntapp.connector.Connector;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorCallback;
 
 import org.json.JSONException;
 import org.w3c.dom.Text;
+
+import java.util.HashMap;
 
 /**
  * Created by jackson on 2016/10/29.
  */
 
 public class ViewEvent implements ConnectorCallback{
+    Dialog dialog;
+    Context context;
     public void view_event(EventStruct struct, Context context,Activity activity){
+        this.context=context;
         AlertDialog.Builder builder=new AlertDialog.Builder(context);
+        View v=get_view(struct,context,activity);
+        ScrollView scrollView=new ScrollView(context);
+        scrollView.addView(v);
+        builder.setView(scrollView);
+        builder.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        dialog=builder.create();
+        dialog.show();
     }
-    public void get_view(EventStruct struct, final Context context, final Activity activity){
+    public View get_view(final EventStruct struct, final Context context, final Activity activity){
         View view= LayoutInflater.from(context).inflate(R.layout.view_event_details,null,false);
         TextView name=(TextView)view.findViewById(R.id.view_event_name);
         TextView start_time=(TextView)view.findViewById(R.id.view_start_time);
-        TextView fee=(TextView)view.findViewById(R.id.view_general_fee);
+        final TextView fee=(TextView)view.findViewById(R.id.view_general_fee);
         TextView vip=(TextView)view.findViewById(R.id.view_vip_fee);
         TextView attending=(TextView)view.findViewById(R.id.view_attending);
         name.setText(struct.name);
@@ -48,9 +71,20 @@ public class ViewEvent implements ConnectorCallback{
         check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                String link=context.getString(R.string.link);
+                HashMap<String,String>send=new HashMap<String, String>();
+                UserLocalData local=new UserLocalData(context);
+                local.open();
+                String id=local.actual().dbid;
+                local.close();
+                send.put("id",id);
+                send.put("event",struct.id);
                 if(isChecked){
-
+                    send.put("type","attending");
+                }else{
+                    send.put("type","unattending");
                 }
+                new Connector(link,ViewEvent.this,context,send,"Updating status","Loading....",false,true).execute();
             }
         });
        final  Bundle bh=new Bundle();
@@ -61,13 +95,15 @@ public class ViewEvent implements ConnectorCallback{
                 Intent i=new Intent(context, InviteUsers.class);
                 i.putExtras(bh);
                 activity.startActivity(i);
+                dialog.dismiss();
             }
         });
+        return view;
     }
 
     @Override
     public void success(String info) throws JSONException {
-
+        Toast.makeText(context,"Updated",Toast.LENGTH_LONG).show();
     }
 
     @Override

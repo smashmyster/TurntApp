@@ -34,6 +34,7 @@ import com.example.dopetheimmortal.turntapp.DataStructures.EventStruct;
 import com.example.dopetheimmortal.turntapp.DataStructures.GeneralUser;
 import com.example.dopetheimmortal.turntapp.LocalData.UserLocalData;
 import com.example.dopetheimmortal.turntapp.R;
+import com.example.dopetheimmortal.turntapp.Services.GCMRegistrationIntentService;
 import com.example.dopetheimmortal.turntapp.connector.CallBackAttending;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorCallSearch;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorCallback;
@@ -56,28 +57,6 @@ import java.util.HashMap;
  */
 public class Home extends AppCompatActivity implements ConnectorCallback, ConnectorCallSearch, CallBackAttending {
     //Notifications
-    private BroadcastReceiver mRegistrationBroadcastReceiver;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     private Toolbar toolbar;
@@ -108,81 +87,12 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
         new Connector(link, this, this, data, "Loading events", "Loading events\nPlease wait..", false, true).execute();
 
 
-//Notifications
-
-        //Initializing our broadcast receiver
-        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
-
-            //When the broadcast received
-            //We are sending the broadcast from GCMRegistrationIntentService
-
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                //If the broadcast has received with success
-                //that means device is registered successfully
-                if(intent.getAction().equals(GCMRegistrationIntentService.REGISTRATION_SUCCESS)){
-                    //Getting the registration token from the intent
-                    String token = intent.getStringExtra("token");
-                    //Displaying the token as toast
-                    Toast.makeText(getApplicationContext(), "Registration token:" + token, Toast.LENGTH_LONG).show();
-
-                    //if the intent is not with success then displaying error messages
-                } else if(intent.getAction().equals(GCMRegistrationIntentService.REGISTRATION_ERROR)){
-                    Toast.makeText(getApplicationContext(), "GCM registration error!", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Error occurred", Toast.LENGTH_LONG).show();
-                }
-            }
-        };
-
-        //Checking play service is available or not
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
-
-        //if play service is not available
-        if(ConnectionResult.SUCCESS != resultCode) {
-            //If play service is supported but not installed
-            if(GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-                //Displaying message that play service is not installed
-                Toast.makeText(getApplicationContext(), "Google Play Service is not install/enabled in this device!", Toast.LENGTH_LONG).show();
-                GooglePlayServicesUtil.showErrorNotification(resultCode, getApplicationContext());
-
-                //If play service is not supported
-                //Displaying an error message
-            } else {
-                Toast.makeText(getApplicationContext(), "This device does not support for Google Play Service!", Toast.LENGTH_LONG).show();
-            }
-
-            //If play service is available
-        } else {
-            //Starting intent to register device
-            Intent itent = new Intent(this, GCMRegistrationIntentService.class);
-            startService(itent);
-        }
 
 
 
 
     }
 
-    //Registering receiver on activity resume
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.w("HomeActivity", "onResume");
-        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter(GCMRegistrationIntentService.REGISTRATION_SUCCESS));
-        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter(GCMRegistrationIntentService.REGISTRATION_ERROR));
-    }
-
-
-    //Unregistering receiver on activity paused
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.w("HomeActivity", "onPause");
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
-    }
 
     private void initializetools() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -262,7 +172,8 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
             String address = get.getString("address");
             String logo = get.getString("logo");
             String host_name = get.getString("host_name");
-            upcoming_events.add(new EventStruct(id, djs, attending, event_type, host_id, rating, tbl_avail, specials, gen_fee, vip_fee, name, start_time, end_time, latlong, address, logo, host_name));
+            boolean me_attending=get.getInt("me_attending")==1?true:false;
+            upcoming_events.add(new EventStruct(id, djs, attending, event_type, host_id, rating, tbl_avail, specials, gen_fee, vip_fee, name, start_time, end_time, latlong, address, logo, host_name,me_attending));
         }
         object = obj.getJSONArray("ongoing");
         for (int i = 0; i < object.length(); i++) {
@@ -284,7 +195,8 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
             String address = get.getString("address");
             String logo = get.getString("logo");
             String host_name = get.getString("host_name");
-            ongoing_events.add(new EventStruct(id, djs, attending, event_type, host_id, rating, tbl_avail, specials, gen_fee, vip_fee, name, start_time, end_time, latlong, address, logo, host_name));
+            boolean me_attending=get.getInt("me_attending")==1?true:false;
+            ongoing_events.add(new EventStruct(id, djs, attending, event_type, host_id, rating, tbl_avail, specials, gen_fee, vip_fee, name, start_time, end_time, latlong, address, logo, host_name,me_attending));
         }
         this.upcomig_events = upcoming_events;
         this.ongoing_events = ongoing_events;

@@ -1,8 +1,7 @@
-package com.example.dopetheimmortal.turntapp.Activities;
+package com.example.dopetheimmortal.turntapp.Services;
 
 import android.content.Intent;
 
-import com.google.android.gms.iid.InstanceID;
 import com.google.android.gms.iid.InstanceIDListenerService;
 
 /**

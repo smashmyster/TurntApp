@@ -18,6 +18,7 @@ import com.example.dopetheimmortal.turntapp.Adapters.UpcomingAdapter;
 import com.example.dopetheimmortal.turntapp.DataStructures.EventStruct;
 import com.example.dopetheimmortal.turntapp.DataStructures.FollowData;
 import com.example.dopetheimmortal.turntapp.R;
+import com.example.dopetheimmortal.turntapp.Useful.ViewEvent;
 
 import java.util.ArrayList;
 
@@ -64,11 +65,11 @@ public class Upcoming extends Fragment {
             });
             name.setText(get.name);
             list.addFooterView(convertView);
-             TouchImageView img = (TouchImageView) lay.findViewById(R.id.logo);
+//            TouchImageView img = (TouchImageView) lay.findViewById(R.id.logo);
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    new ViewEvent().view_event(get,getContext(),getActivity());
                 }
             });
         }

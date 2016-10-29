@@ -34,7 +34,7 @@
       }
       return $stmp->fetchAll();
     }
-    function get_upcoming_events($id){
+    function get_upcoming_events($id,$user){
       include_once 'InfoExchange.php';
       $exchange=new InfoExchange();
       $now = new DateTime();
@@ -46,11 +46,18 @@
         $rows=$this->db_connect_get_many($query);
         $response["ongoing"]=array();
         foreach ($rows as $row ) {
+          $query="SELECT * FROM attending WHERE user=$user AND id=:eid";
+          $jaa=$this->db_connect_get_many($query,array(':eid'=>$row["id"]));
+          if(sizeof($jaa)>0){
+            $row["me_attending"]=1;
+          }else{
+            $row["me_attending"]=0;
+          }
           if($row["event_type"]==1){
-   $row["host_name"]=$exchange->get_club_info($row["host_id"])["club_info"]["name"];
-}else{
-  $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-}
+              $row["host_name"]=$exchange->get_club_info($row["host_id"])["club_info"]["name"];
+            }else{
+              $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
+            }
           array_push($response["ongoing"],$row);
         }
       }else{
@@ -60,6 +67,14 @@
       $rows=$this->db_connect_get_many($query);
 
       foreach ($rows as $row ) {
+        $io=$row["id"];
+        $query="SELECT * FROM attending WHERE user=$user AND id=$io";
+        $jaa=$this->db_connect_get_one($query);
+        if(sizeof($jaa)>0){
+          $row["me_attending"]=1;
+        }else{
+          $row["me_attending"]=0;
+        }
         if($row["event_type"]==1){
            $row["host_name"]=$exchange->get_club_info($row["host_id"])["club_info"]["name"];
         }else{
@@ -86,6 +101,11 @@
         $response["code"]=0;
       }
       foreach ($rows as $row ) {
+        if(sizeof($jaa)>0){
+          $row["me_attending"]=1;
+        }else{
+          $row["me_attending"]=0;
+        }
         if($row["event_type"]==1){
    $row["host_name"]=$exchange->get_club_info($row["host_id"])["club_info"]["name"];
 }else{
@@ -267,7 +287,7 @@
 
     }
     function user_create_event($name,$address,$me,$djs,$specials,$gen_fee,$vip_fee,$start_time,$end_time,$ext,$pic){
-        $image_name=$name.'_'.$start_time.'.'.$ext;
+        $image_name=$name.'_'.$start_time.'.jpg';
         $latlong=$this->lookup($address);
         $this->get_image($pic,$image_name);
         $query="SELECT 1 FROM events WHERE name=:ename AND address=:eaddress";
@@ -317,6 +337,16 @@
     function get_event_by_id($id){
       $query="SELECT * FROM events WHERE id=$id";
       return $this->db_connect_get_one($query);
+    }
+    function attend_event($id,$event){
+      $query="INSERT INTO attending (event,user) VALUES ($event,$id)";
+      $this->db_connect_get_none($query);
+      return array('success'=>1,'message'=>'attending');
+    }
+    function unattend_event($id,$event){
+      $query="DELETE FROM attending WHERE event=$event AND user=$id";
+      $this->db_connect_get_none($query);
+      return array('success'=>1,'message'=>'unattending');
     }
   }
 

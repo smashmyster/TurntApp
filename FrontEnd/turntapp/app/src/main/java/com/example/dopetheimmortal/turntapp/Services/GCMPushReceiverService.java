@@ -1,4 +1,4 @@
-package com.example.dopetheimmortal.turntapp.Activities;
+package com.example.dopetheimmortal.turntapp.Services;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
+import com.example.dopetheimmortal.turntapp.Activities.Home;
 import com.example.dopetheimmortal.turntapp.R;
 import com.google.android.gms.gcm.GcmListenerService;
 
@@ -20,11 +21,12 @@ public class GCMPushReceiverService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
         //Getting the message from the bundle
-        String message = data.getString("message");
-        Toast.makeText(getApplicationContext(),"Ok "+ message, Toast.LENGTH_LONG).show();
-
-        //Displaying a notiffication with the message
-        sendNotification(message);
+        System.out.println(data);
+//        String message = data.getString("message");
+//        Toast.makeText(this,"Ok "+data.getString("message"), Toast.LENGTH_LONG).show();
+//
+//        //Displaying a notiffication with the message
+        sendNotification(data.getString("message"));
     }
 
     //This method is generating a notification and displaying the notificatokention

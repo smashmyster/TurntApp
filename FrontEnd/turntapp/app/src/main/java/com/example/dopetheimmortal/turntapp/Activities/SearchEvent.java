@@ -79,7 +79,8 @@ public class SearchEvent extends AppCompatActivity implements ConnectorCallSearc
             String latlong = get.getString("latlong");
             String address = get.getString("address");
             String logo = get.getString("logo");
-            upcoming_events.add(new EventStruct(id, djs, attending, event_type, host_id, rating, tbl_avail, specials, gen_fee, vip_fee, name, start_time, end_time, latlong, address, logo, ""));
+            boolean me_attending=get.getInt("me_attending")==1?true:false;
+            upcoming_events.add(new EventStruct(id, djs, attending, event_type, host_id, rating, tbl_avail, specials, gen_fee, vip_fee, name, start_time, end_time, latlong, address, logo, "",me_attending));
         }
         UpcomingAdapter adapter = new UpcomingAdapter(this, upcoming_events,this);
         show_search = (ListView) findViewById(R.id.searching_events);

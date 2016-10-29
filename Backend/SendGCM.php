@@ -10,7 +10,7 @@
           'registration_ids'=>$tokens,
           'data'=>$message//array("message" => " FCM PUSH NOTIFICATION TEST MESSAGE","type"=>'order')
       );
-      $hearders=array('Authorization:key=AIzaSyDVpFpeHj4deLgWFCBm8KLQ79BO1dtb284',
+      $hearders=array('Authorization:key=AIzaSyDnug4LqWhu2Ww-VV3yzpzk9otIopClwjg',
       'Content-Type:application/json');
       $ch = curl_init();
       curl_setopt($ch, CURLOPT_URL, $url);
@@ -25,6 +25,7 @@
           die('Curl failed: ' . curl_error($ch));
       }
       curl_close($ch);
+      echo $result;
     }
   }
 
