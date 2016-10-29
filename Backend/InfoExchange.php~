@@ -71,7 +71,6 @@
       $query="SELECT id,name,surname,image_name,following,followers,status FROM user WHERE id=$user";
       $daat= $this->db_connect_get_one($query);
       $daat["success"]=1;
-      return $daat;
     }
     function is_following($me,$user){
       $query="SELECT 1 FROM followers WHERE follower=$me AND following=$user";

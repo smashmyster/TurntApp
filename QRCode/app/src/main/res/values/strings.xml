@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">QR Code</string>
+    <string name="app_name">Check In</string>
+    <string name="link">http://10.0.0.6/TurntappAssignment/Backend/</string>
 </resources>

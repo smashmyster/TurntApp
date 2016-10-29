@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(gIntent);
             }
         });
+        gen.setVisibility(View.GONE);
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

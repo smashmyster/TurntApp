@@ -22,4 +22,10 @@
         android:layout_centerVertical="true"
         android:text="SCAN"
         android:id="@+id/scan_btn"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/person_info"
+        android:gravity="center"
+        android:layout_below="@+id/scan_btn"/>
 </RelativeLayout>

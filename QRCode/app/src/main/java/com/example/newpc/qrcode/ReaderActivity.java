@@ -6,12 +6,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-public class ReaderActivity extends AppCompatActivity {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
+public class ReaderActivity extends AppCompatActivity implements Scanner {
     private Button scan_btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +35,8 @@ public class ReaderActivity extends AppCompatActivity {
                 integrator.setBeepEnabled(false);
                 integrator.setBarcodeImageEnabled(false);
                 integrator.initiateScan();
+                TextView textView=(TextView)findViewById(R.id.person_info);
+                textView.setText("");
             }
         });
     }
@@ -41,11 +49,29 @@ public class ReaderActivity extends AppCompatActivity {
                 Toast.makeText(this, "You cancelled the scanning", Toast.LENGTH_LONG).show();
             }
             else {
-                Toast.makeText(this, result.getContents(),Toast.LENGTH_LONG).show();
+                String s=result.getContents();
+                HashMap<String,String>daata=new HashMap<>();
+                daata.put("type","check_in");
+                daata.put("data",s);
+                String link=this.getString(R.string.link);
+                new Connector(link,this,this,daata,"Confirming","Please wait",false,true).execute();
             }
         }
         else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    @Override
+    public void success(String s) throws JSONException {
+        TextView textView=(TextView)findViewById(R.id.person_info);
+        JSONObject object=new JSONObject(s);
+        textView.setText("Welcome to the party "+object.getString("name"));
+        new Remover(textView).execute();
+    }
+
+    @Override
+    public void fail(String s) {
+
     }
 }

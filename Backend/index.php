@@ -199,7 +199,14 @@
       include_once 'SendGCM.php';
       $send=new GCM();
       $send->send_invite($token,$message);
-
+      break;
+    case 'check_in':
+        $data=$_REQUEST["data"];
+        $arr=explode('_',$data);
+        include_once 'InfoExchange.php';
+        $exchange=new InfoExchange();
+        $info=$exchange->get_user_basic_info($arr[0]);
+        echo json_encode($info);
       break;
     default:
       echo json_encode(array('success'=>-1,'message'=>'Unknown Request'));
