@@ -263,6 +263,7 @@
           array_push($response["people"],$person);
         }
       }
+      $response["id"]=$event;
       $response["success"]=1;
       return $response;
     }

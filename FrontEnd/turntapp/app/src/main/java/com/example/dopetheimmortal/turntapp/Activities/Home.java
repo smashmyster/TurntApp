@@ -69,6 +69,7 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
     ArrayList<EventStruct> upcomig_events;
     ArrayList<EventStruct> ongoing_events;
     ArrayList<EventStruct> b;
+    UserLocalData looca = new UserLocalData(this);
     boolean run=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +83,12 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
         initializetools();
         String link = this.getString(R.string.link);
         HashMap<String, String> data = new HashMap<>();
+        looca.open();
+        Profile_Data ll = looca.actual();
+        looca.close();
         data.put("type", "get_upcoming_events");
         data.put("id", "0");
+        data.put("user",ll.dbid);
         new Connector(link, this, this, data, "Loading events", "Loading events\nPlease wait..", false, true).execute();
 
 
@@ -371,7 +376,6 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
 
     public void get_my_events() {
         HashMap<String, String> att = new HashMap<>();
-        UserLocalData looca = new UserLocalData(this);
         looca.open();
         Profile_Data ll = looca.actual();
         looca.close();
