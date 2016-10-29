@@ -1,25 +1,17 @@
 package com.example.dopetheimmortal.turntapp.Activities;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.example.dopetheimmortal.turntapp.Adapters.InviteAdapter;
 import com.example.dopetheimmortal.turntapp.Adapters.UpcomingAdapter;
 import com.example.dopetheimmortal.turntapp.DataStructures.EventStruct;
-import com.example.dopetheimmortal.turntapp.DataStructures.GeneralUser;
 import com.example.dopetheimmortal.turntapp.R;
-import com.example.dopetheimmortal.turntapp.Useful.ConnectorCallSearch;
+import com.example.dopetheimmortal.turntapp.connector.ConnectorCallSearch;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorSearch;
 
 import org.json.JSONArray;

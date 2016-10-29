@@ -4,9 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.example.dopetheimmortal.turntapp.Useful.CallBackAttending;
-import com.example.dopetheimmortal.turntapp.Useful.ConnectorCallback;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 

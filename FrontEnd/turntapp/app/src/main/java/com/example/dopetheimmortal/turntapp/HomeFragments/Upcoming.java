@@ -65,6 +65,12 @@ public class Upcoming extends Fragment {
             name.setText(get.name);
             list.addFooterView(convertView);
              TouchImageView img = (TouchImageView) lay.findViewById(R.id.logo);
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }
         return lay;
     }

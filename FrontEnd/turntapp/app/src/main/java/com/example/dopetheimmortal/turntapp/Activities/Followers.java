@@ -17,7 +17,7 @@ import com.example.dopetheimmortal.turntapp.Adapters.FollowDataAdapter;
 import com.example.dopetheimmortal.turntapp.DataStructures.FollowData;
 import com.example.dopetheimmortal.turntapp.LocalData.UserLocalData;
 import com.example.dopetheimmortal.turntapp.R;
-import com.example.dopetheimmortal.turntapp.Useful.ConnectorCallback;
+import com.example.dopetheimmortal.turntapp.connector.ConnectorCallback;
 import com.example.dopetheimmortal.turntapp.Useful.Profile_Data;
 import com.example.dopetheimmortal.turntapp.connector.Connector;
 

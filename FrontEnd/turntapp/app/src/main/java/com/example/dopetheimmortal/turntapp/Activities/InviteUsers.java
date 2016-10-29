@@ -12,7 +12,7 @@ import com.example.dopetheimmortal.turntapp.Adapters.InviteAdapter;
 import com.example.dopetheimmortal.turntapp.DataStructures.GeneralUser;
 import com.example.dopetheimmortal.turntapp.LocalData.UserLocalData;
 import com.example.dopetheimmortal.turntapp.R;
-import com.example.dopetheimmortal.turntapp.Useful.ConnectorCallbackInvite;
+import com.example.dopetheimmortal.turntapp.connector.ConnectorCallbackInvite;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorInvite;
 
 import org.json.JSONArray;

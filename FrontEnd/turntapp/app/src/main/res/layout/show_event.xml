@@ -23,11 +23,12 @@
 
     <ImageButton
         android:id="@+id/nav"
+        android:background="@android:color/transparent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/event_name"
-        android:src="@android:drawable/ic_menu_search" />
+        android:src="@mipmap/ic_navigation_black_36dp" />
 
     <TextView
         android:id="@+id/host"

@@ -32,7 +32,7 @@ import android.widget.Toast;
 
 import com.example.dopetheimmortal.turntapp.LocalData.UserLocalData;
 import com.example.dopetheimmortal.turntapp.R;
-import com.example.dopetheimmortal.turntapp.Useful.ConnectorCallback;
+import com.example.dopetheimmortal.turntapp.connector.ConnectorCallback;
 import com.example.dopetheimmortal.turntapp.Useful.ImageProcessing;
 import com.example.dopetheimmortal.turntapp.Useful.Permissions;
 import com.example.dopetheimmortal.turntapp.connector.Connector;

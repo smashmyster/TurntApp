@@ -1,4 +1,4 @@
-package com.example.dopetheimmortal.turntapp.Useful;
+package com.example.dopetheimmortal.turntapp.connector;
 
 import org.json.JSONException;
 
