@@ -168,6 +168,21 @@
       }else{
         $query="INSERT INTO invites (event,inviter,invitee,state) VALUES ($event,$me,$user,-1)";
         $this->db_connect_get_none($query);
+        $query="SELECT regid FROM regid FROM user WHERE id=$user";
+        $reg=$this->db_connect_get_one($query)["regid"];
+        $query="SELECT id,name,logo FROM events WHERE id=$event";
+        $event_info=$this->db_connect_get_one($query);
+        $tokens=array();
+        if($reg!=""){
+          array_push($tokens,$reg);
+          include_once 'SendGCM.php';
+          $gcm=new GCM();
+          $message=array();
+          $message["id"]=$event_info["id"];
+          $message["name"]=$event_info["name"];
+          $message["logo"]=$event_info["logo"];
+          $gcm->send_invite($tokens,$message);
+        }
         $response["success"]=1;
         $response["message"]="User successfully invited to this event";
       }

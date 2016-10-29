@@ -167,7 +167,7 @@
       echo json_encode($info);
       break;
     default:
-      # code...
+      echo json_encode(array('success'=>-1,'message'=>'Unknown Request'));
       break;
   }
 ?>
