@@ -1,11 +1,14 @@
 package com.example.dopetheimmortal.turntapp.Activities;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dopetheimmortal.turntapp.Adapters.InviteAdapter;
 import com.example.dopetheimmortal.turntapp.Adapters.ViewPagerAdapter;
@@ -36,6 +41,8 @@ import com.example.dopetheimmortal.turntapp.Useful.Profile_Data;
 import com.example.dopetheimmortal.turntapp.connector.Connector;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorAttending;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorSearch;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,6 +55,31 @@ import java.util.HashMap;
  * Created by jackson on 2016/08/11.
  */
 public class Home extends AppCompatActivity implements ConnectorCallback, ConnectorCallSearch, CallBackAttending {
+    //Notifications
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -75,6 +107,81 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
         data.put("id", "0");
         new Connector(link, this, this, data, "Loading events", "Loading events\nPlease wait..", false, true).execute();
 
+
+//Notifications
+
+        //Initializing our broadcast receiver
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+
+            //When the broadcast received
+            //We are sending the broadcast from GCMRegistrationIntentService
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                //If the broadcast has received with success
+                //that means device is registered successfully
+                if(intent.getAction().equals(GCMRegistrationIntentService.REGISTRATION_SUCCESS)){
+                    //Getting the registration token from the intent
+                    String token = intent.getStringExtra("token");
+                    //Displaying the token as toast
+                    Toast.makeText(getApplicationContext(), "Registration token:" + token, Toast.LENGTH_LONG).show();
+
+                    //if the intent is not with success then displaying error messages
+                } else if(intent.getAction().equals(GCMRegistrationIntentService.REGISTRATION_ERROR)){
+                    Toast.makeText(getApplicationContext(), "GCM registration error!", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Error occurred", Toast.LENGTH_LONG).show();
+                }
+            }
+        };
+
+        //Checking play service is available or not
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
+
+        //if play service is not available
+        if(ConnectionResult.SUCCESS != resultCode) {
+            //If play service is supported but not installed
+            if(GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                //Displaying message that play service is not installed
+                Toast.makeText(getApplicationContext(), "Google Play Service is not install/enabled in this device!", Toast.LENGTH_LONG).show();
+                GooglePlayServicesUtil.showErrorNotification(resultCode, getApplicationContext());
+
+                //If play service is not supported
+                //Displaying an error message
+            } else {
+                Toast.makeText(getApplicationContext(), "This device does not support for Google Play Service!", Toast.LENGTH_LONG).show();
+            }
+
+            //If play service is available
+        } else {
+            //Starting intent to register device
+            Intent itent = new Intent(this, GCMRegistrationIntentService.class);
+            startService(itent);
+        }
+
+
+
+
+    }
+
+    //Registering receiver on activity resume
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.w("HomeActivity", "onResume");
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(GCMRegistrationIntentService.REGISTRATION_SUCCESS));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(GCMRegistrationIntentService.REGISTRATION_ERROR));
+    }
+
+
+    //Unregistering receiver on activity paused
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.w("HomeActivity", "onPause");
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
     }
 
     private void initializetools() {

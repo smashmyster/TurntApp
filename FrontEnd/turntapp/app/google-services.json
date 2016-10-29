@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "151722639358",
+    "firebase_url": "https://turntapp-93d1e.firebaseio.com",
+    "project_id": "turntapp-93d1e",
+    "storage_bucket": "turntapp-93d1e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:151722639358:android:2f67d435c04e3463",
+        "android_client_info": {
+          "package_name": "com.example.dopetheimmortal.turntapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "151722639358-spacd3h18htqgkcos84boisb48e2ctv3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnug4LqWhu2Ww-VV3yzpzk9otIopClwjg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
