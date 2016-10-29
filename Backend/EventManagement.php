@@ -91,7 +91,7 @@
         return $response;
       }
     }
-    function get_ongoing_events($id){
+    function get_ongoing_events($id,$user){
       $now = new DateTime();
       $date=$now_string =$now->format("YmdHi");
       $query="SELECT * FROM events WHERE id>$id AND $date>=start_time AND $date<=end_time LIMIT 10";
@@ -101,6 +101,9 @@
         $response["code"]=0;
       }
       foreach ($rows as $row ) {
+        $io=$row["id"];
+        $query="SELECT * FROM attending WHERE user=$user AND id=$io";
+        $jaa=$this->db_connect_get_one($query);
         if(sizeof($jaa)>0){
           $row["me_attending"]=1;
         }else{
@@ -156,6 +159,7 @@
         $party_id=$row["event"];
         $query="SELECT * FROM events WHERE id=$party_id";
         $info=$this->db_connect_get_one($query);
+        $info["me_attending"]=1;
         array_push($att["data"],$info);
       }
       $att["success"]=1;

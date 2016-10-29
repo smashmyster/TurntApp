@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-//        check_account();
+        check_account();
         get_reg_id();
         initialize_views();
         set_image_listener();

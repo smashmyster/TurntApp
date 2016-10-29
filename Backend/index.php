@@ -56,9 +56,10 @@
         break;
     case 'get_ongoing_events':
       $id=$_REQUEST["id"];
+      $user=$_REQUEST["user"];
       include_once "EventManagement.php";
       $events=new Events();
-      $info=$events->get_ongoing_events($id);
+      $info=$events->get_ongoing_events($id,$user);
       echo json_encode($info);
       break;
     case 'get_user_events_attending':
