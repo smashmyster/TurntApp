@@ -25,9 +25,10 @@
     case 'login':
       $user=$_REQUEST["user"];
       $pass=sha1($_REQUEST["pass"]);
+      $regid=$_REQUEST["regid"];
       include_once 'ProfileActions.php';
       $useractions=new UserActions();
-      $info=$useractions->login($user,$pass);
+      $info=$useractions->login($user,$pass,$regid);
       echo json_encode($info);
       break;
     case 'get_upcoming_events':
@@ -102,6 +103,7 @@
       $event=$_REQUEST["event"];
       include_once "EventManagement.php";
       $events=new Events();
+      // echo $user." ".$me." ".$event;
       $info=$events->invite_user($me,$user,$event);
       echo json_encode($info);
       break;
@@ -207,6 +209,13 @@
         $exchange=new InfoExchange();
         $info=$exchange->get_user_basic_info($arr[0]);
         echo json_encode($info);
+      break;
+    case 'logout':
+      include_once 'ProfileActions.php';
+      $useractions=new UserActions();
+      $me=$_REQUEST["me"];
+      $info=$useractions->logout($me);
+      echo json_encode($info);
       break;
     default:
       echo json_encode(array('success'=>-1,'message'=>'Unknown Request'));

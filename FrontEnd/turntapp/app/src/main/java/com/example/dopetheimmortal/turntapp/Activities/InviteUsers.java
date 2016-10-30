@@ -78,6 +78,7 @@ public class InviteUsers extends Activity implements ConnectorCallbackInvite{
                     send.put("event",event);
                     UserLocalData user=new UserLocalData(InviteUsers.this);
                     user.open();
+                    System.out.println(user.actual().dbid);
                     send.put("me",user.actual().dbid);
                     user.close();
                     String link=InviteUsers.this.getString(R.string.link);

@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -17,6 +18,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.LocalBroadcastManager;
@@ -162,7 +164,6 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
     }
 
     private void initialize_views() {
-        sign_up.put("regid", "");
         sign_up.put("ext", "");
         sign_up.put("image", "");
 
@@ -246,6 +247,9 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
         sign_up.put("name", sign_name.getText().toString());
         sign_up.put("surname", sign_surname.getText().toString());
         sign_up.put("bday","10/03/2016");
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String token=sharedPref.getString("token","");
+        sign_up.put("regid",token);
         new Connector(link, this, this, sign_up, "Signing Up", "Please wait while we sign you up", false, true).execute();
 
     }
@@ -283,6 +287,9 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
         data.put("pass", password.getText().toString());
         data.put("regid", "test");
         data.put("type", "login");
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String token=sharedPref.getString("token","");
+        data.put("regid",token);
         new Connector(link, this, this, data, "Logging in", "Logging in\n Please wait", false, true).execute();
     }
 
@@ -423,7 +430,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
                     //Getting the registration token from the intent
                     String token = intent.getStringExtra("token");
                     //Displaying the token as toast
-                    Toast.makeText(getApplicationContext(), "Registration token:" + token, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(), "Registration token:" + token, Toast.LENGTH_LONG).show();
 
                     //if the intent is not with success then displaying error messages
                 } else if(intent.getAction().equals(GCMRegistrationIntentService.REGISTRATION_ERROR)){

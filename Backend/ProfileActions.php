@@ -76,7 +76,7 @@
         }
       }
     }
-    function login($user,$pass){
+    function login($user,$pass,$regid){
       $query_params= array(':ename' => $user,':epass'=>$pass);
   		$query="SELECT 1 from user where username=:ename OR email=:ename";
   		$row=$this->db_connect_get_many($query,$query_params);
@@ -87,6 +87,8 @@
           unset($get["password"]);
   				$get["success"]=1;
           $get["code"]=0;
+          $query="UPDATE user SET regid=:eregid WHERE id=:eid";
+          $this->db_connect_get_none($query,array(':eregid'=>$regid,':eid'=>$get["id"]));
   				return $get;
   			}else{
   				$response["success"]=0;
@@ -169,6 +171,12 @@
     $response["success"]=1;
     $response["message"]="You are now following";
     return $response;
+    }
+    function logout($me)
+    {
+      $query="UPDATE user SET regid=:eregid WHERE id=$me";
+      $this->db_connect_get_none($query,array(':eregid'=>""));
+      return array('success'=>-2,'message'=>"Sorry to see you go");
     }
   }
 

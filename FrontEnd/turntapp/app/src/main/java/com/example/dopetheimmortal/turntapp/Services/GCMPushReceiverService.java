@@ -26,7 +26,7 @@ public class GCMPushReceiverService extends GcmListenerService {
 //        Toast.makeText(this,"Ok "+data.getString("message"), Toast.LENGTH_LONG).show();
 //
 //        //Displaying a notiffication with the message
-        sendNotification(data.getString("message"));
+        sendNotification("You are being invited to "+data.getString("name"));
     }
 
     //This method is generating a notification and displaying the notificatokention
@@ -38,7 +38,8 @@ public class GCMPushReceiverService extends GcmListenerService {
         Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder noBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentText("message")
+                .setContentText(message)
+                .setContentTitle("You have been invited to an event")
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent);
 
