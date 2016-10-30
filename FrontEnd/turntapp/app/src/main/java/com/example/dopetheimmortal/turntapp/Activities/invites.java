@@ -58,8 +58,8 @@ public class invites extends  Activity implements ConnectorCallback {
         String link = this.getString(R.string.link);
         HashMap<String, String> data = new HashMap<>();
         data.put("type", "get_my_invites");
-//        data.put("id", me);
-        data.put("me", "6");
+        data.put("me", me);
+//        data.put("me", "6");
         new Connector(link, this, this, data, "Loading invites", "Loading invites\nPlease wait..", false, true).execute();
         d=(ListView)findViewById(R.id.my_invites);
         StaticData.invites=this;
@@ -116,21 +116,6 @@ public class invites extends  Activity implements ConnectorCallback {
     @Override
     public void display(String info, Context cont) {
 
-    }
-    public void accept(View v) {
-
-    }
-    public void decline(View v) {
-        UserLocalData o = new UserLocalData(invites.this);
-        o.open();
-        String me = o.actual().dbid;
-        o.close();
-        String link = this.getString(R.string.link);
-        HashMap<String, String> data = new HashMap<>();
-        data.put("type", "respond_to_invite");
-        data.put("requst_id", me);
-        data.put("accept", "0");
-        new Connector(link, this, this, data, "", "", false, true).execute();
     }
     public void refresh(){
         startActivity(new Intent(this,invites.class));

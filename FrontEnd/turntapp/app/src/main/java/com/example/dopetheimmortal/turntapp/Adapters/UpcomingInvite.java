@@ -95,6 +95,25 @@ public class UpcomingInvite extends ArrayAdapter<EventStruct> implements Connect
 //                Toast.makeText(getApplicationContext(),"gets here",Toast.LENGTH_LONG).show();
             }
         });
+        Button decline=(Button)convertView.findViewById(R.id.decline);
+        decline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserLocalData o = new UserLocalData(context);
+                o.open();
+                String me = o.actual().dbid;
+                o.close();
+                String link = context.getString(R.string.link);
+                HashMap<String, String> data = new HashMap<>();
+                data.put("type", "respond_to_invite");
+                data.put("me", me);
+                data.put("event",get.id);
+                data.put("accept", "0");
+                id=get.id;
+                new Connector(link,UpcomingInvite.this, context, data, "", "", false, true).execute();
+            }
+        });
+
         return convertView;
     }
 
