@@ -44,6 +44,7 @@ import com.example.dopetheimmortal.turntapp.connector.ConnectorAttending;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorSearch;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.api.client.json.Json;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,7 +59,7 @@ import java.util.HashMap;
 public class Home extends AppCompatActivity implements ConnectorCallback, ConnectorCallSearch, CallBackAttending {
     //Notifications
 
-
+    boolean logout=false;
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -220,7 +221,11 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
 
     @Override
     public void fail(String info) {
-
+        if(logout){
+            Toast.makeText(this,"Sorry to see you go",Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
     }
 
     @Override
@@ -243,10 +248,15 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
             case R.id.logout:
                 UserLocalData loc = new UserLocalData(this);
                 loc.open();
+                String id=loc.actual().dbid;
                 loc.delete();
                 loc.close();
-                startActivity(new Intent(this, LoginActivity.class));
-                finish();
+                HashMap<String,String>as=new HashMap<>();
+                as.put("type","logout");
+                as.put("me",id);
+                String link=this.getString(R.string.link);
+                new Connector(link,this,this,as,"Logging out","Logging out",false,true).execute();
+                logout=true;
                 break;
             case R.id.new_event:
                 startActivity(new Intent(this, NewEvent.class));
