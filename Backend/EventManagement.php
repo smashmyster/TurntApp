@@ -39,7 +39,6 @@
       $exchange=new InfoExchange();
       $now = new DateTime();
       $date=$now_string =$now->format("YmdHi");
-      $response["upcoming"]=array();
       if($id==0){
         $response["ongoing"]=array();
         $query="SELECT * FROM events WHERE id>$id AND start_time<$date AND end_time>$date  LIMIT 10";
@@ -65,7 +64,7 @@
       }
       $query="SELECT * FROM events WHERE id>$id AND start_time>$date LIMIT 10";
       $rows=$this->db_connect_get_many($query);
-
+      $response["upcoming"]=array();
       foreach ($rows as $row ) {
         $io=$row["id"];
         $query="SELECT * FROM attending WHERE user=$user AND event=$io";
@@ -82,9 +81,24 @@
         }
         array_push($response["upcoming"],$row);
       }
+      $query="SELECT * FROM invites WHERE invitee=$user";
+      $ass=$this->db_connect_get_many($query);
+      $response["invites"]=sizeof($ass);
+
+      $query="SELECT * FROM followers WHERE follower=$user";
+      $ass=$this->db_connect_get_many($query);
+      $response["following"]=sizeof($ass);
+
+      $query="SELECT * FROM followers WHERE following=$user";
+      $ass=$this->db_connect_get_many($query);
+      $response["followers"]=sizeof($ass);
+
+      $query="SELECT image_name FROM user WHERE id=$user";
+      $ass=$this->db_connect_get_one($query);
+      $response["image_name"]=$ass["image_name"];
+
       if(sizeof($response["upcoming"])==0){
-        $response["success"]=0;
-        unset($response["upcoming"]);
+        $response["success"]=1;
         return $response;
       }else{
         $response["success"]=1;
@@ -96,6 +110,8 @@
       $date=$now_string =$now->format("YmdHi");
       $query="SELECT * FROM events WHERE id>$id AND $date>=start_time AND $date<=end_time LIMIT 10";
       $rows=$this->db_connect_get_many($query);
+      include_once 'InfoExchange.php';
+      $exchange=new InfoExchange();
       $response["ongoing"]=array();
       if($id!=0){
         $response["code"]=0;
@@ -212,11 +228,15 @@
       }
       return $response;
     }
-    function respond_to_invite($requst_id,$accept){
+    function respond_to_invite($event,$user,$accept){
+      $query="SELECT * FROM invites WHERE invitee=$user AND event=$event";
+      $po=$this->db_connect_get_one($query);
+      $requst_id=$po["id"];
       if($accept==1){
         $query="SELECT event FROM invites WHERE id=$requst_id";
         $row=$this->db_connect_get_one($query);
         $event=$row["event"];
+        // echo $event;
         $query="UPDATE events SET attending=attending+1 WHERE id=$event";
         $this->db_connect_get_none($query);
         $query="UPDATE invites SET state=1 WHERE id=$requst_id";
@@ -292,7 +312,7 @@
 
     }
     function user_create_event($name,$address,$me,$djs,$specials,$gen_fee,$vip_fee,$start_time,$end_time,$ext,$pic){
-        $image_name=$name.'_'.$start_time.'.jpg';
+        $image_name=$name.'_'.$start_time.'.'.$ext;
         $latlong=$this->lookup($address);
         $this->get_image($pic,$image_name);
         $query="SELECT 1 FROM events WHERE name=:ename AND address=:eaddress";
@@ -366,6 +386,7 @@
       return array('success'=>1,'message'=>'unattending');
     }
     function get_events($me){
+      // echo $me;
       $query="SELECT * FROM invites WHERE invitee=$me AND state=-1";
       $data=$this->db_connect_get_many($query);
       include_once 'InfoExchange.php';

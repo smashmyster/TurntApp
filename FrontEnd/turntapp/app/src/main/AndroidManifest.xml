@@ -25,7 +25,7 @@
         <activity
             android:name=".Activities.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -72,9 +72,12 @@
 
             android:name=".Activities.invites"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".Activities.Following"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme"/>
 
-        </activity>
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />

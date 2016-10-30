@@ -105,7 +105,7 @@
     }
     function get_image($pic,$ext,$name){
           // Get file name posted from Android App
-
+          // echo $pic;
           // Decode Image
           $binary=base64_decode($pic);
           $filename=$name.'.'.$ext;

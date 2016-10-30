@@ -60,18 +60,48 @@ public class ViewUser extends AppCompatActivity implements ConnectorCallback,Cal
 
     @Override
     public void success(String info) throws JSONException {
-        JSONObject object=new JSONObject(info);
+        final JSONObject object=new JSONObject(info);
         TextView username = (TextView) findViewById(R.id.user_name);
         username.setText(object.getString("username"));
 
         TextView status = (TextView) findViewById(R.id.status);
-        status.setText(object.getString("username"));
+        status.setText(object.getString("status"));
 
         TextView name = (TextView) findViewById(R.id.num_following);
         name.setText(object.getString("following"));
-
+        name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bh=new Bundle();
+                try {
+                    bh.putString("id",object.getString("id"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Intent i=new Intent(ViewUser.this, Following.class);
+                i.putExtras(bh);
+                startActivity(i);
+            }
+        });
         TextView name1 = (TextView) findViewById(R.id.num_followers);
         name1.setText(object.getString("followers"));
+        name1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bh=new Bundle();
+                try {
+                    bh.putString("id",object.getString("id"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Intent i=new Intent(ViewUser.this, Followers.class);
+                i.putExtras(bh);
+                startActivity(i);
+            }
+        });
+
+        RelativeLayout lp=(RelativeLayout)findViewById(R.id.att_wraper);
+        lp.setVisibility(View.GONE);
         RelativeLayout followers_wrapper=(RelativeLayout)findViewById(R.id.followers_wraper);
         followers_wrapper.setOnClickListener(new View.OnClickListener() {
             @Override

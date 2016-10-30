@@ -12,10 +12,17 @@
         android:layout_width="wrap_content"
         android:layout_toRightOf="@+id/view_event_image"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
         android:text="Event Name"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
         android:layout_height="wrap_content"
         android:id="@+id/view_event_name"/>
     <TextView
+        android:layout_alignParentRight="true"
+        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_toRightOf="@+id/view_event_image"
         android:layout_marginLeft="20dp"
@@ -58,7 +65,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/invite_users"
         android:layout_marginTop="20dp"
-        android:src="@mipmap/ic_navigation_black_36dp"
+        android:src="@mipmap/ic_email_black_36dp"
         android:background="@android:color/transparent"
         android:layout_below="@+id/view_attending"/>
     <CheckBox

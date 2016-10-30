@@ -85,13 +85,17 @@ public class ViewEvent implements ConnectorCallback, CallBackAttending {
 
     public View get_view(final EventStruct struct, final Context context, final Activity activity) {
         View view = LayoutInflater.from(context).inflate(R.layout.view_event_details, null, false);
+        ImageView image=(ImageView)view.findViewById(R.id.view_event_image);
+        String link=context.getString(R.string.link)+"EventImages/"+struct.logo;
+        new GetImage(link,context,image).execute();
+
         TextView name = (TextView) view.findViewById(R.id.view_event_name);
         TextView start_time = (TextView) view.findViewById(R.id.view_start_time);
         final TextView fee = (TextView) view.findViewById(R.id.view_general_fee);
         TextView vip = (TextView) view.findViewById(R.id.view_vip_fee);
         TextView attending = (TextView) view.findViewById(R.id.view_attending);
         name.setText(struct.name);
-        start_time.setText(struct.start_time);
+        start_time.setText(new Date().get_date_formated(struct.start_time));
         fee.setText("General Fee : " + struct.gen_fee);
         vip.setText("VIP fee : " + struct.vip_fee);
         attending.setText(struct.attending + " People are attending");

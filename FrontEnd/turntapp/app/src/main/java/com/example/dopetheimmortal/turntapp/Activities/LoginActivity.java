@@ -126,7 +126,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
                 pic.setImageBitmap(yourSelectedImage);
                 String image_string = new ImageProcessing().encode(yourSelectedImage);
                 sign_up.put("thumb", image_string);
-
+                System.out.println(image_string);
             } else if (requestCode == CAMERA_LOAD_IMG && resultCode == RESULT_OK && null != data) {
                 Bundle extras = data.getExtras();
                 Bitmap image = (Bitmap) extras.get("data");

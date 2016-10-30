@@ -35,6 +35,7 @@ import com.example.dopetheimmortal.turntapp.DataStructures.GeneralUser;
 import com.example.dopetheimmortal.turntapp.LocalData.UserLocalData;
 import com.example.dopetheimmortal.turntapp.R;
 import com.example.dopetheimmortal.turntapp.Services.GCMRegistrationIntentService;
+import com.example.dopetheimmortal.turntapp.Useful.StaticData;
 import com.example.dopetheimmortal.turntapp.connector.CallBackAttending;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorCallSearch;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorCallback;
@@ -92,11 +93,6 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
         data.put("id", "0");
         data.put("user",ll.dbid);
         new Connector(link, this, this, data, "Loading events", "Loading events\nPlease wait..", false, true).execute();
-
-
-
-
-
 
     }
 
@@ -205,6 +201,10 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
             boolean me_attending=get.getInt("me_attending")==1?true:false;
             ongoing_events.add(new EventStruct(id, djs, attending, event_type, host_id, rating, tbl_avail, specials, gen_fee, vip_fee, name, start_time, end_time, latlong, address, logo, host_name,me_attending));
         }
+        StaticData.invite=obj.getString("invites");
+        StaticData.following=obj.getString("following");
+        StaticData.followers=obj.getString("followers");
+        StaticData.image_name=obj.getString("image_name");
         this.upcomig_events = upcoming_events;
         this.ongoing_events = ongoing_events;
         get_my_events();
@@ -268,9 +268,7 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
             case R.id.search_event:
                 startActivity(new Intent(this,SearchEvent.class));
                 break;
-            case R.id.invitez:
-                startActivity(new Intent(this,invites.class));
-                break;
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -318,7 +316,7 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
         status.setText(get.status);
         ImageView imageView=(ImageView)findViewById(R.id.user_invite_img);
         String image_link=this.getString(R.string.link)+"UserProfilePics/"+get.image_name;
-        new GetImage(image_link,this,imageView).execute();
+//        new GetImage(image_link,this,imageView).execute();
         if (get.invited.equals("0")) {
             final ImageView image = (ImageView) convertView.findViewById(R.id.send_invite_img);
             image.setOnClickListener(new View.OnClickListener() {
@@ -406,6 +404,7 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
     public void success_my_events(String s) throws JSONException {
         JSONObject o = new JSONObject(s);
         JSONArray arr = o.getJSONArray("data");
+
         ArrayList<EventStruct> b = new ArrayList<>();
         for (int i = 0; i < arr.length(); i++) {
             JSONObject get = arr.getJSONObject(i);

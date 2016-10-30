@@ -17,4 +17,8 @@ public class StaticData {
     public static HashMap<String,ImageView> images=new HashMap<>();
     public static HashMap<String,Bitmap> downloaded_images=new HashMap<>();
     public static invites invites=null;
+    public static String invite="0";
+    public static String following="0";
+    public static String followers="0";
+    public static String image_name="";
 }

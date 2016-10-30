@@ -172,11 +172,17 @@ public class NewEvent extends Activity implements View.OnClickListener,Connector
     public String get_send(DatePicker date_picker, TimePicker time_picker) {
         String year, month, day, hour, min;
         year = "" + date_picker.getYear();
-        month = (Integer.toString(date_picker.getMonth())).length() == 2 ? Integer.toString(date_picker.getMonth()): "0" + Integer.toString(date_picker.getMonth()+1);
+        month =("" + (date_picker.getMonth()+1)).length() == 2 ? "" + (date_picker.getMonth()+1) : "0" + (date_picker.getMonth()+1);
         day = ("" + date_picker.getDayOfMonth()).length() == 2 ? "" + date_picker.getDayOfMonth() : "0" + date_picker.getDayOfMonth();
         hour = ("" + time_picker.getCurrentHour()).length() == 2 ? "" + time_picker.getCurrentHour() : "0" + time_picker.getCurrentHour();
-        min = ("" + time_picker.getCurrentHour()).length() == 2 ? "" + time_picker.getCurrentMinute() : "0" + time_picker.getCurrentMinute();
+        min = ("" + time_picker.getCurrentMinute()).length() == 2 ? "" + time_picker.getCurrentMinute() : "0" + time_picker.getCurrentMinute();
         String time = year + month + day + hour + min;
+        System.out.println(time);
+//        month = (Integer.toString(date_picker.getMonth())).length() == 2 ? Integer.toString(): "0" + Integer.toString(date_picker.getMonth()+1);
+//        day = ("" + date_picker.getDayOfMonth()).length() == 2 ? "" + date_picker.getDayOfMonth() : "0" + date_picker.getDayOfMonth();
+//        hour = ("" + time_picker.getCurrentHour()).length() == 2 ? "" + time_picker.getCurrentHour() : "0" + time_picker.getCurrentHour();
+//        min = ("" + time_picker.getCurrentHour()).length() == 2 ? "" + time_picker.getCurrentMinute() : "0" + time_picker.getCurrentMinute();
+
         return time;
     }
 

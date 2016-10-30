@@ -13,7 +13,7 @@
       $surname=$_REQUEST["surname"];
       $bday=$_REQUEST["bday"];
       $phone=$_REQUEST["phone"];
-      $image=$_REQUEST["image"];
+      $image=$_REQUEST["thumb"];
       $ext=$_REQUEST["ext"];
       $regid=$_REQUEST["regid"];
       $gender=$_REQUEST["gender"];
@@ -108,11 +108,12 @@
       echo json_encode($info);
       break;
     case 'respond_to_invite':
-      $requst_id=$_REQUEST["requst_id"];
+      $user=$_REQUEST["me"];
+      $event=$_REQUEST["event"];
       $accept=$_REQUEST["accept"];
       include_once "EventManagement.php";
       $events=new Events();
-      $info=$events->respond_to_invite($requst_id,$accept);
+      $info=$events->respond_to_invite($event,$user,$accept);
       echo json_encode($info);
       break;
     case 'get_events_users_attending':
@@ -153,6 +154,13 @@
         $exchange=new InfoExchange();
         $me=$_REQUEST["id"];
         $info=$exchange->get_my_followers($me);
+        echo json_encode($info);
+        break;
+    case 'get_my_following':
+        include_once 'InfoExchange.php';
+        $exchange=new InfoExchange();
+        $me=$_REQUEST["id"];
+        $info=$exchange->get_my_following($me);
         echo json_encode($info);
         break;
     case 'search_user':

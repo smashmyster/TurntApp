@@ -44,7 +44,7 @@ import java.util.HashMap;
 /**
  * Created by Dope The Immortal on 2016/10/30.
  */
-public class invites extends  Activity implements ConnectorCallback {
+public class invites extends  AppCompatActivity implements ConnectorCallback {
     public ArrayList<EventStruct> upcoming_events = new ArrayList<>();
     public ListView d;
     protected void onCreate(Bundle savedInstanceState) {

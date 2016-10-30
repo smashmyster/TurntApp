@@ -14,15 +14,14 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.dopetheimmortal.turntapp.Adapters.FollowDataAdapter;
 import com.example.dopetheimmortal.turntapp.DataStructures.FollowData;
 import com.example.dopetheimmortal.turntapp.LocalData.UserLocalData;
 import com.example.dopetheimmortal.turntapp.R;
-import com.example.dopetheimmortal.turntapp.connector.ConnectorCallback;
 import com.example.dopetheimmortal.turntapp.Useful.Profile_Data;
 import com.example.dopetheimmortal.turntapp.connector.Connector;
+import com.example.dopetheimmortal.turntapp.connector.ConnectorCallback;
 import com.example.dopetheimmortal.turntapp.connector.GetImage;
 
 import org.json.JSONArray;
@@ -36,7 +35,7 @@ import java.util.HashMap;
 /**
  * Created by jackson on 2016/03/26.
  */
-public class Followers extends AppCompatActivity implements ConnectorCallback {
+public class Following extends AppCompatActivity implements ConnectorCallback {
     ListView followers;
     View head,tail;
     ListAdapter adapter;
@@ -51,7 +50,7 @@ public class Followers extends AppCompatActivity implements ConnectorCallback {
         initialize();
         people=new ArrayList<>();
         HashMap<String,String> info=get_data();
-        info.put("type","get_my_followers");
+        info.put("type","get_my_following");
         Bundle bh=getIntent().getExtras();
         String id=bh.getString("id");
         info.put("id",id);
@@ -140,7 +139,7 @@ public class Followers extends AppCompatActivity implements ConnectorCallback {
             public void onClick(View v) {
                 Bundle bh=new Bundle();
                 bh.putString("id",get.id);
-                Intent intent=new Intent(Followers.this,ViewUser.class);
+                Intent intent=new Intent(Following.this,ViewUser.class);
                 intent.putExtras(bh);
                 startActivity(intent);
             }

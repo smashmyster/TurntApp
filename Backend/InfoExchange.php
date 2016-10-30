@@ -97,6 +97,16 @@
       $response["success"]=1;
       return $response;
     }
+    function get_my_following($me){
+      $query="SELECT following FROM followers WHERE follower=$me";
+      $followers=$this->db_connect_get_many($query);
+      $response["people"]=array();
+      foreach ($followers as $get) {
+        array_push($response["people"],$this->get_user_basic_info($get["following"]));
+      }
+      $response["success"]=1;
+      return $response;
+    }
     function is_attending($event,$user){
       $query="SELECT 1 FROM attending WHERE event=$event AND user=$user";
       $check=$this->db_connect_get_many($query);
