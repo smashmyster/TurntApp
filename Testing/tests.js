@@ -31,10 +31,12 @@ function loginTest() {
         {
             user: us,
             pass: pass,
+	   regid:"klsjflk",
             type: type
         },
         //function called after success
         function(data){
+	console.log(data);
            status(data);
         }
     );
@@ -44,11 +46,13 @@ function upcomingEvents() {
     $.post('../index.php',
         //data to be passed
         {
-	    id: id,
+	    id: "0",
+	   user:user,
 	  type:"get_upcoming_events"
         },
         //function called after success
         function(data) {
+	console.log(data);
            status(data);       
 }
     );
@@ -58,11 +62,13 @@ function ongoingEvents() {
     $.post('../index.php',
         //data to be passed
         {
-            id:id,
+  	    id: "0",
+	   user:user,
 	  type:"get_ongoing_events"
         },
         //function called after success
         function(data) {
+	console.log(data);
            status(data);
   }
     );
