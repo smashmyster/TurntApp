@@ -22,4 +22,9 @@
         android:orderInCategory="100"
         android:title="Search for an event"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/invitez"
+        android:orderInCategory="100"
+        android:title="See invites"
+        app:showAsAction="never" />
 </menu>
