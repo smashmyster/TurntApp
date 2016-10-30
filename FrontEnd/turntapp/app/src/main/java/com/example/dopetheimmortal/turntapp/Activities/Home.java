@@ -42,6 +42,7 @@ import com.example.dopetheimmortal.turntapp.Useful.Profile_Data;
 import com.example.dopetheimmortal.turntapp.connector.Connector;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorAttending;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorSearch;
+import com.example.dopetheimmortal.turntapp.connector.GetImage;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.api.client.json.Json;
@@ -267,6 +268,9 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
             case R.id.search_event:
                 startActivity(new Intent(this,SearchEvent.class));
                 break;
+            case R.id.invitez:
+                startActivity(new Intent(this,invites.class));
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -312,8 +316,10 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
         name.setText(get.name + " " + get.surname);
         TextView status = (TextView) convertView.findViewById(R.id.invite_user_status);
         status.setText(get.status);
+        ImageView imageView=(ImageView)findViewById(R.id.user_invite_img);
+        String image_link=this.getString(R.string.link)+"UserProfilePics/"+get.image_name;
+        new GetImage(image_link,this,imageView).execute();
         if (get.invited.equals("0")) {
-            System.out.println("About to");
             final ImageView image = (ImageView) convertView.findViewById(R.id.send_invite_img);
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -365,6 +371,7 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
                     }
                 }
             });
+
         }
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -9,10 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dopetheimmortal.turntapp.DataStructures.EventStruct;
 import com.example.dopetheimmortal.turntapp.R;
+import com.example.dopetheimmortal.turntapp.connector.GetImage;
 
 import java.util.ArrayList;
 
@@ -55,8 +57,9 @@ public class UpcomingAdapter extends ArrayAdapter<EventStruct> {
             }
         });
         name.setText(get.name);
-
-
+        ImageView image=(ImageView)convertView.findViewById(R.id.logo);
+        String link=getContext().getString(R.string.link)+"EventImages/"+get.logo;
+        new GetImage(link,getContext(),image).execute();
         return convertView;
     }
 }
