@@ -35,21 +35,22 @@
                 android:layout_alignParentEnd="true" />
 
             <TextView
+                android:id="@+id/host"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Host name"
+                android:textStyle="bold"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/event_name"
+                android:layout_below="@+id/event_name" />
+
+            <TextView
                 android:id="@+id/event_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Event Name"
+                android:textSize="@dimen/ub__text_size"
                 android:textStyle="bold"
-                android:layout_alignParentBottom="true"
-                android:layout_alignStart="@+id/host"
-                android:layout_below="@+id/host" />
-
-            <TextView
-                    android:id="@+id/host"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="Host Name"
-                    android:textStyle="bold"
                 android:layout_alignParentTop="true"
                 android:layout_toStartOf="@+id/nav"
                 android:layout_marginEnd="45dp"
