@@ -3,11 +3,24 @@ var user = "5";
 var id = "24";
 var event = "24";
 
-function status(num){
-  if(num == 1)
-     return "Test passed";
-  else
-     return "Test failed"; 
+function status(data){
+  var obj;
+   try{
+        obj=JSON.parse(data);
+        if(obj.success == 1){
+    	   $('#modalTitle').text("Test passed!");
+           $('#modalMsg').text(data);
+     	   $('#id01').modal('show');
+         }else{
+           $('#modalTitle2').text("Test failed!");
+           $('#modalMsg2').text(obj.message);
+           $('#id02').modal('show');
+         } 
+    }catch(e){
+           $('#modalTitle2').text("Test failed!");
+           $('#modalMsg2').text("Error parsing JSON");
+           $('#id02').modal('show');
+    }
 }
 function loginTest() {
     var us = "rey@mail.com";
@@ -22,11 +35,7 @@ function loginTest() {
         },
         //function called after success
         function(data){
-	    console.log(data);
-            var obj = JSON.parse(data);
-            $('#modalTitle').text(status(obj.success));
-            $('#modalMsg').text(data);
-            $('#id01').modal('show');
+           status(data);
         }
     );
 }
@@ -40,11 +49,8 @@ function upcomingEvents() {
         },
         //function called after success
         function(data) {
-	    console.log(data);
-         var obj = JSON.parse(data);
-            $('#modalTitle').text(status(obj.success));
-            $('#modalMsg').text(data);
-            $('#id01').modal('show');        }
+           status(data);       
+}
     );
 }
 
@@ -57,11 +63,8 @@ function ongoingEvents() {
         },
         //function called after success
         function(data) {
-            	    console.log(data);
-         var obj = JSON.parse(data);
-            $('#modalTitle').text(status(obj.success));
-            $('#modalMsg').text(data);
-            $('#id01').modal('show');        }
+           status(data);
+  }
     );
 }
 
@@ -75,11 +78,8 @@ function userEventsAttending() {
         },
         //function called after success
         function(data) {
-	    console.log(data);
-         var obj = JSON.parse(data);
-            $('#modalTitle').text(status(obj.success));
-            $('#modalMsg').text(data);
-            $('#id01').modal('show');        }
+           status(data);
+	}
     );
 }
 
@@ -92,11 +92,7 @@ function eventsPull() {
         },
         //function called after success
         function(data) {
-	    console.log(data);
-         var obj = JSON.parse(data);
-            $('#modalTitle').text(status(obj.success));
-            $('#modalMsg').text(data);
-            $('#id01').modal('show');        }
+           status(data);       }
     );
 }
 
@@ -110,12 +106,7 @@ function userEventsHosting() {
         },
         //function called after success
         function(data) {
-	    console.log(data);
-
-            var obj = JSON.parse(data);
-            $('#modalTitle').text(status(obj.success));
-            $('#modalMsg').text(data);
-            $('#id01').modal('show');
+           status(data);
         }
     );
 }
@@ -130,11 +121,7 @@ function getUserInfo() {
         },
         //function called after success
         function(data) {
-	    console.log(data);
-         var obj = JSON.parse(data);
-            $('#modalTitle').text(status(obj.success));
-            $('#modalMsg').text(data);
-            $('#id01').modal('show');
+           status(data);
         }
     );
 }
@@ -149,12 +136,7 @@ function eventsUserAttending() {
         },
         //function called after success
         function(data) {
-	    console.log(data);
-
-         var obj = JSON.parse(data);
-            $('#modalTitle').text(status(obj.success));
-            $('#modalMsg').text(data);
-            $('#id01').modal('show');
+           status(data);
         }
     );
 }
@@ -169,12 +151,7 @@ function invitableList() {
         },
         //function called after success
         function(data) {
-	    console.log(data);
-
-         var obj = JSON.parse(data);
-            $('#modalTitle').text(status(obj.success));
-            $('#modalMsg').text(data);
-            $('#id01').modal('show');
+           status(data);
         }
     );
 }
@@ -188,12 +165,7 @@ function getFollowers() {
         },
         //function called after success
         function(data) {
-	    console.log(data);
-
-         var obj = JSON.parse(data);
-            $('#modalTitle').text(status(obj.success));
-            $('#modalMsg').text(data);
-            $('#id01').modal('show');
+           status(data);
         }
     );
 }
@@ -207,11 +179,7 @@ function searchFunctionsTest() {
         },
         //function called after success
         function(data) {
-	    console.log(data);
-          var obj = JSON.parse(data);
-            $('#modalTitle').text(status(obj.success));
-            $('#modalMsg').text(data);
-            $('#id01').modal('show');
+             status(data);
         }
     );
 }
