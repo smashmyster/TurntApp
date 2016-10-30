@@ -1,17 +1,31 @@
+var me = "1";
+var user = "5";
+var id = "24";
+var event = "24";
+function status(num){
+  if(num == 1)
+     return "Test passed";
+  else
+     return "Test failed"; 
+}
 function loginTest() {
-    var user = "someuser";
-    var pass = "password";
+    var us = "rey@mail.com";
+    var pass = "rey";
     var type = "login";
     $.post('../index.php',
         //data to be passed
         {
-            user: user,
+            user: us,
             pass: pass,
             type: type
         },
         //function called after success
-        function(data) {
-            window.alert(data);
+        function(data){
+	    console.log(data);
+            var obj = JSON.parse(data);
+            $('#modalTitle').text(status(obj.success));
+            $('#modalMsg').text(data);
+            $('#id01').modal('show');
         }
     );
 }
@@ -20,13 +34,16 @@ function upcomingEvents() {
     $.post('../index.php',
         //data to be passed
         {
-	    id:"someId",
+	    id: id,
 	  type:"get_upcoming_events"
         },
         //function called after success
         function(data) {
-            window.alert(data);
-        }
+	    console.log(data);
+         var obj = JSON.parse(data);
+            $('#modalTitle').text(status(obj.success));
+            $('#modalMsg').text(data);
+            $('#id01').modal('show');        }
     );
 }
 
@@ -34,13 +51,16 @@ function ongoingEvents() {
     $.post('../index.php',
         //data to be passed
         {
-            id:"someId",
+            id:id,
 	  type:"get_ongoing_events"
         },
         //function called after success
         function(data) {
-            window.alert(data);
-        }
+            	    console.log(data);
+         var obj = JSON.parse(data);
+            $('#modalTitle').text(status(obj.success));
+            $('#modalMsg').text(data);
+            $('#id01').modal('show');        }
     );
 }
 
@@ -48,14 +68,17 @@ function userEventsAttending() {
     $.post('../index.php',
         //data to be passed
         {
-           me:"myId",
-	 user:"otherUserId",
+           me:me,
+	 user:user,
 	 type:"get_user_events_attending"
         },
         //function called after success
         function(data) {
-            window.alert(data);
-        }
+	    console.log(data);
+         var obj = JSON.parse(data);
+            $('#modalTitle').text(status(obj.success));
+            $('#modalMsg').text(data);
+            $('#id01').modal('show');        }
     );
 }
 
@@ -63,13 +86,16 @@ function eventsPull() {
     $.post('../index.php',
         //data to be passed
         {
-           me:"myId"
+           me:me,
 	 type:"get_my_events"
         },
         //function called after success
         function(data) {
-            window.alert(data);
-        }
+	    console.log(data);
+         var obj = JSON.parse(data);
+            $('#modalTitle').text(status(obj.success));
+            $('#modalMsg').text(data);
+            $('#id01').modal('show');        }
     );
 }
 
@@ -77,13 +103,18 @@ function userEventsHosting() {
     $.post('../index.php',
         //data to be passed
         {
-           me:"myId",
-	 user:"otherUserId",
+           me:me,
+	 user:user,
 	 type:"get_user_events_hosting"
         },
         //function called after success
         function(data) {
-            window.alert(data);
+	    console.log(data);
+
+            var obj = JSON.parse(data);
+            $('#modalTitle').text(status(obj.success));
+            $('#modalMsg').text(data);
+            $('#id01').modal('show');
         }
     );
 }
@@ -92,13 +123,17 @@ function getUserInfo() {
     $.post('../index.php',
         //data to be passed
         {
-	   me:"myId",
-         user:"otherUser",
+	   me:me,
+         user:user,
 	 type:"get_user_info"
         },
         //function called after success
         function(data) {
-            window.alert(data);
+	    console.log(data);
+         var obj = JSON.parse(data);
+            $('#modalTitle').text(status(obj.success));
+            $('#modalMsg').text(data);
+            $('#id01').modal('show');
         }
     );
 }
@@ -107,13 +142,18 @@ function eventsUserAttending() {
     $.post('../index.php',
         //data to be passed
         {
-	   event:"eventID",
-	      me:"myId"
+	   event:event,
+	      me:me,
             type:"get_events_users_attending"
         },
         //function called after success
         function(data) {
-            window.alert(data);
+	    console.log(data);
+
+         var obj = JSON.parse(data);
+            $('#modalTitle').text(status(obj.success));
+            $('#modalMsg').text(data);
+            $('#id01').modal('show');
         }
     );
 }
@@ -122,13 +162,18 @@ function invitableList() {
     $.post('../index.php',
         //data to be passed
         {
-           event:"eventId",
-	      me:"myID",
+           event:event,
+	      me:me,
             type:"get_invitable_list"
         },
         //function called after success
         function(data) {
-            window.alert(data);
+	    console.log(data);
+
+         var obj = JSON.parse(data);
+            $('#modalTitle').text(status(obj.success));
+            $('#modalMsg').text(data);
+            $('#id01').modal('show');
         }
     );
 }
@@ -137,12 +182,17 @@ function getFollowers() {
     $.post('../index.php',
         //data to be passed
         {
-            id:"myId",
+            id:id,
           type:"get_my_followers"
         },
         //function called after success
         function(data) {
-            window.alert(data);
+	    console.log(data);
+
+         var obj = JSON.parse(data);
+            $('#modalTitle').text(status(obj.success));
+            $('#modalMsg').text(data);
+            $('#id01').modal('show');
         }
     );
 }
@@ -151,12 +201,16 @@ function searchFunctionsTest() {
     $.post('../index.php',
         //data to be passed
         {
-           search:"SearchHere",
+           search:"Test Event",
 	     type:"search_event"
         },
         //function called after success
         function(data) {
-            window.alert(data);
+	    console.log(data);
+          var obj = JSON.parse(data);
+            $('#modalTitle').text(status(obj.success));
+            $('#modalMsg').text(data);
+            $('#id01').modal('show');
         }
     );
 }
