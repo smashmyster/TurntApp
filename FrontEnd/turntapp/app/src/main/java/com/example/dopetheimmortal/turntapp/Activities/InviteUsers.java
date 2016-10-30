@@ -2,6 +2,7 @@ package com.example.dopetheimmortal.turntapp.Activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -14,6 +15,7 @@ import com.example.dopetheimmortal.turntapp.LocalData.UserLocalData;
 import com.example.dopetheimmortal.turntapp.R;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorCallbackInvite;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorInvite;
+import com.example.dopetheimmortal.turntapp.connector.GetImage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,7 +27,7 @@ import java.util.HashMap;
 /**
  * Created by jackson on 2016/09/08.
  */
-public class InviteUsers extends Activity implements ConnectorCallbackInvite{
+public class InviteUsers extends AppCompatActivity implements ConnectorCallbackInvite{
     ListView list;
     String event="";
     @Override
@@ -66,6 +68,10 @@ public class InviteUsers extends Activity implements ConnectorCallbackInvite{
         name.setText(get.name+" "+get.surname);
         TextView status = (TextView) convertView.findViewById(R.id.invite_user_status);
         status.setText(get.status);
+//        user_invite_img
+        ImageView imageView=(ImageView)convertView.findViewById(R.id.user_invite_img);
+        String image_link=this.getString(R.string.link)+"UserProfilePics/"+get.image_name;
+        new GetImage(image_link,this,imageView).execute();
         if(get.invited.equals("0")){
             System.out.println("About to");
             final  ImageView image=(ImageView)convertView.findViewById(R.id.send_invite_img);

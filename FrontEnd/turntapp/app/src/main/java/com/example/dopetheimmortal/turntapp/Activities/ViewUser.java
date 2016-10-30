@@ -19,6 +19,7 @@ import com.example.dopetheimmortal.turntapp.Adapters.UpcomingAdapter;
 import com.example.dopetheimmortal.turntapp.DataStructures.EventStruct;
 import com.example.dopetheimmortal.turntapp.LocalData.UserLocalData;
 import com.example.dopetheimmortal.turntapp.R;
+import com.example.dopetheimmortal.turntapp.Useful.StaticData;
 import com.example.dopetheimmortal.turntapp.connector.CallBackAttending;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorCallback;
 import com.example.dopetheimmortal.turntapp.Useful.Profile_Data;
@@ -85,15 +86,12 @@ public class ViewUser extends AppCompatActivity implements ConnectorCallback,Cal
         });
         TextView name1 = (TextView) findViewById(R.id.num_followers);
         name1.setText(object.getString("followers"));
+        final String id=object.getString("id");
         name1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bh=new Bundle();
-                try {
-                    bh.putString("id",object.getString("id"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                bh.putString("id",id);
                 Intent i=new Intent(ViewUser.this, Followers.class);
                 i.putExtras(bh);
                 startActivity(i);
@@ -102,13 +100,7 @@ public class ViewUser extends AppCompatActivity implements ConnectorCallback,Cal
 
         RelativeLayout lp=(RelativeLayout)findViewById(R.id.att_wraper);
         lp.setVisibility(View.GONE);
-        RelativeLayout followers_wrapper=(RelativeLayout)findViewById(R.id.followers_wraper);
-        followers_wrapper.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ViewUser.this, Followers.class));
-            }
-        });
+//        RelativeLayout followers_wrapper=(RelativeLayout)findViewById(R.id.followers_wraper);/
         TextView name2 = (TextView) findViewById(R.id.num_attending);
         name2.setText( object.getString("num"));
         get_events();

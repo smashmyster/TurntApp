@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -43,7 +44,7 @@ import java.util.HashMap;
 /**
  * Created by jackson on 2016/08/21.
  */
-public class NewEvent extends Activity implements View.OnClickListener,ConnectorCallback{
+public class NewEvent extends AppCompatActivity implements View.OnClickListener,ConnectorCallback{
     EditText name, address, djs, specials, fee, vip, stime, etime;
     Button create_event;
     HashMap<String, String> upload = new HashMap<>();

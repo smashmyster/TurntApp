@@ -85,10 +85,13 @@
         uber:ub__style="black" />
     <ImageButton
         android:layout_width="90dp"
+        android:scaleType="centerCrop"
+        android:background="@android:color/transparent"
         android:layout_height="90dp"
         android:id="@+id/checkin"
         android:layout_below="@+id/ride"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:src="@drawable/camera"/>
+        android:adjustViewBounds="true"
+        android:src="@drawable/viewticket"/>
 </RelativeLayout>

@@ -77,11 +77,11 @@
         if($row["event_type"]==1){
            $row["host_name"]=$exchange->get_club_info($row["host_id"])["club_info"]["name"];
         }else{
-          $row["host_name"]="User";
+          $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
         }
         array_push($response["upcoming"],$row);
       }
-      $query="SELECT * FROM invites WHERE invitee=$user";
+      $query="SELECT * FROM invites WHERE invitee=$user AND state=-1";
       $ass=$this->db_connect_get_many($query);
       $response["invites"]=sizeof($ass);
 
@@ -241,6 +241,7 @@
         $this->db_connect_get_none($query);
         $query="UPDATE invites SET state=1 WHERE id=$requst_id";
         $this->db_connect_get_none($query);
+        $this->attend_event($user,$event);
       }else{
         $query="SELECT state,event FROM invites WHERE id=$requst_id";
         $row=$this->db_connect_get_one($query);

@@ -11,6 +11,7 @@ import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
 import com.example.dopetheimmortal.turntapp.Activities.Home;
+import com.example.dopetheimmortal.turntapp.Activities.invites;
 import com.example.dopetheimmortal.turntapp.R;
 import com.google.android.gms.gcm.GcmListenerService;
 
@@ -31,13 +32,13 @@ public class GCMPushReceiverService extends GcmListenerService {
 
     //This method is generating a notification and displaying the notificatokention
     private void sendNotification(String message) {
-        Intent intent = new Intent(this, Home.class);
+        Intent intent = new Intent(this,invites.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         int requestCode = 0;
         PendingIntent pendingIntent = PendingIntent.getActivity(this, requestCode, intent, PendingIntent.FLAG_ONE_SHOT);
         Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder noBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.mipmap.logo)
                 .setContentText(message)
                 .setContentTitle("You have been invited to an event")
                 .setAutoCancel(true)

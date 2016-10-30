@@ -21,4 +21,5 @@ public class StaticData {
     public static String following="0";
     public static String followers="0";
     public static String image_name="";
+    public static String hold_id="";
 }

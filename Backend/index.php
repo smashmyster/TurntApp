@@ -175,7 +175,8 @@
       include_once 'InfoExchange.php';
       $group_run=new InfoExchange();
       $name=$_REQUEST["search"];
-      $info=$group_run->search_event($name);
+      $me=$_REQUEST["me"];
+      $info=$group_run->search_event($name,$me);
       echo json_encode($info);
       break;
     case 'follow_user':

@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import com.example.dopetheimmortal.turntapp.Adapters.UpcomingAdapter;
 import com.example.dopetheimmortal.turntapp.DataStructures.EventStruct;
+import com.example.dopetheimmortal.turntapp.LocalData.UserLocalData;
 import com.example.dopetheimmortal.turntapp.R;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorCallSearch;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorSearch;
@@ -28,11 +29,16 @@ import java.util.HashMap;
 public class SearchEvent extends AppCompatActivity implements ConnectorCallSearch {
     private EditText search;
     private ListView show_search;
-
+    UserLocalData local;
+    String me;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_search);
+        local=new UserLocalData(this);
+        local.open();
+        me=local.actual().dbid;
+        local.close();
         search = (EditText) findViewById(R.id.event_txt);
         search.addTextChangedListener(new TextWatcher() {
             @Override
@@ -44,6 +50,7 @@ public class SearchEvent extends AppCompatActivity implements ConnectorCallSearc
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 HashMap<String, String> get = new HashMap<String, String>();
                 get.put("type", "search_event");
+                get.put("me", me);
                 get.put("search", charSequence.toString());
                 String link = SearchEvent.this.getString(R.string.link);
                 new ConnectorSearch(link, SearchEvent.this, SearchEvent.this, get, "", "", false, false).execute();

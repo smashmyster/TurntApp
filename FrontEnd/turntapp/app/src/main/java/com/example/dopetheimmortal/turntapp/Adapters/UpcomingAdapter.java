@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.dopetheimmortal.turntapp.DataStructures.EventStruct;
 import com.example.dopetheimmortal.turntapp.R;
+import com.example.dopetheimmortal.turntapp.Useful.ViewEvent;
 import com.example.dopetheimmortal.turntapp.connector.GetImage;
 
 import java.util.ArrayList;
@@ -60,6 +61,12 @@ public class UpcomingAdapter extends ArrayAdapter<EventStruct> {
         ImageView image=(ImageView)convertView.findViewById(R.id.logo);
         String link=getContext().getString(R.string.link)+"EventImages/"+get.logo;
         new GetImage(link,getContext(),image).execute();
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ViewEvent().view_event(get,getContext(),activity);
+            }
+        });
         return convertView;
     }
 }

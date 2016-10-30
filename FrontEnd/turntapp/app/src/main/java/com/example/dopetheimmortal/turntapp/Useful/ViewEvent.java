@@ -105,6 +105,8 @@ public class ViewEvent implements ConnectorCallback, CallBackAttending {
         if (struct.me_attending) {
             check.setChecked(true);
             checkin.setVisibility(View.VISIBLE);
+        }else{
+            checkin.setVisibility(View.GONE);
         }
         check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
