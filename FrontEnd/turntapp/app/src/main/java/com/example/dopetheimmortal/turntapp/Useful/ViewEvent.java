@@ -99,7 +99,7 @@ public class ViewEvent implements ConnectorCallback, CallBackAttending {
         fee.setText("General Fee : " + struct.gen_fee);
         vip.setText("VIP fee : " + struct.vip_fee);
         attending.setText(struct.attending + " People are attending");
-        ImageView invite = (ImageView) view.findViewById(R.id.invite_users);
+        final ImageView invite = (ImageView) view.findViewById(R.id.invite_users);
         CheckBox check = (CheckBox) view.findViewById(R.id.attending_status);
         final ImageButton checkin=(ImageButton)view.findViewById(R.id.checkin);
         if (struct.me_attending) {
@@ -125,6 +125,7 @@ public class ViewEvent implements ConnectorCallback, CallBackAttending {
                 } else {
                     send.put("type", "unattending");
                     checkin.setVisibility(View.GONE);
+                    invite.setVisibility(View.GONE);
                 }
                 new Connector(link, ViewEvent.this, context, send, "Updating status", "Loading....", false, true).execute();
             }

@@ -66,7 +66,8 @@ public class ReaderActivity extends AppCompatActivity implements Scanner {
     public void success(String s) throws JSONException {
         TextView textView=(TextView)findViewById(R.id.person_info);
         JSONObject object=new JSONObject(s);
-        textView.setText("Welcome to the party "+object.getString("name"));
+        JSONObject event=object.getJSONObject("event");
+        textView.setText("Welcome to the "+event.getString("name")+" party "+object.getString("name"));
         new Remover(textView).execute();
     }
 

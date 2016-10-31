@@ -217,6 +217,9 @@
         include_once 'InfoExchange.php';
         $exchange=new InfoExchange();
         $info=$exchange->get_user_basic_info($arr[0]);
+        include_once 'EventManagement.php';
+        $po=new Events();
+        $info["event"]=$po->get_event_by_id($arr[1]);
         echo json_encode($info);
       break;
     case 'logout':
