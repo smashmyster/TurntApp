@@ -3,6 +3,8 @@ package com.example.dopetheimmortal.turntapp.Useful;
 import android.graphics.Bitmap;
 import android.widget.ImageView;
 
+import com.example.dopetheimmortal.turntapp.Activities.invites;
+
 import java.util.HashMap;
 
 /**
@@ -14,4 +16,10 @@ public class StaticData {
     public static String[] sign_up={"user","pass","email","phone","gender","name","surname"};
     public static HashMap<String,ImageView> images=new HashMap<>();
     public static HashMap<String,Bitmap> downloaded_images=new HashMap<>();
+    public static invites invites=null;
+    public static String invite="0";
+    public static String following="0";
+    public static String followers="0";
+    public static String image_name="";
+    public static String hold_id="";
 }

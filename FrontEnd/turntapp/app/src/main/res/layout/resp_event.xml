@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:uber="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:src="@drawable/profile"
+        android:id="@+id/view_event_image"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_toRightOf="@+id/view_event_image"
+        android:layout_marginLeft="20dp"
+        android:text="Event Name"
+        android:layout_height="wrap_content"
+        android:id="@+id/view_event_name1"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_toRightOf="@+id/view_event_image"
+        android:layout_marginLeft="20dp"
+        android:text="Starting time"
+        android:layout_below="@+id/view_event_name"
+        android:layout_height="wrap_content"
+        android:id="@+id/view_start_time"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/view_vip_fee"
+        android:layout_marginTop="20dp"
+        android:text="VIP Fee"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:background="@drawable/curvedetails"
+        android:layout_below="@+id/view_general_fee"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/view_general_fee"
+        android:layout_marginTop="20dp"
+        android:text="General Fee"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:background="@drawable/curvedetails"
+        android:layout_below="@+id/view_event_image"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/view_attending"
+        android:layout_marginTop="20dp"
+        android:text="Attending"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:background="@drawable/curvedetails"
+        android:layout_below="@+id/view_vip_fee"/>
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/invite_users"
+        android:layout_marginTop="20dp"
+        android:src="@mipmap/ic_navigation_black_36dp"
+        android:background="@android:color/transparent"
+        android:layout_below="@+id/view_attending"/>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Attending"
+        android:id="@+id/attending_status"
+        android:layout_alignTop="@+id/invite_users"
+        android:layout_alignBottom="@+id/invite_users"
+        android:layout_alignParentRight="true"/>
+
+
+</RelativeLayout>

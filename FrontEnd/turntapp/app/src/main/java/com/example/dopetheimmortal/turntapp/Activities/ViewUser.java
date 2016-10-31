@@ -2,6 +2,7 @@ package com.example.dopetheimmortal.turntapp.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,11 +19,13 @@ import com.example.dopetheimmortal.turntapp.Adapters.UpcomingAdapter;
 import com.example.dopetheimmortal.turntapp.DataStructures.EventStruct;
 import com.example.dopetheimmortal.turntapp.LocalData.UserLocalData;
 import com.example.dopetheimmortal.turntapp.R;
-import com.example.dopetheimmortal.turntapp.Useful.CallBackAttending;
-import com.example.dopetheimmortal.turntapp.Useful.ConnectorCallback;
+import com.example.dopetheimmortal.turntapp.Useful.StaticData;
+import com.example.dopetheimmortal.turntapp.connector.CallBackAttending;
+import com.example.dopetheimmortal.turntapp.connector.ConnectorCallback;
 import com.example.dopetheimmortal.turntapp.Useful.Profile_Data;
 import com.example.dopetheimmortal.turntapp.connector.Connector;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorAttending;
+import com.example.dopetheimmortal.turntapp.connector.GetImage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,6 +33,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static java.security.AccessController.getContext;
 
 /**
  * Created by jackson on 2016/10/19.
@@ -55,28 +61,52 @@ public class ViewUser extends AppCompatActivity implements ConnectorCallback,Cal
 
     @Override
     public void success(String info) throws JSONException {
-        JSONObject object=new JSONObject(info);
+        final JSONObject object=new JSONObject(info);
         TextView username = (TextView) findViewById(R.id.user_name);
         username.setText(object.getString("username"));
 
         TextView status = (TextView) findViewById(R.id.status);
-        status.setText(object.getString("username"));
+        status.setText(object.getString("status"));
 
         TextView name = (TextView) findViewById(R.id.num_following);
         name.setText(object.getString("following"));
-
-        TextView name1 = (TextView) findViewById(R.id.num_followers);
-        name1.setText(object.getString("followers"));
-        RelativeLayout followers_wrapper=(RelativeLayout)findViewById(R.id.followers_wraper);
-        followers_wrapper.setOnClickListener(new View.OnClickListener() {
+        name.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ViewUser.this, Followers.class));
+            public void onClick(View v) {
+                Bundle bh=new Bundle();
+                try {
+                    bh.putString("id",object.getString("id"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Intent i=new Intent(ViewUser.this, Following.class);
+                i.putExtras(bh);
+                startActivity(i);
             }
         });
+        TextView name1 = (TextView) findViewById(R.id.num_followers);
+        name1.setText(object.getString("followers"));
+        final String id=object.getString("id");
+        name1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bh=new Bundle();
+                bh.putString("id",id);
+                Intent i=new Intent(ViewUser.this, Followers.class);
+                i.putExtras(bh);
+                startActivity(i);
+            }
+        });
+
+        RelativeLayout lp=(RelativeLayout)findViewById(R.id.att_wraper);
+        lp.setVisibility(View.GONE);
+//        RelativeLayout followers_wrapper=(RelativeLayout)findViewById(R.id.followers_wraper);/
         TextView name2 = (TextView) findViewById(R.id.num_attending);
         name2.setText( object.getString("num"));
         get_events();
+        ImageView imageView=(ImageView)findViewById(R.id.user_photo);
+        String image_link=this.getString(R.string.link)+"UserProfilePics/"+object.getString("image_name");
+        new GetImage(image_link,this,imageView).execute();
 
     }
     public void get_events() {
@@ -116,7 +146,8 @@ public class ViewUser extends AppCompatActivity implements ConnectorCallback,Cal
             String latlong = get.getString("latlong");
             String address = get.getString("address");
             String logo = get.getString("logo");
-            EventStruct event=new EventStruct(id,djs,attending,event_type,host_id,"0",tbl_avail,specials,gen_fee,vip_fee,name,start_time,end_time,latlong,address,logo,"");
+            boolean me_attending=get.getInt("me_attending")==1?true:false;
+            EventStruct event=new EventStruct(id,djs,attending,event_type,host_id,"0",tbl_avail,specials,gen_fee,vip_fee,name,start_time,end_time,latlong,address,logo,"",me_attending);
             b.add(event);
         }
         ListView l=(ListView)findViewById(R.id.show_my_events);
@@ -141,7 +172,9 @@ public class ViewUser extends AppCompatActivity implements ConnectorCallback,Cal
                 }
             });
             name22.setText(get.name);
-
+            ImageView image=(ImageView)convertView.findViewById(R.id.logo);
+            String link=this.getString(R.string.link)+"EventImages/"+get.logo;
+            new GetImage(link,this,image).execute();
             l.addFooterView(convertView);
         }
     }

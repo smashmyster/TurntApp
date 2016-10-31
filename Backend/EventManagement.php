@@ -34,23 +34,29 @@
       }
       return $stmp->fetchAll();
     }
-    function get_upcoming_events($id){
+    function get_upcoming_events($id,$user){
       include_once 'InfoExchange.php';
       $exchange=new InfoExchange();
       $now = new DateTime();
       $date=$now_string =$now->format("YmdHi");
-      $response["upcoming"]=array();
       if($id==0){
         $response["ongoing"]=array();
         $query="SELECT * FROM events WHERE id>$id AND start_time<$date AND end_time>$date  LIMIT 10";
         $rows=$this->db_connect_get_many($query);
         $response["ongoing"]=array();
         foreach ($rows as $row ) {
+          $query="SELECT * FROM attending WHERE user=$user AND event=:eid";
+          $jaa=$this->db_connect_get_many($query,array(':eid'=>$row["id"]));
+          if($jaa){
+            $row["me_attending"]=1;
+          }else{
+            $row["me_attending"]=0;
+          }
           if($row["event_type"]==1){
-   $row["host_name"]=$exchange->get_club_info($row["host_id"])["club_info"]["name"];
-}else{
-  $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
-}
+              $row["host_name"]=$exchange->get_club_info($row["host_id"])["club_info"]["name"];
+            }else{
+              $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
+            }
           array_push($response["ongoing"],$row);
         }
       }else{
@@ -58,34 +64,67 @@
       }
       $query="SELECT * FROM events WHERE id>$id AND start_time>$date LIMIT 10";
       $rows=$this->db_connect_get_many($query);
-
+      $response["upcoming"]=array();
       foreach ($rows as $row ) {
+        $io=$row["id"];
+        $query="SELECT * FROM attending WHERE user=$user AND event=$io";
+        $jaa=$this->db_connect_get_many($query);
+        if($jaa){
+          $row["me_attending"]=1;
+        }else{
+          $row["me_attending"]=0;
+        }
         if($row["event_type"]==1){
            $row["host_name"]=$exchange->get_club_info($row["host_id"])["club_info"]["name"];
         }else{
-          $row["host_name"]="User";
+          $row["host_name"]=$exchange->get_user_basic_info($row["host_id"])["name"];
         }
         array_push($response["upcoming"],$row);
       }
+      $query="SELECT * FROM invites WHERE invitee=$user AND state=-1";
+      $ass=$this->db_connect_get_many($query);
+      $response["invites"]=sizeof($ass);
+
+      $query="SELECT * FROM followers WHERE follower=$user";
+      $ass=$this->db_connect_get_many($query);
+      $response["following"]=sizeof($ass);
+
+      $query="SELECT * FROM followers WHERE following=$user";
+      $ass=$this->db_connect_get_many($query);
+      $response["followers"]=sizeof($ass);
+
+      $query="SELECT image_name FROM user WHERE id=$user";
+      $ass=$this->db_connect_get_one($query);
+      $response["image_name"]=$ass["image_name"];
+
       if(sizeof($response["upcoming"])==0){
-        $response["success"]=0;
-        unset($response["upcoming"]);
+        $response["success"]=1;
         return $response;
       }else{
         $response["success"]=1;
         return $response;
       }
     }
-    function get_ongoing_events($id){
+    function get_ongoing_events($id,$user){
       $now = new DateTime();
       $date=$now_string =$now->format("YmdHi");
       $query="SELECT * FROM events WHERE id>$id AND $date>=start_time AND $date<=end_time LIMIT 10";
       $rows=$this->db_connect_get_many($query);
+      include_once 'InfoExchange.php';
+      $exchange=new InfoExchange();
       $response["ongoing"]=array();
       if($id!=0){
         $response["code"]=0;
       }
       foreach ($rows as $row ) {
+        $io=$row["id"];
+        $query="SELECT * FROM attending WHERE user=$user AND id=$io";
+        $jaa=$this->db_connect_get_one($query);
+        if(sizeof($jaa)>0){
+          $row["me_attending"]=1;
+        }else{
+          $row["me_attending"]=0;
+        }
         if($row["event_type"]==1){
    $row["host_name"]=$exchange->get_club_info($row["host_id"])["club_info"]["name"];
 }else{
@@ -136,6 +175,7 @@
         $party_id=$row["event"];
         $query="SELECT * FROM events WHERE id=$party_id";
         $info=$this->db_connect_get_one($query);
+        $info["me_attending"]=1;
         array_push($att["data"],$info);
       }
       $att["success"]=1;
@@ -168,20 +208,40 @@
       }else{
         $query="INSERT INTO invites (event,inviter,invitee,state) VALUES ($event,$me,$user,-1)";
         $this->db_connect_get_none($query);
+        $query="SELECT regid FROM user WHERE id=$user";
+        $reg=$this->db_connect_get_one($query)["regid"];
+        $query="SELECT id,name,logo FROM events WHERE id=$event";
+        $event_info=$this->db_connect_get_one($query);
+        $tokens=array();
+        if($reg!=""){
+          array_push($tokens,$reg);
+          include_once 'SendGCM.php';
+          $gcm=new GCM();
+          $message=array();
+          $message["id"]=$event_info["id"];
+          $message["name"]=$event_info["name"];
+          $message["logo"]=$event_info["logo"];
+          $gcm->send_invite($tokens,$message);
+        }
         $response["success"]=1;
         $response["message"]="User successfully invited to this event";
       }
       return $response;
     }
-    function respond_to_invite($requst_id,$accept){
+    function respond_to_invite($event,$user,$accept){
+      $query="SELECT * FROM invites WHERE invitee=$user AND event=$event";
+      $po=$this->db_connect_get_one($query);
+      $requst_id=$po["id"];
       if($accept==1){
         $query="SELECT event FROM invites WHERE id=$requst_id";
         $row=$this->db_connect_get_one($query);
         $event=$row["event"];
+        // echo $event;
         $query="UPDATE events SET attending=attending+1 WHERE id=$event";
         $this->db_connect_get_none($query);
         $query="UPDATE invites SET state=1 WHERE id=$requst_id";
         $this->db_connect_get_none($query);
+        $this->attend_event($user,$event);
       }else{
         $query="SELECT state,event FROM invites WHERE id=$requst_id";
         $row=$this->db_connect_get_one($query);
@@ -220,10 +280,11 @@
             $person["invited"]=1;
           }else{
             $person["invited"]=0;
+            array_push($response["people"],$person);
           }
-          array_push($response["people"],$person);
         }
       }
+      $response["id"]=$event;
       $response["success"]=1;
       return $response;
     }
@@ -302,6 +363,44 @@
     function get_event_by_id($id){
       $query="SELECT * FROM events WHERE id=$id";
       return $this->db_connect_get_one($query);
+    }
+    function attend_event($id,$event){
+      $query="INSERT INTO attending (event,user) VALUES ($event,$id)";
+      $this->db_connect_get_none($query);
+      include('QRCreator/qrlib.php');
+      $codeContents = $id."_".$event;
+
+      // we need to generate filename somehow,
+      // with md5 or with database ID used to obtains $codeContents...
+      $fileName = $id."_".$event.'.png';
+      $pngAbsoluteFilePath = "BarCodes/".$fileName;
+      // generating
+      // QRcode::png($codeContents, $pngAbsoluteFilePath);
+      QRcode::png($codeContents, $pngAbsoluteFilePath,QR_ECLEVEL_L, 80);
+
+      // displaying
+      return array('success'=>1,'message'=>'attending');
+    }
+    function unattend_event($id,$event){
+      $query="DELETE FROM attending WHERE event=$event AND user=$id";
+      $this->db_connect_get_none($query);
+      return array('success'=>1,'message'=>'unattending');
+    }
+    function get_events($me){
+      // echo $me;
+      $query="SELECT * FROM invites WHERE invitee=$me AND state=-1";
+      $data=$this->db_connect_get_many($query);
+      include_once 'InfoExchange.php';
+      $exchange=new InfoExchange();
+      $response["data"]=array();
+      foreach ($data as $key) {
+        $query="SELECT * FROM events WHERE id=:eid";
+        $send["event"]=$this->db_connect_get_one($query,array(':eid'=>$key["event"]));
+        $send["inviter"]=$exchange->get_user_basic_info($key["inviter"]);
+        array_push($response["data"],$send);
+      }
+      $response["success"]=1;
+      return $response;
     }
   }
 

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<title>Case Tests</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<body>
+
+ <div class="w3-card-8">
+
+<header class="w3-container w3-light-blue">
+  <h1>Test</h1>
+</header>
+
+<div class="w3-container">
+   <div class="w3-row">
+   	<div class="w3-card-8" onclick="loginTest();">
+  		<div class="w3-third w3-container w3-section w3-hover-blue">
+    		<h2 >Login</h2>
+  	</div>
+  </div>
+    <div class="w3-row">
+   	<div class="w3-card-8" onclick="upcomingEvents()";>
+  		<div class="w3-third w3-container w3-section w3-hover-blue">
+    		<h2 > Upcoming events</h2>
+  	</div>
+  </div>
+   <div class="w3-row">
+   	<div class="w3-card-8" onclick="ongoingEvents()">
+  		<div class="w3-third w3-container w3-section w3-hover-blue">
+    		<h2 > Ongoing events</h2>
+  	</div>
+  </div>
+
+   <!--<div class="w3-row">
+   	<div class="w3-card-8" onclick="ongoingEvents()">
+  		<div class="w3-third w3-container w3-section w3-hover-blue">
+    		<h2 >Test: Upcoming events</h2>
+  	</div>
+  </div>
+-->
+    <div class="w3-row">
+   	<div class="w3-card-8" onclick="userEventsAttending()">
+  		<div class="w3-third w3-container w3-section w3-hover-blue">
+    		<h2 > User events attending</h2>
+  	</div>
+  </div>
+   <div class="w3-row">
+   	<div class="w3-card-8" onclick="eventsPull()">
+  		<div class="w3-third w3-container w3-section w3-hover-blue">
+    		<h2 >Events pull</h2>
+  	</div>
+  </div>
+   <div class="w3-row">
+   	<div class="w3-card-8" onclick="userEventsHosting()">
+  		<div class="w3-third w3-container w3-section w3-hover-blue">
+    		<h2 >User events hosting</h2>
+  	</div>
+  </div>
+    <div class="w3-row">
+   	<div class="w3-card-8" onclick="getUserInfo()">
+  		<div class="w3-third w3-container w3-section w3-hover-blue">
+    		<h2 >Get user info</h2>
+  	</div>
+  </div>
+   <div class="w3-row">
+   	<div class="w3-card-8" onclick="eventsUserAttending()" >
+  		<div class="w3-third w3-container w3-section w3-hover-blue">
+    		<h2 >Events users attending</h2>
+  	</div>
+  </div>
+   <div class="w3-row">
+   	<div class="w3-card-8" onclick="invitableList()">
+  		<div class="w3-third w3-container w3-section w3-hover-blue">
+    		<h2 > Invitable list</h2>
+  	</div>
+  </div>
+    <div class="w3-row">
+   	<div class="w3-card-8" onclick="getFollowers()">
+  		<div class="w3-third w3-container w3-section w3-hover-blue">
+    		<h2 > Get followers</h2>
+  	</div>
+  </div>
+   <div class="w3-row">
+   	<div class="w3-card-8" onclick="searchFunctionsTest()">
+  		<div class="w3-third w3-container w3-section w3-hover-blue">
+    		<h2 > Search funtions</h2>
+  	</div>
+  </div>
+</div>
+<div id="id01" class="w3-modal">
+    <div class="w3-modal-content w3-animate-top w3-card-8">
+      <header id="titleClass" class="w3-container w3-green"> 
+        <span onclick="document.getElementById('id01').style.display='none'" 
+        class="w3-closebtn">&times;</span>
+        <h2 id="modalTitle"></h2>
+      </header>
+      <div class="w3-container">
+        <p id="modalMsg"></p>
+      </div>
+      <footer id="footerClass"  class="w3-container w3-green">
+        <p></p>
+      </footer>
+    </div>
+  </div>
+
+<div id="id02" class="w3-modal">
+    <div class="w3-modal-content w3-animate-top w3-card-8">
+      <header id="titleClass2" class="w3-container w3-red"> 
+        <span onclick="document.getElementById('id02').style.display='none'" 
+        class="w3-closebtn">&times;</span>
+        <h2 id="modalTitle2"></h2>
+      </header>
+      <div class="w3-container">
+        <p id="modalMsg2"></p>
+      </div>
+      <footer id="footerClass"  class="w3-container w3-red">
+        <p></p>
+      </footer>
+    </div>
+  </div>
+
+<footer class="w3-container w3-light-blue">
+  <h5>By TurntApp</h5>
+</footer>
+</div>	
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="tests.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html> 

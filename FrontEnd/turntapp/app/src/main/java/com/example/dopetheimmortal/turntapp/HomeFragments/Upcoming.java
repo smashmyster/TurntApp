@@ -1,5 +1,6 @@
 package com.example.dopetheimmortal.turntapp.HomeFragments;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -18,6 +19,8 @@ import com.example.dopetheimmortal.turntapp.Adapters.UpcomingAdapter;
 import com.example.dopetheimmortal.turntapp.DataStructures.EventStruct;
 import com.example.dopetheimmortal.turntapp.DataStructures.FollowData;
 import com.example.dopetheimmortal.turntapp.R;
+import com.example.dopetheimmortal.turntapp.Useful.ViewEvent;
+import com.example.dopetheimmortal.turntapp.connector.GetImage;
 
 import java.util.ArrayList;
 
@@ -62,9 +65,18 @@ public class Upcoming extends Fragment {
 
                 }
             });
+            ImageView image=(ImageView)convertView.findViewById(R.id.logo);
+            String link=getContext().getString(R.string.link)+"EventImages/"+get.logo;
+            new GetImage(link,getContext(),image).execute();
             name.setText(get.name);
             list.addFooterView(convertView);
-             TouchImageView img = (TouchImageView) lay.findViewById(R.id.logo);
+//            TouchImageView img = (TouchImageView) lay.findViewById(R.id.logo);
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new ViewEvent().view_event(get,getContext(),getActivity());
+                }
+            });
         }
         return lay;
     }

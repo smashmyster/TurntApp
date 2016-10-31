@@ -8,16 +8,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.dopetheimmortal.turntapp.Activities.Followers;
+import com.example.dopetheimmortal.turntapp.Activities.Following;
+import com.example.dopetheimmortal.turntapp.Activities.invites;
 import com.example.dopetheimmortal.turntapp.Adapters.UpcomingAdapter;
 import com.example.dopetheimmortal.turntapp.DataStructures.EventStruct;
 import com.example.dopetheimmortal.turntapp.LocalData.UserLocalData;
 import com.example.dopetheimmortal.turntapp.R;
 import com.example.dopetheimmortal.turntapp.Useful.Profile_Data;
+import com.example.dopetheimmortal.turntapp.Useful.StaticData;
+import com.example.dopetheimmortal.turntapp.Useful.ViewEvent;
+import com.example.dopetheimmortal.turntapp.connector.GetImage;
 
 import java.util.ArrayList;
 
@@ -43,7 +49,9 @@ public class ProfileFragment extends Fragment {
         data.open();
         Profile_Data person =data.actual();
         data.close();
-
+        ImageView imageView=(ImageView)lay.findViewById(R.id.user_photo);
+        String image_link=getContext().getString(R.string.link)+"UserProfilePics/"+StaticData.image_name;
+        new GetImage(image_link,getContext(),imageView).execute();
         TextView username = (TextView) lay.findViewById(R.id.user_name);
         username.setText(person.surname);
 
@@ -51,19 +59,46 @@ public class ProfileFragment extends Fragment {
         status.setText(person.status);
 
         TextView name = (TextView) lay.findViewById(R.id.num_following);
-        name.setText(person.following);
-
+        name.setText(StaticData.following);
+        name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bh=new Bundle();
+                UserLocalData local=new UserLocalData(getContext());
+                local.open();
+                String id=local.actual().dbid;
+                local.close();
+                bh.putString("id",id);
+                Intent i=new Intent(getContext(), Following.class);
+                i.putExtras(bh);
+                startActivity(i);
+            }
+        });
         TextView name1 = (TextView) lay.findViewById(R.id.num_followers);
-        name1.setText(person.followers);
+        name1.setText(StaticData.followers);
         RelativeLayout followers_wrapper=(RelativeLayout)lay.findViewById(R.id.followers_wraper);
         followers_wrapper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), Followers.class));
+                Bundle bh=new Bundle();
+                UserLocalData local=new UserLocalData(getContext());
+                local.open();
+                String id=local.actual().dbid;
+                local.close();
+                bh.putString("id",id);
+                Intent i=new Intent(getContext(), Followers.class);
+                i.putExtras(bh);
+                startActivity(i);
             }
         });
         TextView name2 = (TextView) lay.findViewById(R.id.num_attending);
-        // name2.setText( person.regid);
+         name2.setText(StaticData.invite);
+        name2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(),invites.class));
+            }
+        });
         ListView l=(ListView)lay.findViewById(R.id.show_my_events);
         ArrayList<EventStruct> dummy = new ArrayList<>();
         l.setAdapter(new UpcomingAdapter(getContext(), dummy,getActivity()));
@@ -86,7 +121,15 @@ public class ProfileFragment extends Fragment {
                 }
             });
             name22.setText(get.name);
-
+            ImageView image=(ImageView)convertView.findViewById(R.id.logo);
+            String link=getContext().getString(R.string.link)+"EventImages/"+get.logo;
+            new GetImage(link,getContext(),image).execute();
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new ViewEvent().view_event(get,getContext(),getActivity());
+                }
+            });
             l.addFooterView(convertView);
         }
         return lay;

@@ -1,11 +1,14 @@
 package com.example.dopetheimmortal.turntapp.Activities;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dopetheimmortal.turntapp.Adapters.InviteAdapter;
 import com.example.dopetheimmortal.turntapp.Adapters.ViewPagerAdapter;
@@ -29,13 +34,19 @@ import com.example.dopetheimmortal.turntapp.DataStructures.EventStruct;
 import com.example.dopetheimmortal.turntapp.DataStructures.GeneralUser;
 import com.example.dopetheimmortal.turntapp.LocalData.UserLocalData;
 import com.example.dopetheimmortal.turntapp.R;
-import com.example.dopetheimmortal.turntapp.Useful.CallBackAttending;
-import com.example.dopetheimmortal.turntapp.Useful.ConnectorCallSearch;
-import com.example.dopetheimmortal.turntapp.Useful.ConnectorCallback;
+import com.example.dopetheimmortal.turntapp.Services.GCMRegistrationIntentService;
+import com.example.dopetheimmortal.turntapp.Useful.StaticData;
+import com.example.dopetheimmortal.turntapp.connector.CallBackAttending;
+import com.example.dopetheimmortal.turntapp.connector.ConnectorCallSearch;
+import com.example.dopetheimmortal.turntapp.connector.ConnectorCallback;
 import com.example.dopetheimmortal.turntapp.Useful.Profile_Data;
 import com.example.dopetheimmortal.turntapp.connector.Connector;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorAttending;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorSearch;
+import com.example.dopetheimmortal.turntapp.connector.GetImage;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.api.client.json.Json;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,6 +59,9 @@ import java.util.HashMap;
  * Created by jackson on 2016/08/11.
  */
 public class Home extends AppCompatActivity implements ConnectorCallback, ConnectorCallSearch, CallBackAttending {
+    //Notifications
+
+    boolean logout=false;
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -58,6 +72,7 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
     ArrayList<EventStruct> upcomig_events;
     ArrayList<EventStruct> ongoing_events;
     ArrayList<EventStruct> b;
+    UserLocalData looca = new UserLocalData(this);
     boolean run=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,11 +86,16 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
         initializetools();
         String link = this.getString(R.string.link);
         HashMap<String, String> data = new HashMap<>();
+        looca.open();
+        Profile_Data ll = looca.actual();
+        looca.close();
         data.put("type", "get_upcoming_events");
         data.put("id", "0");
+        data.put("user",ll.dbid);
         new Connector(link, this, this, data, "Loading events", "Loading events\nPlease wait..", false, true).execute();
 
     }
+
 
     private void initializetools() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -155,7 +175,8 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
             String address = get.getString("address");
             String logo = get.getString("logo");
             String host_name = get.getString("host_name");
-            upcoming_events.add(new EventStruct(id, djs, attending, event_type, host_id, rating, tbl_avail, specials, gen_fee, vip_fee, name, start_time, end_time, latlong, address, logo, host_name));
+            boolean me_attending=get.getInt("me_attending")==1?true:false;
+            upcoming_events.add(new EventStruct(id, djs, attending, event_type, host_id, rating, tbl_avail, specials, gen_fee, vip_fee, name, start_time, end_time, latlong, address, logo, host_name,me_attending));
         }
         object = obj.getJSONArray("ongoing");
         for (int i = 0; i < object.length(); i++) {
@@ -177,8 +198,13 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
             String address = get.getString("address");
             String logo = get.getString("logo");
             String host_name = get.getString("host_name");
-            ongoing_events.add(new EventStruct(id, djs, attending, event_type, host_id, rating, tbl_avail, specials, gen_fee, vip_fee, name, start_time, end_time, latlong, address, logo, host_name));
+            boolean me_attending=get.getInt("me_attending")==1?true:false;
+            ongoing_events.add(new EventStruct(id, djs, attending, event_type, host_id, rating, tbl_avail, specials, gen_fee, vip_fee, name, start_time, end_time, latlong, address, logo, host_name,me_attending));
         }
+        StaticData.invite=obj.getString("invites");
+        StaticData.following=obj.getString("following");
+        StaticData.followers=obj.getString("followers");
+        StaticData.image_name=obj.getString("image_name");
         this.upcomig_events = upcoming_events;
         this.ongoing_events = ongoing_events;
         get_my_events();
@@ -196,7 +222,11 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
 
     @Override
     public void fail(String info) {
-
+        if(logout){
+            Toast.makeText(this,"Sorry to see you go",Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
     }
 
     @Override
@@ -219,10 +249,15 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
             case R.id.logout:
                 UserLocalData loc = new UserLocalData(this);
                 loc.open();
+                String id=loc.actual().dbid;
                 loc.delete();
                 loc.close();
-                startActivity(new Intent(this, LoginActivity.class));
-                finish();
+                HashMap<String,String>as=new HashMap<>();
+                as.put("type","logout");
+                as.put("me",id);
+                String link=this.getString(R.string.link);
+                new Connector(link,this,this,as,"Logging out","Logging out",false,true).execute();
+                logout=true;
                 break;
             case R.id.new_event:
                 startActivity(new Intent(this, NewEvent.class));
@@ -233,6 +268,7 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
             case R.id.search_event:
                 startActivity(new Intent(this,SearchEvent.class));
                 break;
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -278,8 +314,10 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
         name.setText(get.name + " " + get.surname);
         TextView status = (TextView) convertView.findViewById(R.id.invite_user_status);
         status.setText(get.status);
+        ImageView imageView=(ImageView)findViewById(R.id.user_invite_img);
+        String image_link=this.getString(R.string.link)+"UserProfilePics/"+get.image_name;
+//        new GetImage(image_link,this,imageView).execute();
         if (get.invited.equals("0")) {
-            System.out.println("About to");
             final ImageView image = (ImageView) convertView.findViewById(R.id.send_invite_img);
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -331,6 +369,7 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
                     }
                 }
             });
+
         }
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -340,7 +379,6 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
                 Intent o = new Intent(Home.this, ViewUser.class);
                 o.putExtras(bh);
                 startActivity(o);
-                System.out.println("Trying");
             }
         });
         return convertView;
@@ -352,7 +390,6 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
 
     public void get_my_events() {
         HashMap<String, String> att = new HashMap<>();
-        UserLocalData looca = new UserLocalData(this);
         looca.open();
         Profile_Data ll = looca.actual();
         looca.close();
@@ -367,6 +404,7 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
     public void success_my_events(String s) throws JSONException {
         JSONObject o = new JSONObject(s);
         JSONArray arr = o.getJSONArray("data");
+
         ArrayList<EventStruct> b = new ArrayList<>();
         for (int i = 0; i < arr.length(); i++) {
             JSONObject get = arr.getJSONObject(i);
@@ -385,7 +423,8 @@ public class Home extends AppCompatActivity implements ConnectorCallback, Connec
             String latlong = get.getString("latlong");
             String address = get.getString("address");
             String logo = get.getString("logo");
-            EventStruct event = new EventStruct(id, djs, attending, event_type, host_id, "0", tbl_avail, specials, gen_fee, vip_fee, name, start_time, end_time, latlong, address, logo, "");
+            boolean me_attending=get.getInt("me_attending")==1?true:false;
+            EventStruct event = new EventStruct(id, djs, attending, event_type, host_id, "0", tbl_avail, specials, gen_fee, vip_fee, name, start_time, end_time, latlong, address, logo, "",me_attending);
             b.add(event);
         }
         this.b = b;

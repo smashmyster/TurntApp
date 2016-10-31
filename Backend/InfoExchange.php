@@ -69,7 +69,9 @@
     }
     function get_user_basic_info($user){
       $query="SELECT id,name,surname,image_name,following,followers,status FROM user WHERE id=$user";
-      return $this->db_connect_get_one($query);
+      $daat= $this->db_connect_get_one($query);
+      $daat["success"]=1;
+      return $daat;
     }
     function is_following($me,$user){
       $query="SELECT 1 FROM followers WHERE follower=$me AND following=$user";
@@ -91,6 +93,16 @@
       $response["people"]=array();
       foreach ($followers as $get) {
         array_push($response["people"],$this->get_user_basic_info($get["follower"]));
+      }
+      $response["success"]=1;
+      return $response;
+    }
+    function get_my_following($me){
+      $query="SELECT following FROM followers WHERE follower=$me";
+      $followers=$this->db_connect_get_many($query);
+      $response["people"]=array();
+      foreach ($followers as $get) {
+        array_push($response["people"],$this->get_user_basic_info($get["following"]));
       }
       $response["success"]=1;
       return $response;
@@ -122,7 +134,7 @@
       $response["success"]=1;
       return $response;
     }
-    function search_event($name){
+    function search_event($name,$me){
       $query="SELECT id,name FROM events WHERE name LIKE :ename";
       $query_params=array(':ename'=>'%'.$name.'%');
       $data=$this->db_connect_get_many($query,$query_params);
@@ -132,7 +144,15 @@
         include_once 'EventManagement.php';
         $po=new Events();
         foreach ($data as $key ) {
-          array_push($response["data"],$po->get_event_by_id($key["id"]));
+          $lhj=$po->get_event_by_id($key["id"]);
+          $query="SELECT * FROM attending WHERE event=:eevent AND  user=:euser";
+          $hj=$this->db_connect_get_many($query,array(':eevent'=>$key["id"],':euser'=>$me));
+          if(sizeof($hj)>0){
+            $lhj["me_attending"]=1;
+          }else{
+            $lhj["me_attending"]=0;
+          }
+          array_push($response["data"],$lhj);
         }
       }else{
         $response["success"]=1;

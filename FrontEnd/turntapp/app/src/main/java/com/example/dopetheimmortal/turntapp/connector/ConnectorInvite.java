@@ -5,9 +5,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.ImageView;
 
-import com.example.dopetheimmortal.turntapp.Useful.ConnectorCallback;
-import com.example.dopetheimmortal.turntapp.Useful.ConnectorCallbackInvite;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 

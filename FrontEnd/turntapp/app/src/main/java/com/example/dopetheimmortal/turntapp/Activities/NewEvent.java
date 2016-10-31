@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -28,7 +29,7 @@ import android.widget.Toast;
 
 import com.example.dopetheimmortal.turntapp.LocalData.UserLocalData;
 import com.example.dopetheimmortal.turntapp.R;
-import com.example.dopetheimmortal.turntapp.Useful.ConnectorCallback;
+import com.example.dopetheimmortal.turntapp.connector.ConnectorCallback;
 import com.example.dopetheimmortal.turntapp.Useful.Date;
 import com.example.dopetheimmortal.turntapp.Useful.ImageProcessing;
 import com.example.dopetheimmortal.turntapp.Useful.Permissions;
@@ -43,7 +44,7 @@ import java.util.HashMap;
 /**
  * Created by jackson on 2016/08/21.
  */
-public class NewEvent extends Activity implements View.OnClickListener,ConnectorCallback{
+public class NewEvent extends AppCompatActivity implements View.OnClickListener,ConnectorCallback{
     EditText name, address, djs, specials, fee, vip, stime, etime;
     Button create_event;
     HashMap<String, String> upload = new HashMap<>();
@@ -172,11 +173,17 @@ public class NewEvent extends Activity implements View.OnClickListener,Connector
     public String get_send(DatePicker date_picker, TimePicker time_picker) {
         String year, month, day, hour, min;
         year = "" + date_picker.getYear();
-        month = (Integer.toString(date_picker.getMonth())).length() == 2 ? Integer.toString(date_picker.getMonth()): "0" + Integer.toString(date_picker.getMonth()+1);
+        month =("" + (date_picker.getMonth()+1)).length() == 2 ? "" + (date_picker.getMonth()+1) : "0" + (date_picker.getMonth()+1);
         day = ("" + date_picker.getDayOfMonth()).length() == 2 ? "" + date_picker.getDayOfMonth() : "0" + date_picker.getDayOfMonth();
         hour = ("" + time_picker.getCurrentHour()).length() == 2 ? "" + time_picker.getCurrentHour() : "0" + time_picker.getCurrentHour();
-        min = ("" + time_picker.getCurrentHour()).length() == 2 ? "" + time_picker.getCurrentMinute() : "0" + time_picker.getCurrentMinute();
+        min = ("" + time_picker.getCurrentMinute()).length() == 2 ? "" + time_picker.getCurrentMinute() : "0" + time_picker.getCurrentMinute();
         String time = year + month + day + hour + min;
+        System.out.println(time);
+//        month = (Integer.toString(date_picker.getMonth())).length() == 2 ? Integer.toString(): "0" + Integer.toString(date_picker.getMonth()+1);
+//        day = ("" + date_picker.getDayOfMonth()).length() == 2 ? "" + date_picker.getDayOfMonth() : "0" + date_picker.getDayOfMonth();
+//        hour = ("" + time_picker.getCurrentHour()).length() == 2 ? "" + time_picker.getCurrentHour() : "0" + time_picker.getCurrentHour();
+//        min = ("" + time_picker.getCurrentHour()).length() == 2 ? "" + time_picker.getCurrentMinute() : "0" + time_picker.getCurrentMinute();
+
         return time;
     }
 

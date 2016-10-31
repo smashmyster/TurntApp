@@ -1,25 +1,18 @@
 package com.example.dopetheimmortal.turntapp.Activities;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.example.dopetheimmortal.turntapp.Adapters.InviteAdapter;
 import com.example.dopetheimmortal.turntapp.Adapters.UpcomingAdapter;
 import com.example.dopetheimmortal.turntapp.DataStructures.EventStruct;
-import com.example.dopetheimmortal.turntapp.DataStructures.GeneralUser;
+import com.example.dopetheimmortal.turntapp.LocalData.UserLocalData;
 import com.example.dopetheimmortal.turntapp.R;
-import com.example.dopetheimmortal.turntapp.Useful.ConnectorCallSearch;
+import com.example.dopetheimmortal.turntapp.connector.ConnectorCallSearch;
 import com.example.dopetheimmortal.turntapp.connector.ConnectorSearch;
 
 import org.json.JSONArray;
@@ -36,11 +29,16 @@ import java.util.HashMap;
 public class SearchEvent extends AppCompatActivity implements ConnectorCallSearch {
     private EditText search;
     private ListView show_search;
-
+    UserLocalData local;
+    String me;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_search);
+        local=new UserLocalData(this);
+        local.open();
+        me=local.actual().dbid;
+        local.close();
         search = (EditText) findViewById(R.id.event_txt);
         search.addTextChangedListener(new TextWatcher() {
             @Override
@@ -52,6 +50,7 @@ public class SearchEvent extends AppCompatActivity implements ConnectorCallSearc
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 HashMap<String, String> get = new HashMap<String, String>();
                 get.put("type", "search_event");
+                get.put("me", me);
                 get.put("search", charSequence.toString());
                 String link = SearchEvent.this.getString(R.string.link);
                 new ConnectorSearch(link, SearchEvent.this, SearchEvent.this, get, "", "", false, false).execute();
@@ -87,7 +86,8 @@ public class SearchEvent extends AppCompatActivity implements ConnectorCallSearc
             String latlong = get.getString("latlong");
             String address = get.getString("address");
             String logo = get.getString("logo");
-            upcoming_events.add(new EventStruct(id, djs, attending, event_type, host_id, rating, tbl_avail, specials, gen_fee, vip_fee, name, start_time, end_time, latlong, address, logo, ""));
+            boolean me_attending=get.getInt("me_attending")==1?true:false;
+            upcoming_events.add(new EventStruct(id, djs, attending, event_type, host_id, rating, tbl_avail, specials, gen_fee, vip_fee, name, start_time, end_time, latlong, address, logo, "",me_attending));
         }
         UpcomingAdapter adapter = new UpcomingAdapter(this, upcoming_events,this);
         show_search = (ListView) findViewById(R.id.searching_events);
