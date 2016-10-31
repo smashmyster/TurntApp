@@ -61,7 +61,7 @@ Related Artifacts: Implementation model, components\\
 \subsection{Physical view} 
 Audience: Deployment managers.\\
 Area: Topology: describes the mapping of the software onto the hardware and shows the system's distributed aspects.\\
-Related Artifacts: Deployment model.\\
+Related Artefacts: Deployment model.\\
 
 \subsection{Use Case view}
 Audience: all the stakeholders of the system, including the end-users.\\
@@ -101,9 +101,9 @@ For internet access, the following requirements are mandatory
 
 Data persistence will be addressed using a relational database. 
 
-\subsection{Reliability/Availability (failover)}
+\subsection{Reliability/Availability (fail-over)}
 
-The availability of the system is a key requirement by nature, as it is a selling system. The candidate architecture must ensure failover capabilities.
+The availability of the system is a key requirement by nature, as it is a selling system. The candidate architecture must ensure fail-over capabilities.
 Targeted availability is 12/5: 12 hours a day, 5 days a week 
 The time left (8 hours) is reserved for any maintenance activities
 
@@ -115,26 +115,21 @@ The login process must be under 5 seconds.
 \subsection{Internationalization (i18n)}
 layers must be generic enough to work with any internationalization context.
 
-\section{Scenarios}
-This section lists use cases or scenarios from the use-case model if they represent some significant, central functionality of the final system. The only use-case studied here on the Turnt App architecture is the one related to computicket. It includes a search feature as well as a call to external services (uber options)
-
-
-\subsection{Events}
-	
-A customer accesses the Turnt App application and search for the available events.  The customer chooses from a list of events and selects which event she/he wants to attend.  Then, the customer performs a computicket payment to get the tickets. Once the payment has been validated, the customer confirms attendance, enters her/his location ( address, coordinates etc..) and all the relevant information is sent to the Google maps app then the directions are given.
-\begin{figure}[H]
-\includegraphics{usecase.jpg}
-\end{figure}
-\subsection{Use-Case Realizations}
-Refers to section 5.2 to see how design elements provide the functionalities identified in the significant use-cases
 \section{Logical View}
 \subsection{Overview}
 The Turnt App application is divided into layers based on the N-tier architecture.\\
 The layering model of the Turnt App application is based on a responsibility layering strategy that associates each layer with a particular responsibility.
 This strategy has been chosen because it isolates various system responsibilities from one another, so that it improves both system development and maintenance.
+\begin{figure}[H]
+\includegraphics[scale=0.3]{UseCaseDiagram7.png}
+\end{figure}
+\begin{figure}[H]
+\includegraphics[scale=0.3]{UseCaseDiagram6.png}
+\end{figure}
+
 \subsection{Architectural Layer Dependencies}
 \begin{figure}[H]
-\includegraphics{alayer.jpg}
+\includegraphics[scale = 0.8]{sequence.png}
 \end{figure}
 Each layer has specific responsibilities.
 \begin{itemize}
@@ -146,11 +141,16 @@ Each layer has specific responsibilities.
 \end{itemize}
 
 \section{Process View}
-The android package automatically handles the processes of the system.
-\section{Physical View}
-Global Overview.
+The following diagram describes the state of the program when the user creates or attends and event. The system will be in idle until the an event is created or a user selects to attend an event. Then if the action is unsuccessful then the program will move to the final state. Otherwise the program will exit normally to the select a club or normal event - where the user will decide weather they want to attend a club or a normal event. Then on confirmation, the state will change to order confirmation. Then on to attend event. After all that is done, the program will move to the final state.
 \begin{figure}[H]
-\includegraphics{one.png}
+\includegraphics[scale=0.5]{state.png}
+\end{figure}
+
+\section{Physical View}
+
+The application is Android based. It is assumed to register it's users using a database stored on the lamp server. So the application would need to connect to the internet first, then be directed to web servers that are going to grant it access to the lamp server. Then from the lamp server the application will access the database. Redirect everything that it got from those databases back to the web services then back to the application.
+\begin{figure}[H]
+\includegraphics[scale=0.5]{design.png}
 \end{figure}
 
 \section{Development  View} 
@@ -159,7 +159,11 @@ Global Overview.
 The Development view depicts the physical composition of the implementation in terms of Implementation Subsystems, and Implementation Elements (directories and files, including source code, data, and executable files). 
 Usually, the layers of the Development view do fit the layering defined in the Logical view
 
-It is unnecessary to document the Development view in great details in this document. For further information, refer to the Online Catering Service 1.0 workspace in Rational Software Architect. 
+It is unnecessary to document the Development view in great details in this document. For further information, refer to the On-line Catering Service 1.0 workspace in Rational Software Architect. 
+
+\begin{figure}[H]
+\includegraphics{component.png}
+\end{figure}
 
 \subsection{Layers}
 
