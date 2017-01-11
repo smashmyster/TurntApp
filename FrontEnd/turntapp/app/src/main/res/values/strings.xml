@@ -14,8 +14,8 @@
 
 
     <string name="ip">http://10.0.1.145/</string>
-    <string name="link">http://lamp.ms.wits.ac.za/~856807/TurntApp/</string>
-    <!--<string name="link">http://10.0.0.6/TurntappAssignment/Backend/</string>-->
+    <!--<string name="link">http://lamp.ms.wits.ac.za/~856807/TurntApp/</string>-->
+    <string name="link">http://10.0.0.3/TurntappAssignment/Backend/</string>
     <!-- Login related links -->
     <!--Login User-->
     <string name="login">turntapp/UserActions/Login.php</string>

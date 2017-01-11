@@ -107,6 +107,7 @@ public class ViewEvent implements ConnectorCallback, CallBackAttending {
             checkin.setVisibility(View.VISIBLE);
         }else{
             checkin.setVisibility(View.GONE);
+            invite.setVisibility(View.INVISIBLE);
         }
         check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -125,7 +126,7 @@ public class ViewEvent implements ConnectorCallback, CallBackAttending {
                 } else {
                     send.put("type", "unattending");
                     checkin.setVisibility(View.GONE);
-                    invite.setVisibility(View.GONE);
+                    invite.setVisibility(View.INVISIBLE);
                 }
                 new Connector(link, ViewEvent.this, context, send, "Updating status", "Loading....", false, true).execute();
             }

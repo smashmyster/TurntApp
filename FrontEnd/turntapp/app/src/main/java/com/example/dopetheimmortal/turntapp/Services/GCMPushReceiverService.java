@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,7 +43,10 @@ public class GCMPushReceiverService extends GcmListenerService {
                 .setContentText(message)
                 .setContentTitle("You have been invited to an event")
                 .setAutoCancel(true)
-                .setContentIntent(pendingIntent);
+                .setContentIntent(pendingIntent)
+                .setSound(sound)
+                .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
+                .setLights(Color.RED, 3000, 3000);
 
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, noBuilder.build()); //0 = ID of notification

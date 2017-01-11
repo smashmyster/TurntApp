@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Check In</string>
-    <string name="link">http://lamp.ms.wits.ac.za/~856807/TurntApp/</string>
+    <string name="link">http://172.20.10.2/TurntappAssignment/Backend/</string>
 </resources>
